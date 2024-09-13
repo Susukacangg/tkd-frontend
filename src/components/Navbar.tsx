@@ -12,10 +12,9 @@ const navLinkItems: NavLinkProps[] = [
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
     let navLinks = enableHomeOnly ? navLinkItems.slice(0, 1) : navLinkItems;
-    console.log(navLinkItems);
 
     return (
-        <div className={"flex justify-between items-center " + (enableHomeOnly? "w-1/5": "w-2/5")}>
+        <div className={"flex justify-between items-center " + (enableHomeOnly || !enableContributeBtn? "w-1/5": "w-2/5")}>
             {navLinks.map((navLink) => (<NavLink key={navLink.to.toString()} to={navLink.to}>{navLink.children}</NavLink>))}
             {enableContributeBtn &&
                 <Button className={"bg-primary text-md text-white rounded-md py-2 hover:bg-opacity-85 capitalize"}>

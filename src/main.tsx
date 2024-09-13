@@ -6,10 +6,11 @@ import './index.css'
 import Register from "./pages/Register.tsx";
 import {ThemeProvider} from "@material-tailwind/react";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faSearch} from "@fortawesome/free-solid-svg-icons";
 import Login from "./pages/Login.tsx";
+import Definition from "./pages/Definition.tsx";
 
-library.add(faSearch);
+library.add(faSearch, faArrowRight);
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login/>
+    },
+    {
+        path: "/definition/:wordId",
+        element: <Definition/>,
     }
 ]);
 
