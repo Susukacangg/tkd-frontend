@@ -13,7 +13,7 @@ function Header({children = <Navbar/>}: HeaderProps) {
 
     return (
         // items center kasi center the text in the middle line
-        <header className={"bg-white sticky top-0 z-50 mx-auto flex w-full items-center p-8 border-b-grey border-2"}>
+        <header className={"bg-white sticky top-0 z-50 mx-auto flex w-full items-center px-8 py-4 border-b-grey border-2"}>
             <HeaderTitle/>
             {children}
         </header>
