@@ -8,16 +8,16 @@ function Definition() {
     return(
         <>
             <Header/>
-            <div className={"flex flex-col gap-6 w-3/4 mx-auto my-10"}>
+            <div className={"flex flex-col gap-8 w-3/4 mx-auto my-10"}>
                 {/*WORD*/}
                 <Typography variant={"h1"}>
-                    Tokou
+                    tokou
                 </Typography>
 
-                {/*MEANINGS*/}
+                {/*TRANSLATION*/}
                 <div className={"flex flex-col gap-4"}>
                     <Typography variant={"h3"}>
-                        Meanings
+                        Translation
                     </Typography>
                     <TranslateItem translation={"we"} wordCategory={"Pronoun"}/>
                 </div>
@@ -25,7 +25,7 @@ function Definition() {
                 {/*EXAMPLES*/}
                 <div className={"flex flex-col gap-4"}>
                     <Typography variant={"h3"}>
-                        Examples
+                        Usage examples
                     </Typography>
                     <UsageExampleItem kadazanSentence={"Kanou tokou mugad doiho"} englishSentence={"Come on, let's go there"}/>
                 </div>

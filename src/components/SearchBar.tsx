@@ -9,7 +9,7 @@ function SearchBar() {
             <Input type={"text"} label={"Search"}
                    className={"focus:border-primary"}
                    icon={
-                       <FontAwesomeIcon className={"text-md text-gray-400 cursor-pointer"} icon="search" />
+                       <FontAwesomeIcon className={"text-gray-400 cursor-pointer"} icon="search" />
                    }
                    labelProps={{
                        className: INPUT_LABEL_PRIMARY

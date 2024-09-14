@@ -6,11 +6,12 @@ import './index.css'
 import Register from "./pages/Register.tsx";
 import {ThemeProvider} from "@material-tailwind/react";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faArrowRight, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faSearch, faLanguage, faQuoteLeft} from "@fortawesome/free-solid-svg-icons";
 import Login from "./pages/Login.tsx";
 import Definition from "./pages/Definition.tsx";
+import Contribute from "./pages/Contribute.tsx";
 
-library.add(faSearch, faArrowRight);
+library.add(faSearch, faArrowRight, faLanguage, faQuoteLeft);
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
         path: "/definition/:wordId",
         element: <Definition/>,
+    },
+    {
+        path: "contribute",
+        element: <Contribute/>,
     }
 ]);
 

@@ -1,4 +1,4 @@
-import {NavLink, NavLinkProps} from "react-router-dom";
+import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
 import '@fortawesome/free-solid-svg-icons';
 import {Avatar, Button} from "@material-tailwind/react";
 import SearchBar from "./SearchBar.tsx";
@@ -12,12 +12,21 @@ const navLinkItems: NavLinkProps[] = [
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
     let navLinks = enableHomeOnly ? navLinkItems.slice(0, 1) : navLinkItems;
+    const navigate = useNavigate();
 
     return (
-        <div className={"flex justify-between items-center " + (enableHomeOnly || !enableContributeBtn? "w-1/5": "w-2/5")}>
-            {navLinks.map((navLink) => (<NavLink key={navLink.to.toString()} to={navLink.to}>{navLink.children}</NavLink>))}
+        <div className={"flex justify-between items-center h-full " + (enableHomeOnly || !enableContributeBtn? "w-1/5": "w-2/5")}>
+            {navLinks.map((navLink) => (
+                <NavLink key={navLink.to.toString()} to={navLink.to}
+                         className={({isActive}) => (isActive? "bg-primary text-white " : "bg-none text-black ") +
+                             "h-full rounded-lg py-2 px-3 hover:bg-amber-200 hover:text-blue-gray-700"}>
+                    {navLink.children}
+                </NavLink>
+            ))}
             {enableContributeBtn &&
-                <Button className={"bg-primary text-md text-white rounded-md py-2 hover:bg-opacity-85 capitalize"}>
+                <Button onClick={() => (navigate("/contribute"))}
+                        size={"sm"}
+                        className={"!bg-primary text-md text-white capitalize rounded-md hover:bg-opacity-85"}>
                     Contribute
                 </Button>}
         </div>
@@ -27,7 +36,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
 function Navbar({enableHomeOnly = false, enableContributeBtn = true, enableSearchBar = true, enableAvatar = true}: NavBarProps) {
     return (
         <>
-            <nav className={"flex justify-between w-full items-center"}>
+            <nav className={"flex justify-between w-full items-center h-full py-4"}>
                 <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
                 <div className={"flex items-center w-1/4 " + (enableSearchBar? "justify-between" : "justify-end")}>
                     {enableSearchBar && <SearchBar/>}
