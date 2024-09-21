@@ -1,17 +1,14 @@
-import {Input} from "@material-tailwind/react";
-import {INPUT_STYLE} from "../component-const/input-props.ts";
+import {TextField} from "@mui/material";
 import FormInputProps from "../component-props/form-input-props.ts";
 
-function FormInput({type, placeholder}: FormInputProps) {
+function FormInput({type, placeholder = "", isError = false}: FormInputProps) {
     return(
         <>
-            <Input size={"lg"}
-                   placeholder={placeholder}
-                   type={type}
-                   className={INPUT_STYLE}
-                   labelProps={{
-                       className: "hidden"
-                   }}/>
+            <TextField variant="outlined"
+                       placeholder={placeholder}
+                       type={type}
+                       color={"primary"}
+                       error={isError}/>
         </>
     );
 }

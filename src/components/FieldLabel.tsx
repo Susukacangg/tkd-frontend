@@ -1,9 +1,9 @@
-import {Typography} from "@material-tailwind/react";
+import {Typography} from "@mui/material";
 import FieldLabelProps from "../component-props/field-label-props.ts";
 
 function FieldLabel({title}: FieldLabelProps) {
     return(
-        <Typography variant={"h5"} className={"-mb-3"}>
+        <Typography variant={"h6"} className={"-mb-3"}>
             {title}
         </Typography>
     );

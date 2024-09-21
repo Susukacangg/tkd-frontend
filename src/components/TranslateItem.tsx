@@ -1,20 +1,17 @@
-import {Typography} from "@material-tailwind/react";
+import {Typography} from "@mui/material";
 import {TranslateItemProps} from "../component-props/translate-item-props.ts";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {GTranslate} from "@mui/icons-material";
 
-function TranslateItem({translation, wordCategory}: TranslateItemProps) {
+function TranslateItem({translation}: TranslateItemProps) {
     return (
         <div className={"flex flex-row justify-between items-center"}>
             <div className={"w-fit flex flex-row items-center"}>
-                <FontAwesomeIcon icon={"language"} size={"2xl"}
-                                 className={"mr-4 bg-gray-200 p-3 rounded-md"}/>
-                <Typography variant="h5">
+                <GTranslate fontSize={"large"}
+                            className={"mr-4 bg-gray-200 p-3 rounded-md"}/>
+                <Typography variant="h6" fontWeight={"bold"}>
                     {translation}
                 </Typography>
             </div>
-            <Typography variant="h5">
-                {wordCategory}
-            </Typography>
         </div>
     );
 }

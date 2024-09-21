@@ -1,6 +1,7 @@
 interface FormInputProps {
     type: string;
-    placeholder: string;
+    placeholder?: string;
+    isError?: boolean;
 }
 
 export default FormInputProps;

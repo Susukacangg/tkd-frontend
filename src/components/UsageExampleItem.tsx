@@ -1,22 +1,22 @@
-import {Typography} from "@material-tailwind/react";
+import {Typography} from "@mui/material";
 import {UsageExampleProps} from "../component-props/usage-example-props.ts";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {FormatQuote} from "@mui/icons-material";
 
 function UsageExampleItem({kadazanSentence, englishSentence}: UsageExampleProps) {
     return (
         <div className={"flex flex-row mr-4 items-center"}>
-            <FontAwesomeIcon icon={"quote-left"} size={"xl"}
-                             className={"mr-4 bg-gray-200 p-3 rounded-md"}/>
+            <FormatQuote fontSize={"large"}
+                         className={"mr-4 bg-gray-200 p-3 rounded-md"}/>
 
             {/*sentence example*/}
             <div className={"flex flex-col"}>
                 {/*KADAZAN EXAMPLE*/}
-                <Typography variant={"h5"}>
+                <Typography variant={"h6"} fontWeight={"bold"}>
                     {kadazanSentence}
                 </Typography>
 
                 {/*ENGLISH EXAMPLE*/}
-                <Typography variant={"paragraph"}>
+                <Typography variant={"subtitle1"}>
                     {englishSentence}
                 </Typography>
             </div>

@@ -4,14 +4,14 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Home from './pages/Home.tsx'
 import './index.css'
 import Register from "./pages/Register.tsx";
-import {ThemeProvider} from "@material-tailwind/react";
 import {library} from "@fortawesome/fontawesome-svg-core";
-import {faArrowRight, faSearch, faLanguage, faQuoteLeft} from "@fortawesome/free-solid-svg-icons";
+import {faArrowRight, faSearch, faLanguage, faQuoteLeft, faCircleXmark, faCirclePlus} from "@fortawesome/free-solid-svg-icons";
 import Login from "./pages/Login.tsx";
 import Definition from "./pages/Definition.tsx";
 import Contribute from "./pages/Contribute.tsx";
+import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 
-library.add(faSearch, faArrowRight, faLanguage, faQuoteLeft);
+library.add(faSearch, faArrowRight, faLanguage, faQuoteLeft, faCircleXmark, faCirclePlus);
 
 const router = createBrowserRouter([
     {
@@ -40,11 +40,31 @@ const router = createBrowserRouter([
     }
 ]);
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            light: "#ffd238",
+            main: "#f5bd02",
+            dark: "#e1aa04",
+            contrastText: "#fff",
+        },
+        secondary: {
+            main: "#fff",
+            contrastText: "#000",
+        },
+    },
+    typography: {
+        fontFamily: ['"Playfair Display"', 'Cambria', 'Georgia', 'Times', 'serif'].join(','),
+    },
+});
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-      <ThemeProvider>
-          <RouterProvider router={router}/>
+      <ThemeProvider theme={theme}>
+          <StyledEngineProvider injectFirst>
+              <RouterProvider router={router}/>
+          </StyledEngineProvider>
       </ThemeProvider>
   </StrictMode>,
 )

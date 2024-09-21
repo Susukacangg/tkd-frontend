@@ -6,7 +6,8 @@ function Register() {
     return (
         <>
             <Header>
-                <Navbar enableHomeOnly={true} enableContributeBtn={false}/>
+                <Navbar enableHomeOnly={true} enableContributeBtn={false}
+                        enableSearchBar={false} enableAvatar={false}/>
             </Header>
             <RegisForm/>
         </>
