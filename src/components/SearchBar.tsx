@@ -5,15 +5,18 @@ function SearchBar() {
 
     return (
         <>
-            <TextField type={"text"} placeholder={"Search"}
+            <TextField type={"text"}
+                       placeholder={"Search"}
                        color={"primary"}
+                       className={"w-full"}
                        slotProps={{
                            input: {
                                endAdornment: (
                                    <InputAdornment position={"end"}>
                                        <Search/>
                                    </InputAdornment>
-                               )
+                               ),
+                               className: "text-sm"
                            },
                        }}/>
         </>

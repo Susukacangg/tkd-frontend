@@ -15,7 +15,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
     const navigate = useNavigate();
 
     return (
-        <div className={"flex justify-between items-center h-full " + (enableHomeOnly || !enableContributeBtn? "w-1/5": "w-2/5")}>
+        <div className={"flex justify-between items-center h-full my-6 " + (enableHomeOnly || !enableContributeBtn? "w-1/4": "w-2/5")}>
             {navLinks.map((navLink) => (
                 <NavLink key={navLink.to.toString()} to={navLink.to}
                          className={({isActive}) => (isActive? "bg-primary text-white " : "bg-none text-black ") +
@@ -37,11 +37,11 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
 function Navbar({enableHomeOnly = false, enableContributeBtn = true, enableSearchBar = true, enableAvatar = true}: NavBarProps) {
     return (
         <>
-            <nav className={"flex grow justify-between items-center h-full py-4"}>
+            <nav className={"flex grow justify-between items-center h-full"}>
                 <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
-                <div className={"flex flex-row items-center " + (enableSearchBar? "justify-between" : "justify-end")}>
+                <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
                     {enableSearchBar && <SearchBar/>}
-                    {enableAvatar && <Avatar srcSet="../../public/mt-avatar.jpg" alt={"avatar"}
+                    {enableAvatar && <Avatar srcSet="/mt-avatar.jpg" alt={"avatar"}
                                              className={"ml-5 cursor-pointer"}/>}
                 </div>
             </nav>

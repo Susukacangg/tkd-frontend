@@ -72,7 +72,6 @@ const ExampleInputSection = ({label, examples, updateInput, addExampleInput, rem
                         <TextField value={ex.example}
                                    multiline
                                    rows={3}
-                                   maxRows={3}
                                    placeholder={`example ${index + 1}`}
                                    required
                                    className={"w-3/4"}
@@ -88,7 +87,6 @@ const ExampleInputSection = ({label, examples, updateInput, addExampleInput, rem
                     <TextField value={ex.exampleTrans}
                                multiline
                                rows={3}
-                               maxRows={3}
                                placeholder={`example translation ${index + 1}`}
                                required
                                className={"w-3/4"}

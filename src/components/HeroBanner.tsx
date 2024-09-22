@@ -4,7 +4,7 @@ import InputWithButton from "./InputWithButton.tsx";
 function HeroBanner() {
     return (
         <div className="w-full relative h-fit">
-            <img src="../../public/kadazanpplenhanced.jpeg" alt="landing image"
+            <img src="/kadazanpplenhanced.jpeg" alt="landing image"
                  className={"rounded-lg w-full"}/>
 
             {/*search bar and text section*/}
