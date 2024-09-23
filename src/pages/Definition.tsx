@@ -7,7 +7,7 @@ function Definition() {
 
     return(
         <>
-            <Header/>
+            <Header enableContributeBtn={false}/>
             <div className={"flex flex-col gap-10 w-3/4 mx-auto my-10"}>
                 {/*WORD*/}
                 <Typography variant={"h3"}>

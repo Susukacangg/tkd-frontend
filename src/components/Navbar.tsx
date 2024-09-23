@@ -1,16 +1,12 @@
 import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
 import '@fortawesome/free-solid-svg-icons';
-import {Avatar, Button} from "@mui/material";
+import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
+import {useContext, useState} from "react";
+import {Logout, Settings} from "@mui/icons-material";
+import {HeaderContext} from "./Header.tsx";
 
-interface NavBarProps {
-    enableHomeOnly?: boolean;
-    enableContributeBtn?: boolean;
-    enableSearchBar?: boolean;
-    enableAvatar?: boolean;
-}
-
-const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
+const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boolean, enableContributeBtn?: boolean}) => {
     const navLinkItems: NavLinkProps[] = [
         {to: "/home", children: "Home"},
         {to: "/about", children: "About"},
@@ -41,6 +37,9 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: NavBarProps) => {
 }
 
 const ProfileIcon = ({name}: {name: string}) => {
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const isMenuOpen = Boolean(anchorEl);
 
     const nameToColor = (name: string): string => {
         let hash: number = 0;
@@ -77,20 +76,48 @@ const ProfileIcon = ({name}: {name: string}) => {
 
     return (
         <>
-            <Avatar {...avatarDisplay(name)}
-                    className={"ml-5 cursor-pointer"}/>
+            <Tooltip title={"Account settings"}>
+                <IconButton className={"ml-4"}
+                            onClick={(e) => setAnchorEl(e.currentTarget)}
+                            sx={{color: nameToColor(name)}}>
+                    <Avatar {...avatarDisplay(name)}/>
+                </IconButton>
+            </Tooltip>
+            <Menu open={isMenuOpen}
+                  anchorEl={anchorEl}
+                  onClick={() => setAnchorEl(null)}
+                  onClose={() => {setAnchorEl(null)}}>
+                <MenuItem>My Account</MenuItem>
+                <Divider />
+                <MenuItem>
+                    <ListItemIcon>
+                        <Settings/>
+                    </ListItemIcon>
+                    Settings
+                </MenuItem>
+                <MenuItem>
+                    <ListItemIcon>
+                        <Logout/>
+                    </ListItemIcon>
+                    Logout
+                </MenuItem>
+            </Menu>
         </>
     );
 }
 
-function Navbar({enableHomeOnly = false, enableContributeBtn = true, enableSearchBar = true, enableAvatar = true}: NavBarProps) {
+function Navbar() {
+
+    const {userName, enableHomeOnly, enableContributeBtn, enableSearchBar, enableAvatar} = useContext(HeaderContext);
+
     return (
         <>
             <nav className={"flex grow justify-between items-center h-full"}>
                 <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
                 <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
                     {enableSearchBar && <SearchBar/>}
-                    {enableAvatar && <ProfileIcon name={"Zachary Jobb Jude Abel Logijin"}/>}
+                    {/*@ts-ignore*/}
+                    {enableAvatar && <ProfileIcon name={userName}/>}
                 </div>
             </nav>
         </>
