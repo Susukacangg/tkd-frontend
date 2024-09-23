@@ -1,10 +1,7 @@
 import {Typography} from "@mui/material";
 import Navbar from "./Navbar.tsx";
-import React from "react";
 import NavBarProps from "../component-props/nav-bar-props.ts";
-
-const HeaderContext = React.createContext<NavBarProps>({userName: ""});
-export {HeaderContext};
+import {HeaderContext} from "../contexts/HeaderContext.ts";
 
 const HeaderTitle = () => {
     return (
@@ -16,14 +13,14 @@ function Header({enableHomeOnly = false, enableAvatar = true, enableSearchBar = 
 
     return (
         <HeaderContext.Provider value={{
-            userName: "Zachary Jobb",
+            userName: "Zachary Jobb Jude Abel Logijin",
             enableHomeOnly,
             enableAvatar,
             enableSearchBar,
             enableContributeBtn
         }}>
             {/*items center kasi center the text in the middle line*/}
-            <header className={"bg-white sticky top-0 z-50 flex items-center px-8 border-0 border-b-2 border-solid border-b-gray-200"}>
+            <header className={"bg-white static top-0 z-50 flex items-center px-8 border-0 border-b-2 border-solid border-b-gray-200"}>
                 <HeaderTitle/>
                 <Navbar/>
             </header>

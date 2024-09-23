@@ -4,7 +4,7 @@ import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolt
 import SearchBar from "./SearchBar.tsx";
 import {useContext, useState} from "react";
 import {Logout, Settings} from "@mui/icons-material";
-import {HeaderContext} from "./Header.tsx";
+import {HeaderContext} from "../contexts/HeaderContext.ts";
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boolean, enableContributeBtn?: boolean}) => {
     const navLinkItems: NavLinkProps[] = [
@@ -36,41 +36,48 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
     );
 }
 
-const ProfileIcon = ({name}: {name: string}) => {
+const ProfileIcon = ({name}: {name?: string}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
 
-    const nameToColor = (name: string): string => {
-        let hash: number = 0;
-        for(let i = 0; i < name.length; i++) {
-            hash = name.charCodeAt(i) + ((hash << 6) - hash);
-        }
+    const nameToColor = (name?: string): string => {
+        let color: string = "";
 
-        let color: string = "#";
+        if(name !== undefined) {
+            let hash: number = 0;
+            for(let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 6) - hash);
+            }
 
-        for(let i = 0; i < 3; i++) {
-            const value = (hash >> (i * 8)) & 0xff;
-            color += `00${value.toString(16)}`.slice(-2)
+            color = "#";
+
+            for(let i = 0; i < 3; i++) {
+                const value = (hash >> (i * 8)) & 0xff;
+                color += `00${value.toString(16)}`.slice(-2)
+            }
         }
 
         return color;
     }
 
-    const avatarDisplay = (name: string) => {
-        const nameArray = name.split(' ');
-        const firstInitial = nameArray[0][0];
-        let lastInitial;
-        if(nameArray.length > 1)
-            lastInitial = nameArray[nameArray.length - 1][0];
-        else
-            lastInitial = "";
+    const avatarDisplay = (name?: string) => {
+        let firstInitial, lastInitial, avatarImg = "";
+
+        if(name !== undefined){
+            const nameArray = name.split(' ');
+            firstInitial = nameArray[0][0];
+            lastInitial = nameArray.length > 1? nameArray[nameArray.length - 1][0] : "";
+        } else {
+            avatarImg = "/mt-avatar.jpg";
+        }
 
         return {
             sx: {
                 bgcolor: nameToColor(name),
             },
             children: `${firstInitial}${lastInitial}`,
+            src: avatarImg,
         }
     }
 
@@ -116,7 +123,6 @@ function Navbar() {
                 <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
                 <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
                     {enableSearchBar && <SearchBar/>}
-                    {/*@ts-ignore*/}
                     {enableAvatar && <ProfileIcon name={userName}/>}
                 </div>
             </nav>
