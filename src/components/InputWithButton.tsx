@@ -1,7 +1,6 @@
 import {Button, InputBase} from "@mui/material";
-import InputWithButtonProps from "../component-props/input-with-button-props.ts";
 
-function InputWithButton({children, placeholder}: InputWithButtonProps) {
+function InputWithButton({children, placeholder}: {children: string, placeholder?: string}) {
     return (
         <div className={"w-full items-center p-3 flex bg-white rounded-md"}>
             <InputBase type={"text"}

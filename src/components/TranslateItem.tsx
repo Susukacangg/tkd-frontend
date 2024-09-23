@@ -1,8 +1,7 @@
 import {Typography} from "@mui/material";
-import {TranslateItemProps} from "../component-props/translate-item-props.ts";
 import {GTranslate} from "@mui/icons-material";
 
-function TranslateItem({translation}: TranslateItemProps) {
+function TranslateItem({translation}: {translation: string}) {
     return (
         <div className={"flex flex-row justify-between items-center"}>
             <div className={"w-fit flex flex-row items-center"}>

@@ -1,10 +1,10 @@
-import WordListItemProps from "../component-props/word-list-item-props.ts";
 import {useNavigate} from "react-router-dom";
 import {Button, Typography} from "@mui/material";
 import {ArrowForward} from "@mui/icons-material";
+import WordData from "../component-props/word-data.ts";
 
 
-function WordListItem({wordData}: WordListItemProps) {
+function WordListItem({wordData}: {wordData: WordData}) {
     const navigate = useNavigate();
 
     return (

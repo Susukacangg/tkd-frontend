@@ -7,7 +7,7 @@ function FormFooter({text, linkText, linkRoute}: FormFooterProps) {
         <div className={"flex flex-row mt-6 w-fit"}>
             <Typography>
                 {text} <NavLink to={linkRoute}
-                                className={"text-blue-300 underline"}>{linkText}</NavLink>
+                                className={"text-blue-600 underline"}>{linkText}</NavLink>
             </Typography>
         </div>
     );

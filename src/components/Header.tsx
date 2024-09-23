@@ -1,7 +1,6 @@
 import {Typography} from "@mui/material";
-import HeaderProps from "../component-props/header-props.ts";
 import Navbar from "./Navbar.tsx";
-
+import {ReactElement} from "react";
 
 const HeaderTitle = () => {
     return (
@@ -9,7 +8,7 @@ const HeaderTitle = () => {
     );
 }
 
-function Header({children = <Navbar/>}: HeaderProps) {
+function Header({children = <Navbar/>}: {children?: ReactElement}) {
 
     return (
         // items center kasi center the text in the middle line
