@@ -1,5 +1,4 @@
 import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
-import '@fortawesome/free-solid-svg-icons';
 import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
 import {useContext, useState} from "react";
@@ -12,8 +11,8 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
         {to: "/about", children: "About"},
         {to: "/contact", children: "Contact"}
     ]
-
     let navLinks = enableHomeOnly ? navLinkItems.slice(0, 1) : navLinkItems;
+
     const navigate = useNavigate();
 
     return (
@@ -26,10 +25,10 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
                 </NavLink>
             ))}
             {enableContributeBtn &&
-                <Button onClick={() => (navigate("/contribute"))}
-                        variant={"contained"}
+                <Button variant={"contained"}
                         color={"primary"}
-                        className={"capitalize"}>
+                        className={"capitalize"}
+                        onClick={() => (navigate("/contribute"))}>
                     Contribute
                 </Button>}
         </div>
@@ -118,15 +117,13 @@ function Navbar() {
     const {userName, enableHomeOnly, enableContributeBtn, enableSearchBar, enableAvatar} = useContext(HeaderContext);
 
     return (
-        <>
-            <nav className={"flex grow justify-between items-center h-full"}>
-                <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
-                <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
-                    {enableSearchBar && <SearchBar/>}
-                    {enableAvatar && <ProfileIcon name={userName}/>}
-                </div>
-            </nav>
-        </>
+        <nav className={"flex grow justify-between items-center h-full"}>
+            <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
+            <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
+                {enableSearchBar && <SearchBar/>}
+                {enableAvatar && <ProfileIcon name={userName}/>}
+            </div>
+        </nav>
     );
 }
 

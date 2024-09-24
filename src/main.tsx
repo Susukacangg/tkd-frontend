@@ -4,14 +4,12 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import Home from './pages/Home.tsx'
 import './index.css'
 import Register from "./pages/Register.tsx";
-import {library} from "@fortawesome/fontawesome-svg-core";
-import {faArrowRight, faSearch, faLanguage, faQuoteLeft, faCircleXmark, faCirclePlus} from "@fortawesome/free-solid-svg-icons";
 import Login from "./pages/Login.tsx";
 import Definition from "./pages/Definition.tsx";
 import Contribute from "./pages/Contribute.tsx";
 import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
+import {Toaster} from "sonner";
 
-library.add(faSearch, faArrowRight, faLanguage, faQuoteLeft, faCircleXmark, faCirclePlus);
 
 const router = createBrowserRouter([
     {
@@ -63,6 +61,14 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
+              <Toaster richColors
+                       position="top-center"
+                       offset={115}
+                       toastOptions={{
+                           classNames: {
+                               cancelButton: "bg-transparent text-black"
+                           },
+                       }}/>
               <RouterProvider router={router}/>
           </StyledEngineProvider>
       </ThemeProvider>
