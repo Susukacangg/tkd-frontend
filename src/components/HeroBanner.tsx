@@ -8,10 +8,11 @@ function HeroBanner() {
                  className={"rounded-lg w-full"}/>
 
             {/*search bar and text section*/}
-            <div className={"flex flex-col justify-between w-fit absolute bottom-16 left-14"}>
-                <Typography variant={"h3"} color={"white"}
+            <div className={"flex flex-col justify-between w-fit absolute bottom-12 left-14"}>
+                <Typography variant={"h3"}
+                            color={"white"}
                             fontWeight={"bold"}
-                            className={"mb-8 !text-nowrap"}>
+                            className={"mb-6 !text-nowrap"}>
                     Discover new words
                 </Typography>
 

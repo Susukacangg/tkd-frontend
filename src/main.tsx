@@ -52,7 +52,7 @@ const theme = createTheme({
         },
     },
     typography: {
-        fontFamily: ['"Playfair Display"', 'Cambria', 'Georgia', 'Times', 'serif'].join(','),
+        fontFamily: ['Enriqueta', 'Cambria', 'Georgia', 'Times', 'serif'].join(','),
     },
 });
 
