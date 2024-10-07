@@ -1,5 +1,5 @@
 import {Button, Typography} from "@mui/material";
-import FormContainerProps from "../component-props/form-container-props.ts";
+import FormContainerProps from "../../component-props/form-container-props.ts";
 
 function FormContainer({headerString, subHeaderString, children, btnText, formFooter}: FormContainerProps) {
     return (

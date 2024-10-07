@@ -1,5 +1,5 @@
 import {TextField} from "@mui/material";
-import FormInputProps from "../component-props/form-input-props.ts";
+import FormInputProps from "../../component-props/form-input-props.ts";
 
 function FormInput({type, placeholder = "", isError = false}: FormInputProps) {
     return(

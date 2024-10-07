@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {Button, Typography} from "@mui/material";
 import {ArrowForward} from "@mui/icons-material";
-import WordData from "../component-props/word-data.ts";
+import WordData from "../../component-props/word-data.ts";
 
 
 function WordListItem({wordData}: {wordData: WordData}) {

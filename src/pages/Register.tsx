@@ -1,5 +1,5 @@
-import Header from "../components/Header.tsx";
-import RegisForm from "../components/RegisForm.tsx";
+import Header from "../components/common/Header.tsx";
+import RegisForm from "../components/auth/RegisForm.tsx";
 
 function Register() {
     return (

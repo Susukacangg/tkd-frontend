@@ -1,7 +1,7 @@
-import FormInput from "./FormInput.tsx";
-import FieldLabel from "./FieldLabel.tsx";
-import FormContainer from "./FormContainer.tsx";
-import FormFooter from "./FormFooter.tsx";
+import FormInput from "../form-components/FormInput.tsx";
+import FieldLabel from "../form-components/FieldLabel.tsx";
+import FormContainer from "../form-components/FormContainer.tsx";
+import FormFooter from "../form-components/FormFooter.tsx";
 
 function LoginForm() {
     return(

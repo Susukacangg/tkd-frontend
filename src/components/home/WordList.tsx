@@ -1,5 +1,5 @@
 import WordListItem from "./WordListItem.tsx";
-import WordData from "../component-props/word-data.ts";
+import WordData from "../../component-props/word-data.ts";
 
 const wordListItems: WordData[] = [
     {id: "tokou1", word: "tokou"},

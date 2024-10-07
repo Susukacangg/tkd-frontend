@@ -2,8 +2,8 @@ import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
 import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
 import {useContext, useState} from "react";
-import {Logout, Settings} from "@mui/icons-material";
-import {HeaderContext} from "../contexts/HeaderContext.ts";
+import {Login, Logout, Settings} from "@mui/icons-material";
+import {HeaderContext} from "../../contexts/HeaderContext.ts";
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boolean, enableContributeBtn?: boolean}) => {
     const navLinkItems: NavLinkProps[] = [
@@ -103,9 +103,11 @@ const ProfileIcon = ({name}: {name?: string}) => {
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
-                        <Logout/>
+                        <Login/>
                     </ListItemIcon>
-                    Logout
+                    <NavLink to={"/login"} className={"!text-black !no-underline"}>
+                        Login
+                    </NavLink>
                 </MenuItem>
             </Menu>
         </>

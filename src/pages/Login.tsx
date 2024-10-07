@@ -1,5 +1,5 @@
-import Header from "../components/Header.tsx";
-import LoginForm from "../components/LoginForm.tsx";
+import Header from "../components/common/Header.tsx";
+import LoginForm from "../components/auth/LoginForm.tsx";
 
 function Login() {
     return(

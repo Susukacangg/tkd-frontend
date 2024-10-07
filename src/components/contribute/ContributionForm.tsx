@@ -1,6 +1,6 @@
-import FormContainer from "./FormContainer.tsx";
-import FormInput from "./FormInput.tsx";
-import FieldLabel from "./FieldLabel.tsx";
+import FormContainer from "../form-components/FormContainer.tsx";
+import FormInput from "../form-components/FormInput.tsx";
+import FieldLabel from "../form-components/FieldLabel.tsx";
 import {useState} from "react";
 import {Button, IconButton, TextField} from "@mui/material";
 import {AddCircle, RemoveCircle} from "@mui/icons-material";

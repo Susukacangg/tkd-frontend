@@ -1,7 +1,7 @@
-import FieldLabel from "./FieldLabel.tsx";
-import FormInput from "./FormInput.tsx";
-import FormFooter from "./FormFooter.tsx";
-import FormContainer from "./FormContainer.tsx";
+import FieldLabel from "../form-components/FieldLabel.tsx";
+import FormInput from "../form-components/FormInput.tsx";
+import FormFooter from "../form-components/FormFooter.tsx";
+import FormContainer from "../form-components/FormContainer.tsx";
 
 function RegisForm() {
     const subHeaderString: string = "Join our community and help revitalize the Kadazandusun language. As a registered user, you can add new words and keep track of your contribution";
