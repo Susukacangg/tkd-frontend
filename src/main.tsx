@@ -9,7 +9,7 @@ import Definition from "./pages/Definition.tsx";
 import Contribute from "./pages/Contribute.tsx";
 import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {Toaster} from "sonner";
-
+import axios from "axios";
 
 const router = createBrowserRouter([
     {
@@ -56,6 +56,7 @@ const theme = createTheme({
     },
 });
 
+axios.defaults.baseURL = "http://localhost:8081/api";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

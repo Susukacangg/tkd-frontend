@@ -36,7 +36,7 @@ function RegisForm() {
 
         try {
             const response: AuthResponse = await IamService.register(registrationReq);
-            toast.success(response.responseInfo.message + "\nYou can now log in.", TOAST_CUSTOM_CLOSE_BTN);
+            toast.success(response.responseInfo.message + " You can now log in.", TOAST_CUSTOM_CLOSE_BTN);
             navigate("/login");
         } catch (error: any) {
             toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
