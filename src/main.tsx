@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/register",
-        element: <Register/>
+        element: <Register/>,
     },
     {
         path: "/login",
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     {
         path: "contribute",
         element: <Contribute/>,
-    }
+    },
 ]);
 
 const theme = createTheme({
@@ -63,7 +63,7 @@ createRoot(document.getElementById('root')!).render(
           <StyledEngineProvider injectFirst>
               <Toaster richColors
                        position="top-center"
-                       offset={115}
+                       offset={100}
                        toastOptions={{
                            classNames: {
                                cancelButton: "bg-transparent text-black"

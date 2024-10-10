@@ -1,7 +1,7 @@
-import Header from "../components/common/Header.tsx";
+import Header from "../components/Header.tsx";
 import {Typography} from "@mui/material";
-import TranslateItem from "../components/definition/TranslateItem.tsx";
-import UsageExampleItem from "../components/definition/UsageExampleItem.tsx";
+import TranslateItem from "../components/TranslateItem.tsx";
+import UsageExampleItem from "../components/UsageExampleItem.tsx";
 
 function Definition() {
 

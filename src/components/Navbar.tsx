@@ -3,7 +3,7 @@ import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolt
 import SearchBar from "./SearchBar.tsx";
 import {useContext, useState} from "react";
 import {Login, Logout, Settings} from "@mui/icons-material";
-import {HeaderContext} from "../../contexts/HeaderContext.ts";
+import {HeaderContext} from "../contexts/HeaderContext.ts";
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boolean, enableContributeBtn?: boolean}) => {
     const navLinkItems: NavLinkProps[] = [

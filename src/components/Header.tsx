@@ -1,7 +1,7 @@
 import {Typography} from "@mui/material";
 import Navbar from "./Navbar.tsx";
-import NavBarProps from "../../component-props/nav-bar-props.ts";
-import {HeaderContext} from "../../contexts/HeaderContext.ts";
+import NavBarProps from "../component-props/nav-bar-props.ts";
+import {HeaderContext} from "../contexts/HeaderContext.ts";
 
 const HeaderTitle = () => {
     return (

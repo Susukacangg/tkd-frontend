@@ -1,10 +1,11 @@
-import FormContainer from "../form-components/FormContainer.tsx";
-import FormInput from "../form-components/FormInput.tsx";
-import FieldLabel from "../form-components/FieldLabel.tsx";
+import FormContainer from "./FormContainer.tsx";
+import FormInput from "./FormInput.tsx";
+import FieldLabel from "./FieldLabel.tsx";
 import {useState} from "react";
 import {Button, IconButton, TextField} from "@mui/material";
 import {AddCircle, RemoveCircle} from "@mui/icons-material";
 import * as React from "react";
+import {Form} from "react-router-dom";
 
 interface TranslationInputSectionProps {
     label: string;
@@ -137,25 +138,34 @@ function ContributionForm() {
     }
 
     return (
-        <FormContainer headerString={"Contribute to the dictionary"} btnText={"Submit"}>
-            <FieldLabel title={"Word or phrase"}/>
-            <FormInput type={"text"} placeholder={"e.g. tokou"}/>
+        <FormContainer headerString={"Contribute to the dictionary"}>
+            <Form method={"POST"}
+                  className={"mt-10 w-1/2"}>
+                <div className={"mb-1 flex flex-col justify-between gap-6"}>
+                    <FieldLabel title={"Word or phrase"}/>
+                    <FormInput type={"text"} placeholder={"e.g. tokou"} name={"newword"}/>
 
-            {/*translation input section*/}
-            <TranslationInputSection label={"Translation"}
-                                     values={translationInputValues}
-                                     updateValueFunc={updateTranslationValues(setTranslationInputValues, translationInputValues)}
-                                     addInputFunc={addTranslationInput(setTranslationInputValues, translationInputValues)}
-                                     removeInputFunc={removeTranslationInput(setTranslationInputValues, translationInputValues)}/>
+                    {/*translation input section*/}
+                    <TranslationInputSection label={"Translation"}
+                                             values={translationInputValues}
+                                             updateValueFunc={updateTranslationValues(setTranslationInputValues, translationInputValues)}
+                                             addInputFunc={addTranslationInput(setTranslationInputValues, translationInputValues)}
+                                             removeInputFunc={removeTranslationInput(setTranslationInputValues, translationInputValues)}/>
 
-            {/*examples section*/}
-            <ExampleInputSection label={"Usage example"}
-                                 examples={exampleValues}
-                                 updateInput={updateExampleValues}
-                                 addExampleInput={addExampleInput}
-                                 removeExampleInput={removeExampleInput}/>
+                    {/*examples section*/}
+                    <ExampleInputSection label={"Usage example"}
+                                         examples={exampleValues}
+                                         updateInput={updateExampleValues}
+                                         addExampleInput={addExampleInput}
+                                         removeExampleInput={removeExampleInput}/>
+                </div>
+                <Button variant={"contained"}
+                        className={"mt-6 capitalize w-full text-lg"}>
+                    Submit
+                </Button>
+            </Form>
         </FormContainer>
-    );
+);
 }
 
 export default ContributionForm;

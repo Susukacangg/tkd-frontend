@@ -1,6 +1,6 @@
-import Header from "../components/common/Header.tsx";
-import HeroBanner from "../components/home/HeroBanner.tsx";
-import WordList from "../components/home/WordList.tsx";
+import Header from "../components/Header.tsx";
+import HeroBanner from "../components/HeroBanner.tsx";
+import WordList from "../components/WordList.tsx";
 
 function Home() {
 

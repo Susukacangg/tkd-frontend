@@ -1,5 +1,5 @@
 import {Typography} from "@mui/material";
-import {UsageExampleProps} from "../../component-props/usage-example-props.ts";
+import {UsageExampleProps} from "../component-props/usage-example-props.ts";
 import {FormatQuote} from "@mui/icons-material";
 
 function UsageExampleItem({kadazanSentence, englishSentence}: UsageExampleProps) {

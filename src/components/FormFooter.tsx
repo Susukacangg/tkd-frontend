@@ -1,6 +1,6 @@
 import {NavLink} from "react-router-dom";
 import {Typography} from "@mui/material";
-import FormFooterProps from "../../component-props/form-footer-props.ts";
+import FormFooterProps from "../component-props/form-footer-props.ts";
 
 function FormFooter({text, linkText, linkRoute}: FormFooterProps) {
     return (
