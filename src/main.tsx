@@ -10,6 +10,7 @@ import Contribute from "./pages/Contribute.tsx";
 import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {Toaster} from "sonner";
 import axios from "axios";
+import {AuthProvider} from "./contexts/AuthContext.tsx";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,7 @@ const theme = createTheme({
 });
 
 axios.defaults.baseURL = "http://localhost:8081/api";
+axios.defaults.headers.common["Authorization"] = null;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -70,7 +72,9 @@ createRoot(document.getElementById('root')!).render(
                                cancelButton: "bg-transparent text-black"
                            },
                        }}/>
-              <RouterProvider router={router}/>
+              <AuthProvider>
+                  <RouterProvider router={router}/>
+              </AuthProvider>
           </StyledEngineProvider>
       </ThemeProvider>
   </StrictMode>,

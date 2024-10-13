@@ -34,3 +34,13 @@ export const RegisFormSchema = z.object({
     path: ["confirmPassword"],
     message: "Passwords do not match"
 });
+
+export const LoginFormSchema = z.object({
+    login: z.string().trim()
+        .min(1, {
+            message: "Username required!"
+        }),
+    password: z.string().trim().min(1, {
+        message: "Password required!"
+    }),
+})

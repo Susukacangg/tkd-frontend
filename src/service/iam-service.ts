@@ -1,10 +1,11 @@
 import axios from "axios";
 import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
+import LoginResponse from "../dto/LoginResponse.ts";
 
 class IamService {
 
-    static async register(req: RegisterRequest) {
+    static async register(req: RegisterRequest): Promise<string> {
         try {
             const response = await axios.post('/auth/register', req, {
                 timeout: 3000,
@@ -16,12 +17,24 @@ class IamService {
         }
     }
 
-    static async login(req: LoginRequest) {
+    static async login(req: LoginRequest): Promise<LoginResponse> {
         try {
             const response = await axios.post('/auth/login', req, {
                 timeout: 3000,
                 timeoutErrorMessage: "Failed to login"
             });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async logout(): Promise<string> {
+        try {
+            const response = await axios.post('/auth/logout', {
+                timeout: 3000,
+                timeoutErrorMessage: "Something went wrong",
+            })
             return response.data;
         } catch (error) {
             throw error;

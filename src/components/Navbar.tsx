@@ -1,9 +1,10 @@
 import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
 import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {Login, Logout, Settings} from "@mui/icons-material";
-import {HeaderContext} from "../contexts/HeaderContext.ts";
+import {useAuth} from "../contexts/AuthContext.tsx";
+import HeaderProps from "../component-props/header-props.ts";
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boolean, enableContributeBtn?: boolean}) => {
     const navLinkItems: NavLinkProps[] = [
@@ -35,35 +36,41 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
     );
 }
 
-const ProfileIcon = ({name}: {name?: string}) => {
+const ProfileIcon = ({name}: {name: string | null}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const {isAuthenticated, logoutUser, currentUsername} = useAuth();
+    const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
 
-    const nameToColor = (name?: string): string => {
-        let color: string = "";
+    const nameToColor = (name: string | null): string => {
+        if (name !== null) {
+            let color: string = "";
 
-        if(name !== undefined) {
-            let hash: number = 0;
-            for(let i = 0; i < name.length; i++) {
-                hash = name.charCodeAt(i) + ((hash << 6) - hash);
+            if (name !== undefined) {
+                let hash: number = 0;
+                for (let i = 0; i < name.length; i++) {
+                    hash = name.charCodeAt(i) + ((hash << 6) - hash);
+                }
+
+                color = "#";
+
+                for (let i = 0; i < 3; i++) {
+                    const value = (hash >> (i * 8)) & 0xff;
+                    color += `00${value.toString(16)}`.slice(-2)
+                }
             }
 
-            color = "#";
-
-            for(let i = 0; i < 3; i++) {
-                const value = (hash >> (i * 8)) & 0xff;
-                color += `00${value.toString(16)}`.slice(-2)
-            }
+            return color;
         }
 
-        return color;
+        return "";
     }
 
-    const avatarDisplay = (name?: string) => {
+    const avatarDisplay = (name: string | null) => {
         let firstInitial, lastInitial, avatarImg = "";
 
-        if(name !== undefined){
+        if(name !== null){
             const nameArray = name.split(' ');
             firstInitial = nameArray[0][0];
             lastInitial = nameArray.length > 1? nameArray[nameArray.length - 1][0] : "";
@@ -80,6 +87,11 @@ const ProfileIcon = ({name}: {name?: string}) => {
         }
     }
 
+    const handleLogout = () => {
+        logoutUser();
+        navigate("/home");
+    }
+
     return (
         <>
             <Tooltip title={"Account settings"}>
@@ -93,37 +105,39 @@ const ProfileIcon = ({name}: {name?: string}) => {
                   anchorEl={anchorEl}
                   onClick={() => setAnchorEl(null)}
                   onClose={() => {setAnchorEl(null)}}>
-                <MenuItem>My Account</MenuItem>
-                <Divider />
+                <MenuItem>
+                    My Account
+                </MenuItem>
+                <Divider/>
+                {isAuthenticated && <MenuItem>
+                    {currentUsername}'s Profile
+                </MenuItem>}
                 <MenuItem>
                     <ListItemIcon>
                         <Settings/>
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={() => isAuthenticated? handleLogout() : navigate("/login")}>
                     <ListItemIcon>
-                        <Login/>
+                        {isAuthenticated? <Logout/> : <Login/>}
                     </ListItemIcon>
-                    <NavLink to={"/login"} className={"!text-black !no-underline"}>
-                        Login
-                    </NavLink>
+                    {isAuthenticated? "Logout" : "Login"}
                 </MenuItem>
             </Menu>
         </>
     );
 }
 
-function Navbar() {
-
-    const {userName, enableHomeOnly, enableContributeBtn, enableSearchBar, enableAvatar} = useContext(HeaderContext);
+function Navbar({enableHomeOnly, enableContributeBtn, enableSearchBar, enableAvatar}: HeaderProps) {
+    const {currentUsername} = useAuth();
 
     return (
         <nav className={"flex grow justify-between items-center h-full"}>
             <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
             <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
                 {enableSearchBar && <SearchBar/>}
-                {enableAvatar && <ProfileIcon name={userName}/>}
+                {enableAvatar && <ProfileIcon name={currentUsername}/>}
             </div>
         </nav>
     );

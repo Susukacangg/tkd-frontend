@@ -7,7 +7,6 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import IamService from "../service/iam-service.ts";
 import RegisterRequest from "../dto/RegisterRequest.ts";
-import AuthResponse from "../dto/AuthResponse.ts";
 import {toast} from "sonner";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {useNavigate} from "react-router-dom";
@@ -35,8 +34,8 @@ function RegisForm() {
         }
 
         try {
-            const response: AuthResponse = await IamService.register(registrationReq);
-            toast.success(response.responseInfo.message + " You can now log in.", TOAST_CUSTOM_CLOSE_BTN);
+            const response: string = await IamService.register(registrationReq);
+            toast.success(response + " You can now log in.", TOAST_CUSTOM_CLOSE_BTN);
             navigate("/login");
         } catch (error: any) {
             toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
