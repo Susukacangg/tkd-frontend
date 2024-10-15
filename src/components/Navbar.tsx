@@ -39,7 +39,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
 const ProfileIcon = ({name}: {name: string | null}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {isAuthenticated, logoutUser, currentUsername} = useAuth();
+    const {isAuthenticated, logoutUser} = useAuth();
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
 
@@ -110,7 +110,7 @@ const ProfileIcon = ({name}: {name: string | null}) => {
                 </MenuItem>
                 <Divider/>
                 {isAuthenticated && <MenuItem>
-                    {currentUsername}'s Profile
+                    Profile
                 </MenuItem>}
                 <MenuItem>
                     <ListItemIcon>
@@ -130,14 +130,14 @@ const ProfileIcon = ({name}: {name: string | null}) => {
 }
 
 function Navbar({enableHomeOnly, enableContributeBtn, enableSearchBar, enableAvatar}: HeaderProps) {
-    const {currentUsername} = useAuth();
+    const {currentUser} = useAuth();
 
     return (
         <nav className={"flex grow justify-between items-center h-full"}>
             <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
             <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
                 {enableSearchBar && <SearchBar/>}
-                {enableAvatar && <ProfileIcon name={currentUsername}/>}
+                {enableAvatar && <ProfileIcon name={currentUser !== null? currentUser.username : null}/>}
             </div>
         </nav>
     );

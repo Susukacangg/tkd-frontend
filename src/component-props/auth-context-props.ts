@@ -1,8 +1,9 @@
 import LoginResponse from "../dto/LoginResponse.ts";
+import UserAccount from "../dto/UserAccount.ts";
 
 export default interface AuthContextProps {
+    currentUser: UserAccount | null;
     isAuthenticated: boolean;
-    currentUsername: string | null;
     loginUser: (res: LoginResponse) => void;
     logoutUser: () => void;
 }
