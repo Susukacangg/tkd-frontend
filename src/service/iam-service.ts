@@ -2,6 +2,7 @@ import axios from "axios";
 import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
 import LoginResponse from "../dto/LoginResponse.ts";
+import UserAccount from "../dto/UserAccount.ts";
 
 class IamService {
 
@@ -64,6 +65,22 @@ class IamService {
 
             return response.data;
         } catch (error) {
+            throw error;
+        }
+    }
+    
+    static async getUserDetails(): Promise<UserAccount> {
+        try {
+            const response = await axios.get('/auth/get-user-details', {
+                headers: {
+                    "Authorization": "Bearer " + sessionStorage.getItem("token")
+                },
+                timeout: 2000,
+                timeoutErrorMessage: "Failed to get user details"
+            });
+
+            return response.data;
+        } catch (error: any) {
             throw error;
         }
     }
