@@ -39,7 +39,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
 const ProfileIcon = ({name}: {name: string | null}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {isAuthenticated, logoutUser} = useAuth();
+    const {isAuthenticated, logoutUser, currentUser} = useAuth();
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
 
@@ -110,7 +110,7 @@ const ProfileIcon = ({name}: {name: string | null}) => {
                 </MenuItem>
                 <Divider/>
                 {isAuthenticated && <MenuItem>
-                    Profile
+                    {currentUser?.username}'s Profile
                 </MenuItem>}
                 <MenuItem>
                     <ListItemIcon>
