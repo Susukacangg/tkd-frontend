@@ -13,6 +13,7 @@ import axios, {AxiosResponse} from "axios";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
 import LoginResponse from "./dto/LoginResponse.ts";
 import {IS_AUTHENTICATED_KEY, JWT_TOKEN_KEY} from "./common/CommonConst.ts";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
     {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
     },
     {
         path: "contribute",
-        element: <Contribute/>,
+        element: (
+            <ProtectedRoute>
+                <Contribute/>
+            </ProtectedRoute>
+        ),
     },
 ]);
 
@@ -91,6 +96,7 @@ axios.interceptors.response.use(
 );
 
 createRoot(document.getElementById('root')!).render(
+    <StrictMode>
       <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
               <Toaster richColors
@@ -106,4 +112,5 @@ createRoot(document.getElementById('root')!).render(
               </AuthProvider>
           </StyledEngineProvider>
       </ThemeProvider>
+    </StrictMode>
 )
