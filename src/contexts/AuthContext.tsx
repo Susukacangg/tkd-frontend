@@ -6,6 +6,7 @@ import LoginResponse from "../dto/LoginResponse.ts";
 import AuthContextProps from "../component-props/auth-context-props.ts";
 import IamService from "../service/iam-service.ts";
 import UserAccount from "../dto/UserAccount.ts";
+import axios, {AxiosResponse} from "axios";
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -14,17 +15,31 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     const [currentUser, setCurrentUser] = useState<UserAccount | null>(null);
 
     useEffect(() => {
+        const controller = new AbortController();
         (async () => {
             if(isAuthenticated) {
                 try {
-                    console.log("load user details");
-                    const userDetails = await IamService.getUserDetails();
+                    const response: AxiosResponse<UserAccount, any> = await axios.get('/auth/get-user-details', {
+                        headers: {
+                            "Authorization": "Bearer " + sessionStorage.getItem("token")
+                        },
+                        timeout: 2000,
+                        timeoutErrorMessage: "Failed to get user details",
+                        signal: controller.signal,
+                    });
+
+                    const userDetails: UserAccount = response.data;
                     setCurrentUser(userDetails);
                 } catch (error: any) {
-                    console.error(error);
+                    if(error.name === "CanceledError")
+                        console.error("Request Cancelled");
+                    else
+                        toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
                 }
             }
         })();
+        return () => controller.abort();
+
     }, [isAuthenticated])
 
     const loginUser = (response: LoginResponse) => {
