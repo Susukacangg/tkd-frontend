@@ -83,7 +83,7 @@ axios.interceptors.response.use(
             } catch (error) {
                 // do nothing
             }
-        } else if (error.status === 500 && error.response.data.message === "No refresh token found") {
+        } else if (error.status === 500 && error.response.data.message === "Refresh token error") {
             localStorage.removeItem(IS_AUTHENTICATED_KEY);
             window.location.href = "/login";
         }
