@@ -18,7 +18,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         (async () => {
             if(isAuthenticated) {
                 try {
-                    const response: AxiosResponse<UserAccount, any> = await axios.get('/auth/get-user-details', {
+                    const response: AxiosResponse<UserAccount, any> = await axios.get('/user/details', {
                         withCredentials: true,
                         timeout: 2000,
                         timeoutErrorMessage: "Failed to get user details",
