@@ -9,7 +9,6 @@ import {z} from "zod";
 import LoginRequest from "../dto/LoginRequest.ts";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {toast} from "sonner";
-import LoginResponse from "../dto/LoginResponse.ts";
 import IamService from "../service/iam-service.ts";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../contexts/AuthContext.tsx";
@@ -34,12 +33,12 @@ function LoginForm() {
         }
 
         try {
-            const response: LoginResponse = await IamService.login(loginReq);
-            loginUser(response);
-            toast.success(response.message, TOAST_CUSTOM_CLOSE_BTN);
+            const response: string = await IamService.login(loginReq);
+            loginUser();
+            toast.success(response, TOAST_CUSTOM_CLOSE_BTN);
             navigate("/home");
         } catch (error: any) {
-            if (error.status === 403)
+            if (error.status === 401)
                 toast.error("The login ID or password you provided is incorrect.", TOAST_CUSTOM_CLOSE_BTN);
             else
                 toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
