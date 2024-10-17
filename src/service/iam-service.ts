@@ -1,7 +1,6 @@
 import axios from "axios";
 import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
-import LoginResponse from "../dto/LoginResponse.ts";
 
 class IamService {
 
@@ -17,7 +16,7 @@ class IamService {
         }
     }
 
-    static async login(req: LoginRequest): Promise<LoginResponse> {
+    static async login(req: LoginRequest): Promise<string> {
         try {
             const response = await axios.post('/auth/login', req, {
                 timeout: 3000,

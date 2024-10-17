@@ -5,7 +5,7 @@ import {JSX} from "react";
 function ProtectedRoute({children}: {children: JSX.Element}) {
     const {isAuthenticated} = useAuth();
 
-    if(!isAuthenticated)
+    if(isAuthenticated)
         return children;
     else
         return <Navigate to={"/login"}/>
