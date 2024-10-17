@@ -11,6 +11,7 @@ import {toast} from "sonner";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {useNavigate} from "react-router-dom";
 import {RegisFormSchema} from "../common/form-schema.ts";
+import {useAuth} from "../contexts/AuthContext.tsx";
 
 type RegisterFormFields = z.infer<typeof RegisFormSchema>;
 
@@ -18,6 +19,7 @@ function RegisForm() {
     const subHeaderString: string = "Join our community and help revitalize the Kadazandusun language. As a registered user, you can add new words and keep track of your contribution";
 
     const navigate = useNavigate();
+    const {loginUser} = useAuth();
     const {
         register,
         handleSubmit,
@@ -35,10 +37,11 @@ function RegisForm() {
 
         try {
             const response: string = await IamService.register(registrationReq);
-            toast.success(response + " You can now log in.", TOAST_CUSTOM_CLOSE_BTN);
-            navigate("/login");
+            toast.success(response, TOAST_CUSTOM_CLOSE_BTN);
+            loginUser();
+            navigate("/home");
         } catch (error: any) {
-            toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
+            console.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
         }
     };
 

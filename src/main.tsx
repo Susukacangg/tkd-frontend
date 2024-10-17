@@ -9,10 +9,9 @@ import Definition from "./pages/Definition.tsx";
 import Contribute from "./pages/Contribute.tsx";
 import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {Toaster} from "sonner";
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
-import LoginResponse from "./dto/LoginResponse.ts";
-import {IS_AUTHENTICATED_KEY, JWT_TOKEN_KEY} from "./common/CommonConst.ts";
+import {IS_AUTHENTICATED_KEY} from "./common/CommonConst.ts";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
@@ -74,17 +73,15 @@ axios.interceptors.response.use(
         if(error.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                const response: AxiosResponse<LoginResponse, any> = await axios.post('/auth/refresh', {
+                await axios.post('/auth/refresh', {
+                    withCredentials: true,
                     timeout: 1100,
                     timeoutErrorMessage: "Failed to refresh token",
                 })
 
-                sessionStorage.setItem(JWT_TOKEN_KEY, response.data.token)
-
-                originalRequest.headers["Authorization"] = "Bearer " + response.data.token;
                 return axios(originalRequest);
             } catch (error) {
-                throw error;
+                // do nothing
             }
         } else if (error.status === 500 && error.response.data.message === "No refresh token found") {
             localStorage.removeItem(IS_AUTHENTICATED_KEY);
