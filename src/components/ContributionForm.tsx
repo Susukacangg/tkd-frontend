@@ -1,171 +1,180 @@
 import FormContainer from "./FormContainer.tsx";
-import FormInput from "./FormInput.tsx";
 import FieldLabel from "./FieldLabel.tsx";
-import {useState} from "react";
 import {Button, IconButton, TextField} from "@mui/material";
 import {AddCircle, RemoveCircle} from "@mui/icons-material";
-import * as React from "react";
-import {Form} from "react-router-dom";
+import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-interface TranslationInputSectionProps {
-    label: string;
-    values: string[];
-    updateValueFunc: (index: number, value: string) => void;
-    addInputFunc: () => void;
-    removeInputFunc: (index: number) => void;
-}
-
-interface Example {
-    example: string;
-    exampleTrans: string;
-}
-
-interface ExampleInputSectionProps {
-    label: string;
-    examples: Example[];
-    updateInput: (index: number, key: keyof Example, value: string) => void;
-    addExampleInput: () => void;
-    removeExampleInput: (index: number) => void;
-}
-
-const TranslationInputSection = ({label, values, updateValueFunc, addInputFunc, removeInputFunc}: TranslationInputSectionProps) => {
-
-    return (
-        <div className={"flex flex-col gap-6"}>
-            <FieldLabel title={label}/>
-            {values.map((value: string, index: number) => (
-                <div key={`${label}-${index}`}
-                     className={"flex gap-3 items-center"}>
-                    <TextField value={value || ""}
-                               placeholder={`translation ${index + 1}`}
-                               rows={3}
-                               maxRows={3}
-                               required
-                               className={"w-3/4"}
-                               onChange={(e) => updateValueFunc(index, e.target.value)}/>
-                    {values.length > 1 &&
-                        <IconButton color={"error"}
-                                    onClick={() => removeInputFunc(index)}>
-                            <RemoveCircle fontSize={"large"}
-                                          color={"error"}/>
-                        </IconButton>
-                    }
-                </div>
-            ))}
-            <Button variant={"contained"}
-                    className={"w-1/3 capitalize bg-gray-900"}
-                    onClick={addInputFunc}>
-                Add {label.toLowerCase()} <AddCircle fontSize={"small"}
-                                                     className={"ml-2"}/>
-            </Button>
-        </div>
-    );
-}
-
-const ExampleInputSection = ({label, examples, updateInput, addExampleInput, removeExampleInput}: ExampleInputSectionProps) => {
-    return (
-        <div className={"flex flex-col gap-6"}>
-            <FieldLabel title={label}/>
-            {examples.map((ex, index) => (
-                <div key={`example-${index}`}
-                     className={"flex flex-col gap-3"}>
-                    <div className={"flex gap-3 items-center"}>
-                        <TextField value={ex.example}
-                                   multiline
-                                   rows={3}
-                                   placeholder={`example ${index + 1}`}
-                                   required
-                                   className={"w-3/4"}
-                                   onChange={(e) => updateInput(index, "example", e.target.value)}/>
-                        {examples.length > 1 &&
-                            <IconButton color={"error"}
-                                        onClick={() => removeExampleInput(index)}>
-                                <RemoveCircle fontSize={"large"}
-                                              color={"error"}/>
-                            </IconButton>}
-                    </div>
-
-                    <TextField value={ex.exampleTrans}
-                               multiline
-                               rows={3}
-                               placeholder={`example translation ${index + 1}`}
-                               required
-                               className={"w-3/4"}
-                               onChange={(e) => updateInput(index, "exampleTrans", e.target.value)}/>
-                </div>
-            ))}
-
-            <Button variant={"contained"}
-                    className={"w-1/3 capitalize bg-gray-900"}
-                    onClick={addExampleInput}>
-                Add example <AddCircle fontSize={"small"}
-                                       className={"ml-2"}/>
-            </Button>
-        </div>
-    );
-}
+const ContributeFormSchema = z.object({
+    word: z.string().trim().min(1, {
+        message: "Please enter a word or phrase"
+    }),
+    translations: z.object({
+        translation: z.string().trim().min(1, {
+            message: "Translation is required"
+        })
+    }).array(),
+    usageExamples: z.object({
+        example: z.string().trim().min(1, {
+            message: "Example is required"}),
+        exampleTranslation: z.string().trim().min(1, {
+            message: "Example translation is required"})
+    }).array()
+})
+type ContributeFormSchema = z.infer<typeof ContributeFormSchema>
 
 function ContributionForm() {
-    const [translationInputValues, setTranslationInputValues] = useState([""]);
-    const [exampleValues, setExampleValues] = useState<Example[]>([{example: "", exampleTrans: ""}]);
+    const {
+        control,
+        register,
+        handleSubmit,
+        reset,
+        formState: {errors, isSubmitting}
+    } = useForm<ContributeFormSchema>({
+        resolver: zodResolver(ContributeFormSchema),
+        defaultValues: {
+            word: '',
+            translations: [{
+                translation: ''
+            }],
+            usageExamples: [{
+                example: '',
+                exampleTranslation: '',
+            }]
+        }
+    })
+    const {
+        fields: translationFields,
+        remove: removeTranslation,
+        append: appendTranslation
+    } = useFieldArray({
+        name: "translations",
+        control
+    })
+    const {
+        fields: exampleFields,
+        remove: removeExample,
+        append: appendExample
+    } = useFieldArray({
+        name: "usageExamples",
+        control
+    });
 
-    const updateTranslationValues = (setValuesHook: React.Dispatch<React.SetStateAction<string[]>>, valueArray: string[]) => (currentIndex: number, newValue: string): void => {
-        const updatedValues = [...valueArray];
-        updatedValues[currentIndex] = newValue;
-        setValuesHook(updatedValues);
-    }
-
-    const addTranslationInput = (setValuesHook: React.Dispatch<React.SetStateAction<string[]>>, valueArray: string[]) => (): void => {
-        setValuesHook([...valueArray, ""]);
-    }
-
-    const removeTranslationInput = (setValuesHook: React.Dispatch<React.SetStateAction<string[]>>, valueArray: string[]) => (inputIndex: number) => {
-        setValuesHook(valueArray.filter((_, i) => i !== inputIndex));
-    }
-
-    const updateExampleValues = (index: number, key: keyof Example, value: string): void => {
-        const updatedExamples = [...exampleValues];
-        updatedExamples[index][key] = value;
-        setExampleValues(updatedExamples);
-    }
-
-    const addExampleInput = (): void => {
-        setExampleValues([...exampleValues, {example: "", exampleTrans: ""}]);
-    }
-
-    const removeExampleInput = (index: number): void => {
-        setExampleValues(exampleValues.filter((_, i) => i !== index));
+    const handleFormSubmit: SubmitHandler<ContributeFormSchema> = (data: ContributeFormSchema) => {
+        console.log(data);
     }
 
     return (
         <FormContainer headerString={"Contribute to the dictionary"}>
-            <Form method={"POST"}
+            <form onSubmit={handleSubmit(handleFormSubmit)}
                   className={"mt-10 w-1/2"}>
                 <div className={"mb-1 flex flex-col justify-between gap-6"}>
                     <FieldLabel title={"Word or phrase"}/>
-                    <FormInput type={"text"} placeholder={"e.g. tokou"} name={"newword"}/>
+                    <TextField type={"text"}
+                               placeholder={"e.g. tokou"}
+                               error={errors.word && true}
+                               helperText={errors.word?.message}
+                               className={"w-11/12"}
+                               {...register('word')}/>
 
                     {/*translation input section*/}
-                    <TranslationInputSection label={"Translation"}
-                                             values={translationInputValues}
-                                             updateValueFunc={updateTranslationValues(setTranslationInputValues, translationInputValues)}
-                                             addInputFunc={addTranslationInput(setTranslationInputValues, translationInputValues)}
-                                             removeInputFunc={removeTranslationInput(setTranslationInputValues, translationInputValues)}/>
+                    <FieldLabel title={"Translation"}/>
+                    {translationFields.map((field, index) => {
+                        return (
+                            <div key={field.id} className={"flex flex-col gap-6"}>
+                                <div className={"flex gap-3 items-center"}>
+                                    <TextField placeholder={`translation ${index + 1}`}
+                                               rows={3}
+                                               maxRows={3}
+                                               error={errors.translations?.[index]?.translation && true}
+                                               helperText={errors.translations?.[index]?.translation?.message}
+                                               className={"w-11/12"}
+                                               {...register(`translations.${index}.translation`)}/>
+
+                                    {translationFields.length > 1 &&
+                                        <IconButton color={"error"}
+                                                    onClick={() => removeTranslation(index)}>
+                                            <RemoveCircle fontSize={"large"}
+                                                          color={"error"}/>
+                                        </IconButton>
+                                    }
+                                </div>
+                            </div>
+                        );
+                    })}
+                    <Button variant={"contained"}
+                            className={"w-1/3 capitalize bg-gray-900"}
+                            onClick={() => appendTranslation({
+                                translation: ''
+                            })}>
+                        Add translation <AddCircle fontSize={"small"}
+                                                   className={"ml-2"}/>
+                    </Button>
 
                     {/*examples section*/}
-                    <ExampleInputSection label={"Usage example"}
-                                         examples={exampleValues}
-                                         updateInput={updateExampleValues}
-                                         addExampleInput={addExampleInput}
-                                         removeExampleInput={removeExampleInput}/>
+                    <FieldLabel title={"Usage examples"}/>
+                    {exampleFields.map((field, index) => {
+                        return(
+                            <div key={field.id} className={"flex flex-col gap-6"}>
+                                <div className={"flex flex-col gap-3"}>
+                                    <div className={"flex gap-3 items-center"}>
+                                        <TextField multiline
+                                                   rows={3}
+                                                   placeholder={`example ${index + 1}`}
+                                                   error={errors.usageExamples?.[index]?.example && true}
+                                                   helperText={errors.usageExamples?.[index]?.example?.message}
+                                                   className={"w-11/12"}
+                                                   {...register(`usageExamples.${index}.example` as const)}/>
+                                        {exampleFields.length > 1 &&
+                                            <IconButton color={"error"}
+                                                        onClick={() => removeExample(index)}>
+                                                <RemoveCircle fontSize={"large"}
+                                                              color={"error"}/>
+                                            </IconButton>}
+                                    </div>
+
+                                    <TextField multiline
+                                               rows={3}
+                                               placeholder={`Translate your example`}
+                                               error={errors.usageExamples?.[index]?.exampleTranslation && true}
+                                               helperText={errors.usageExamples?.[index]?.exampleTranslation?.message}
+                                               className={"w-11/12"}
+                                               {...register(`usageExamples.${index}.exampleTranslation` as const)}/>
+                                </div>
+                            </div>
+                        );
+                    })}
+                    <Button variant={"contained"}
+                            className={"w-1/3 capitalize bg-gray-900"}
+                            onClick={() => appendExample({
+                                example: '',
+                                exampleTranslation: ''
+                            })}>
+                        Add example <AddCircle fontSize={"small"}
+                                               className={"ml-2"}/>
+                    </Button>
                 </div>
-                <Button variant={"contained"}
-                        className={"mt-6 capitalize w-full text-lg"}>
-                    Submit
-                </Button>
-            </Form>
+
+                <div className={"flex w-11/12 gap-3"}>
+                    <Button variant={"contained"}
+                            type={"submit"}
+                            disabled={isSubmitting}
+                            className={"mt-6 capitalize w-1/2 text-lg"}>
+                        Submit
+                    </Button>
+                    <Button variant={"contained"}
+                            type={"reset"}
+                            disabled={isSubmitting}
+                            onClick={() => reset()}
+                            className={"mt-6 capitalize w-1/2 text-lg"}
+                            sx={{backgroundColor: "#f28b82"}}>
+                        Reset
+                    </Button>
+                </div>
+            </form>
         </FormContainer>
-);
+    );
 }
 
 export default ContributionForm;
