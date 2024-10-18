@@ -46,3 +46,20 @@ export const LoginFormSchema = z.object({
         message: "Password required!"
     }),
 })
+
+export const ContributeFormSchema = z.object({
+    word: z.string().trim().min(1, {
+        message: "Please enter a word or phrase"
+    }),
+    translations: z.object({
+        translation: z.string().trim().min(1, {
+            message: "Translation is required"
+        })
+    }).array(),
+    usageExamples: z.object({
+        example: z.string().trim().min(1, {
+            message: "Example is required"}),
+        exampleTranslation: z.string().trim().min(1, {
+            message: "Example translation is required"})
+    }).array()
+})
