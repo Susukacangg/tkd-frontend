@@ -1,7 +1,7 @@
 import FieldLabel from "./FieldLabel.tsx";
 import FormFooter from "./FormFooter.tsx";
 import FormContainer from "./FormContainer.tsx";
-import {Button, CircularProgress, TextField} from "@mui/material";
+import {Button, CircularProgress, InputAdornment, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -23,7 +23,7 @@ function RegisForm() {
     const {
         register,
         handleSubmit,
-        formState: {errors, isSubmitting}
+        formState: {errors, isSubmitting, validatingFields}
     } = useForm<RegisterFormFields>({
         resolver: zodResolver(RegisFormSchema)
     });
@@ -45,6 +45,21 @@ function RegisForm() {
         }
     };
 
+    const setLoading = (isFieldLoading: boolean | undefined) => {
+        if(!isFieldLoading)
+            return {};
+
+        return {
+            input: {
+                endAdornment: (
+                    <InputAdornment position={"start"}>
+                        <CircularProgress size={20}/>
+                    </InputAdornment>
+                )
+            }
+        }
+    }
+
     return(
         <FormContainer headerString={"Welcome to The Kadazandusun Dictionary"}
                        subHeaderString={subHeaderString}
@@ -58,6 +73,7 @@ function RegisForm() {
                     <TextField type={"text"}
                                placeholder={"username"}
                                error={errors.username && true}
+                               slotProps={setLoading(validatingFields?.username)}
                                helperText={errors.username?.message}
                                {...register("username")}/>
 
@@ -65,6 +81,7 @@ function RegisForm() {
                     <TextField type={"text"}
                                placeholder={"example@mail.com"}
                                error={errors.email && true}
+                               slotProps={setLoading(validatingFields?.email)}
                                helperText={errors.email?.message}
                                {...register("email")}/>
 

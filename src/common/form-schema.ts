@@ -11,10 +11,12 @@ export const RegisFormSchema = z.object({
             message: "Invalid username"
         })
         .refine(async (value) => {
-            try {
-                return !await IamService.checkUsername(value)
-            } catch (error: any) {
-                return error.message;
+            if(value.length > 2) {
+                try {
+                    return !await IamService.checkUsername(value)
+                } catch (error: any) {
+                    return error.message;
+                }
             }
         }, {message: "Username taken!"}),
     email: z.string().email()
