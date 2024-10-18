@@ -5,24 +5,9 @@ import {AddCircle, RemoveCircle} from "@mui/icons-material";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {ContributeFormSchema} from "../common/form-schema.ts";
 
-const ContributeFormSchema = z.object({
-    word: z.string().trim().min(1, {
-        message: "Please enter a word or phrase"
-    }),
-    translations: z.object({
-        translation: z.string().trim().min(1, {
-            message: "Translation is required"
-        })
-    }).array(),
-    usageExamples: z.object({
-        example: z.string().trim().min(1, {
-            message: "Example is required"}),
-        exampleTranslation: z.string().trim().min(1, {
-            message: "Example translation is required"})
-    }).array()
-})
-type ContributeFormSchema = z.infer<typeof ContributeFormSchema>
+type ContributeFormFields = z.infer<typeof ContributeFormSchema>
 
 function ContributionForm() {
     const {
@@ -31,7 +16,7 @@ function ContributionForm() {
         handleSubmit,
         reset,
         formState: {errors, isSubmitting}
-    } = useForm<ContributeFormSchema>({
+    } = useForm<ContributeFormFields>({
         resolver: zodResolver(ContributeFormSchema),
         defaultValues: {
             word: '',
@@ -61,7 +46,7 @@ function ContributionForm() {
         control
     });
 
-    const handleFormSubmit: SubmitHandler<ContributeFormSchema> = (data: ContributeFormSchema) => {
+    const handleFormSubmit: SubmitHandler<ContributeFormFields> = (data: ContributeFormFields) => {
         console.log(data);
     }
 
@@ -70,6 +55,7 @@ function ContributionForm() {
             <form onSubmit={handleSubmit(handleFormSubmit)}
                   className={"mt-10 w-1/2"}>
                 <div className={"mb-1 flex flex-col justify-between gap-6"}>
+                    {/*word or phrase section*/}
                     <FieldLabel title={"Word or phrase"}/>
                     <TextField type={"text"}
                                placeholder={"e.g. tokou"}
@@ -156,6 +142,7 @@ function ContributionForm() {
                     </Button>
                 </div>
 
+                {/*submit and reset buttons*/}
                 <div className={"flex w-11/12 gap-3"}>
                     <Button variant={"contained"}
                             type={"submit"}
