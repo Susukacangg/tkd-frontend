@@ -85,6 +85,7 @@ class IamService {
     static async getUserDetails(controller: AbortController): Promise<UserAccount> {
         try {
             const response: AxiosResponse<UserAccount, any> = await iamClient.get('/user/details', {
+                params: {includeId: false},
                 withCredentials: true,
                 timeout: 2000,
                 timeoutErrorMessage: "Failed to get user details",
