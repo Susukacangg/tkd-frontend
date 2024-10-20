@@ -6,6 +6,7 @@ import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ContributeFormSchema} from "../common/form-schema.ts";
+import DictionaryService from "../service/dictionary-service.ts";
 
 type ContributeFormFields = z.infer<typeof ContributeFormSchema>
 
@@ -48,6 +49,12 @@ function ContributionForm() {
 
     const handleFormSubmit: SubmitHandler<ContributeFormFields> = (data: ContributeFormFields) => {
         console.log(data);
+        try {
+            const response = DictionaryService.addWord(data);
+            console.log(response);
+        } catch (error) {
+            console.error("Add new word error: " + error);
+        }
     }
 
     return (
