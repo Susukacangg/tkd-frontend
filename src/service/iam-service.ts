@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
+import UserAccount from "../dto/UserAccount.ts";
 
 class IamService {
 
@@ -40,6 +41,19 @@ class IamService {
         }
     }
 
+    static async refresh(): Promise<string> {
+        try {
+            const response = await axios.post('/auth/refresh', {}, {
+                withCredentials: true,
+                timeout: 1100,
+                timeoutErrorMessage: "Failed to refresh token",
+            })
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     static async checkUsername(username: string): Promise<boolean> {
         try {
             const response = await axios.get('/auth/check-username', {
@@ -63,6 +77,22 @@ class IamService {
 
             return response.data;
         } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getUserDetails(controller: AbortController): Promise<UserAccount> {
+        try {
+            const response: AxiosResponse<UserAccount, any> = await axios.get('/user/details', {
+                withCredentials: true,
+                timeout: 2000,
+                timeoutErrorMessage: "Failed to get user details",
+                signal: controller.signal,
+            });
+
+            return response.data;
+        } catch (error: any) {
+            // do nothing
             throw error;
         }
     }
