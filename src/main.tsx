@@ -13,7 +13,7 @@ import axios from "axios";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
 import {IS_AUTHENTICATED_KEY} from "./common/CommonConst.ts";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import iamService from "./service/iam-service.ts";
+import IamService from "./service/iam-service.ts";
 
 const router = createBrowserRouter([
     {
@@ -73,7 +73,7 @@ axios.interceptors.response.use(
         if(error.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                await iamService.refresh();
+                await IamService.refresh();
                 return axios(originalRequest);
             } catch (error) {
                 // do nothing
