@@ -13,6 +13,7 @@ import axios from "axios";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
 import {IS_AUTHENTICATED_KEY} from "./common/CommonConst.ts";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import iamService from "./service/iam-service.ts";
 
 const router = createBrowserRouter([
     {
@@ -64,7 +65,6 @@ const theme = createTheme({
 });
 
 axios.defaults.baseURL = "http://localhost:8081/api";
-axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -73,12 +73,7 @@ axios.interceptors.response.use(
         if(error.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                await axios.post('/auth/refresh', {
-                    withCredentials: true,
-                    timeout: 1100,
-                    timeoutErrorMessage: "Failed to refresh token",
-                })
-
+                await iamService.refresh();
                 return axios(originalRequest);
             } catch (error) {
                 // do nothing
