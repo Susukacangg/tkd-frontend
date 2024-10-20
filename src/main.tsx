@@ -9,11 +9,8 @@ import Definition from "./pages/Definition.tsx";
 import Contribute from "./pages/Contribute.tsx";
 import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {Toaster} from "sonner";
-import axios from "axios";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
-import {IS_AUTHENTICATED_KEY} from "./common/CommonConst.ts";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import IamService from "./service/iam-service.ts";
 
 const router = createBrowserRouter([
     {
@@ -63,29 +60,6 @@ const theme = createTheme({
         fontFamily: ['Enriqueta', 'Cambria', 'Georgia', 'Times', 'serif'].join(','),
     },
 });
-
-axios.defaults.baseURL = "http://localhost:8081/api";
-axios.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config
-
-        if(error.status === 403 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            try {
-                await IamService.refresh();
-                return axios(originalRequest);
-            } catch (error) {
-                // do nothing
-            }
-        } else if (error.status === 500 && error.response.data.message === "Refresh token error") {
-            localStorage.removeItem(IS_AUTHENTICATED_KEY);
-            window.location.href = "/login";
-        }
-
-        return Promise.reject(error);
-    }
-);
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
