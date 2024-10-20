@@ -1,13 +1,14 @@
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
 import UserAccount from "../dto/UserAccount.ts";
+import {iamClient} from "../common/api-client.ts";
 
 class IamService {
 
     static async register(req: RegisterRequest): Promise<string> {
         try {
-            const response = await axios.post('/auth/register', req, {
+            const response = await iamClient.post('/auth/register', req, {
                 timeout: 3000,
                 timeoutErrorMessage: "Failed to register"
             });
@@ -19,7 +20,7 @@ class IamService {
 
     static async login(req: LoginRequest): Promise<string> {
         try {
-            const response = await axios.post('/auth/login', req, {
+            const response = await iamClient.post('/auth/login', req, {
                 timeout: 3000,
                 timeoutErrorMessage: "Failed to login"
             });
@@ -31,7 +32,7 @@ class IamService {
 
     static async logout(): Promise<string> {
         try {
-            const response = await axios.post('/auth/logout', {
+            const response = await iamClient.post('/auth/logout', {
                 timeout: 3000,
                 timeoutErrorMessage: "Something went wrong",
             })
@@ -43,7 +44,7 @@ class IamService {
 
     static async refresh(): Promise<string> {
         try {
-            const response = await axios.post('/auth/refresh', {}, {
+            const response = await iamClient.post('/auth/refresh', {}, {
                 withCredentials: true,
                 timeout: 1100,
                 timeoutErrorMessage: "Failed to refresh token",
@@ -56,7 +57,7 @@ class IamService {
 
     static async checkUsername(username: string): Promise<boolean> {
         try {
-            const response = await axios.get('/auth/check-username', {
+            const response = await iamClient.get('/auth/check-username', {
                 params: {username: username},
                 timeout: 1100,
                 timeoutErrorMessage: "Failed to check username"
@@ -69,7 +70,7 @@ class IamService {
 
     static async checkEmail(email: string): Promise<boolean> {
         try {
-            const response = await axios.get('/auth/check-email', {
+            const response = await iamClient.get('/auth/check-email', {
                 params: {email: email},
                 timeout: 1100,
                 timeoutErrorMessage: "Failed to check email"
@@ -83,7 +84,7 @@ class IamService {
 
     static async getUserDetails(controller: AbortController): Promise<UserAccount> {
         try {
-            const response: AxiosResponse<UserAccount, any> = await axios.get('/user/details', {
+            const response: AxiosResponse<UserAccount, any> = await iamClient.get('/user/details', {
                 withCredentials: true,
                 timeout: 2000,
                 timeoutErrorMessage: "Failed to get user details",
