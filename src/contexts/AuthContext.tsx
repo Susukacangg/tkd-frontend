@@ -5,7 +5,7 @@ import {IS_AUTHENTICATED_KEY} from "../common/CommonConst.ts";
 import AuthContextProps from "../component-props/auth-context-props.ts";
 import IamService from "../service/iam-service.ts";
 import UserAccount from "../dto/UserAccount.ts";
-import axios, {AxiosResponse} from "axios";
+import iamService from "../service/iam-service.ts";
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -18,15 +18,8 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         (async () => {
             if(isAuthenticated) {
                 try {
-                    const response: AxiosResponse<UserAccount, any> = await axios.get('/user/details', {
-                        withCredentials: true,
-                        timeout: 2000,
-                        timeoutErrorMessage: "Failed to get user details",
-                        signal: controller.signal,
-                    });
-
-                    const userDetails: UserAccount = response.data;
-                    setCurrentUser(userDetails);
+                    const response: UserAccount = await iamService.getUserDetails(controller);
+                    setCurrentUser(response);
                 } catch (error: any) {
                     // do nothing
                 }
