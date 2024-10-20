@@ -1,4 +1,4 @@
-import {PASS_REGEX, USERNAME_REGEX} from "./CommonConst.ts";
+import {PASS_REGEX, USERNAME_REGEX} from "./constants.ts";
 import {z} from "zod";
 import IamService from "../service/iam-service.ts";
 

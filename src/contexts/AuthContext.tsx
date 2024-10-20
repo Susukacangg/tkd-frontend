@@ -1,7 +1,7 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import {toast} from "sonner";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
-import {IS_AUTHENTICATED_KEY} from "../common/CommonConst.ts";
+import {IS_AUTHENTICATED_KEY} from "../common/constants.ts";
 import AuthContextProps from "../component-props/auth-context-props.ts";
 import IamService from "../service/iam-service.ts";
 import UserAccount from "../dto/UserAccount.ts";
