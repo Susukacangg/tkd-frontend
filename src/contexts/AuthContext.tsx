@@ -5,7 +5,6 @@ import {IS_AUTHENTICATED_KEY} from "../common/constants.ts";
 import AuthContextProps from "../component-props/auth-context-props.ts";
 import IamService from "../service/iam-service.ts";
 import UserView from "../dto/UserView.ts";
-import iamService from "../service/iam-service.ts";
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
@@ -18,7 +17,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         (async () => {
             if(isAuthenticated) {
                 try {
-                    const response: UserView = await iamService.getUserDetails(controller);
+                    const response: UserView = await IamService.getUserDetails(controller);
                     setCurrentUser(response);
                 } catch (error: any) {
                     // do nothing
