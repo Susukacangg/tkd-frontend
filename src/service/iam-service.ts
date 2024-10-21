@@ -1,7 +1,7 @@
 import {AxiosResponse} from "axios";
 import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
-import UserAccount from "../dto/UserAccount.ts";
+import UserView from "../dto/UserView.ts";
 import {iamClient} from "../common/api-client.ts";
 
 class IamService {
@@ -82,9 +82,9 @@ class IamService {
         }
     }
 
-    static async getUserDetails(controller: AbortController): Promise<UserAccount> {
+    static async getUserDetails(controller: AbortController): Promise<UserView> {
         try {
-            const response: AxiosResponse<UserAccount, any> = await iamClient.get('/user/details', {
+            const response: AxiosResponse<UserView, any> = await iamClient.get('/user/details', {
                 params: {includeId: false},
                 withCredentials: true,
                 timeout: 2000,
