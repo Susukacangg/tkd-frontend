@@ -1,8 +1,8 @@
-import DictionaryWord from "../dto/DictionaryWord.ts";
+import Word from "../dto/Word.ts";
 import {dictionaryClient} from "../common/api-client.ts";
 
 export default class DictionaryService {
-    static async addWord(newWord: DictionaryWord): Promise<string> {
+    static async addWord(newWord: Word): Promise<string> {
         try {
             const response = await dictionaryClient.post("/dict/add", newWord, {
                 withCredentials: true,
