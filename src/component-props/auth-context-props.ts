@@ -1,7 +1,7 @@
-import UserAccount from "../dto/UserAccount.ts";
+import UserView from "../dto/UserView.ts";
 
 export default interface AuthContextProps {
-    currentUser: UserAccount | null;
+    currentUser: UserView | null;
     isAuthenticated: boolean;
     loginUser: () => void;
     logoutUser: () => void;
