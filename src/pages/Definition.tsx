@@ -12,7 +12,7 @@ import DictionaryItem from "../dto/DictionaryItem.ts";
 function Definition() {
     const {wordId} = useParams();
     const navigate = useNavigate()
-    const [currentWord, setCurrentWord] = useState<DictionaryItem>({translations: "", usageExamples: "", word: ""});
+    const [currentWord, setCurrentWord] = useState<DictionaryItem>({wordId: null, translations: "", usageExamples: "", word: ""});
 
     useEffect(() => {
         const controller = new AbortController();
