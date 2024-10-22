@@ -1,18 +1,13 @@
 import WordListItem from "./WordListItem.tsx";
-import WordData from "../component-props/word-data.ts";
+import DictionaryItem from "../dto/DictionaryItem.ts";
 
-const wordListItems: WordData[] = [
-    {id: "tokou1", word: "tokou"},
-    {id: "manakau1", word: "manakau"},
-    {id: "talib1", word: "talib"},
-]
-
-function WordList() {
+function WordList({dictionaryItems}: {dictionaryItems: DictionaryItem[] }) {
 
     return(
         <>
-            {wordListItems.map((data) => {
-                return <WordListItem key={data.id} wordData={data} />;
+            {dictionaryItems.map((item: DictionaryItem) => {
+                return <WordListItem key={item.wordId}
+                                     dictionaryItem={item} />;
             })}
         </>
     );
