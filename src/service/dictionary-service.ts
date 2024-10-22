@@ -1,8 +1,9 @@
 import Word from "../dto/Word.ts";
 import {dictionaryClient} from "../common/api-client.ts";
+import DictionaryItem from "../dto/DictionaryItem.ts";
 
 export default class DictionaryService {
-    static async addWord(newWord: Word): Promise<string> {
+    static async addWord(newWord: Word): Promise<any> {
         try {
             const response = await dictionaryClient.post("/dict/add", newWord, {
                 withCredentials: true,
@@ -12,6 +13,20 @@ export default class DictionaryService {
 
             return response.data;
         } catch (error: any) {
+            throw error;
+        }
+    }
+
+    static async findWord(wordId: number, controller: AbortController): Promise<DictionaryItem> {
+        try {
+            const response = await dictionaryClient.get(`/dict/${wordId}`, {
+                timeout: 2000,
+                timeoutErrorMessage: "Failed to get word",
+                signal: controller.signal
+            })
+
+            return response.data
+        } catch (error) {
             throw error;
         }
     }
