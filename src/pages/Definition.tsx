@@ -25,10 +25,12 @@ function Definition() {
                     setCurrentWord(response);
                 } catch (error: any) {
                     // do nothing
+                    // todo: navigate to 404 not found page
                     if (error.status === 404)
                         toast.error("Word not found", TOAST_CUSTOM_CLOSE_BTN);
                 }
             } else {
+                // todo: navigate to 404 not found page
                 toast.error("Invalid path", TOAST_CUSTOM_CLOSE_BTN);
                 navigate("/home");
             }
