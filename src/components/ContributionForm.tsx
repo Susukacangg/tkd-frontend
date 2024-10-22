@@ -7,6 +7,9 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ContributeFormSchema} from "../common/form-schema.ts";
 import DictionaryService from "../service/dictionary-service.ts";
+import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
+import {toast} from "sonner";
+import {useNavigate} from "react-router-dom";
 
 type ContributeFormFields = z.infer<typeof ContributeFormSchema>
 
@@ -47,11 +50,14 @@ function ContributionForm() {
         control
     });
 
-    const handleFormSubmit: SubmitHandler<ContributeFormFields> = (data: ContributeFormFields) => {
+    const navigate = useNavigate();
+
+    const handleFormSubmit: SubmitHandler<ContributeFormFields> = async (data: ContributeFormFields) => {
         console.log(data);
         try {
-            const response = DictionaryService.addWord(data);
-            console.log(response);
+            const response = await DictionaryService.addWord(data);
+            toast.success("Successfully added word", TOAST_CUSTOM_CLOSE_BTN);
+            navigate(`/definition/${response}`);
         } catch (error) {
             console.error("Add new word error: " + error);
         }
