@@ -32,7 +32,7 @@ export default class DictionaryService {
         }
     }
 
-    static async findWord(wordId: number, controller: AbortController): Promise<DictionaryItem> {
+    static async getWord(wordId: number, controller: AbortController): Promise<DictionaryItem> {
         try {
             const response = await dictionaryClient.get(`/dict/${wordId}`, {
                 timeout: 2000,
