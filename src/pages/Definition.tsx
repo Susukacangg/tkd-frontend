@@ -20,7 +20,7 @@ function Definition() {
         (async () => {
             if (wordId != undefined) {
                 try {
-                    const response: DictionaryItem = await DictionaryService.findWord(parseInt(wordId), controller);
+                    const response: DictionaryItem = await DictionaryService.getWord(parseInt(wordId), controller);
                     console.log(response);
                     setCurrentWord(response);
                 } catch (error: any) {
