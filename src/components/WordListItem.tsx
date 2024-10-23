@@ -11,11 +11,24 @@ function WordListItem({dictionaryItem}: {dictionaryItem: DictionaryItem }) {
         <Button variant={"contained"}
                 color={"secondary"}
                 className={"py-8 px-6 rounded-lg bg-white hover:bg-gray-100 cursor-pointer normal-case"}
-                onClick={() => navigate("/definition/" + dictionaryItem.wordId)}>
+                onClick={() => navigate("/definition/" + dictionaryItem.wordId)}
+                sx={{boxShadow: 5}}>
             <div className={"flex items-center justify-between w-full"}>
-                <Typography variant={"h5"} >
-                    {dictionaryItem.word}
-                </Typography>
+                <div className="flex flex-col items-start w-full">
+                    <Typography variant={"h5"}>
+                        {dictionaryItem.word}
+                    </Typography>
+                    <Typography variant={"h6"}
+                                color={"textDisabled"}
+                                className={"font-semibold"}>
+                        {dictionaryItem.translations.split(";").map((value, index, array) => {
+                            let translation = value;
+                            if (index !== array.length - 1)
+                                translation += "; ";
+                            return translation;
+                        })}
+                    </Typography>
+                </div>
                 <ArrowForward/>
             </div>
         </Button>
