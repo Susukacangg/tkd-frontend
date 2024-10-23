@@ -42,7 +42,7 @@ function Definition() {
     return(
         <>
             <Header/>
-            <div className={"flex flex-col gap-10 w-3/4 mx-auto my-10"}>
+            <div className={"flex flex-col gap-10 w-3/4 mx-auto mt-16 mb-10"}>
                 {/*WORD*/}
                 <Typography variant={"h3"}>
                     {currentWord.word}
