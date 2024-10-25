@@ -9,6 +9,7 @@ class IamService {
     static async register(req: RegisterRequest): Promise<string> {
         try {
             const response = await iamClient.post('/auth/register', req, {
+                withCredentials: true,
                 timeout: 3000,
                 timeoutErrorMessage: "Failed to register"
             });
@@ -21,6 +22,7 @@ class IamService {
     static async login(req: LoginRequest): Promise<string> {
         try {
             const response = await iamClient.post('/auth/login', req, {
+                withCredentials: true,
                 timeout: 3000,
                 timeoutErrorMessage: "Failed to login"
             });
@@ -33,6 +35,7 @@ class IamService {
     static async logout(): Promise<string> {
         try {
             const response = await iamClient.post('/auth/logout', {
+                withCredentials: true,
                 timeout: 3000,
                 timeoutErrorMessage: "Something went wrong",
             })
