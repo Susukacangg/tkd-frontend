@@ -11,6 +11,7 @@ import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {Toaster} from "sonner";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import SearchResult from "./pages/SearchResult.tsx";
 
 const router = createBrowserRouter([
     {
@@ -34,12 +35,16 @@ const router = createBrowserRouter([
         element: <Definition/>,
     },
     {
-        path: "contribute",
+        path: "/contribute",
         element: (
             <ProtectedRoute>
                 <Contribute/>
             </ProtectedRoute>
         ),
+    },
+    {
+        path: "/search/:searchString",
+        element: <SearchResult/>,
     },
 ]);
 
