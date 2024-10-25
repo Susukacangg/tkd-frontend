@@ -44,4 +44,34 @@ export default class DictionaryService {
             throw error;
         }
     }
+
+    static async searchWord(wordString: string, pageNum: number, controller: AbortController): Promise<any> {
+        try {
+            const response = await dictionaryClient.get("/dict/search", {
+                params: {word: wordString, pageNum: pageNum},
+                timeout: 3000,
+                timeoutErrorMessage: "Failed to search word",
+                signal: controller.signal
+            });
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async suggestWord(searchStr: string, controller: AbortController): Promise<string[]> {
+        try {
+            const response = await dictionaryClient.get("/dict/suggest", {
+                params: {searchStr: searchStr},
+                timeout: 1000,
+                timeoutErrorMessage: "Failed to get available words",
+                signal: controller.signal
+            })
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 };
