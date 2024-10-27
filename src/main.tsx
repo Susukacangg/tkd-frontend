@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <Definition/>,
     },
     {
-        path: "/contribute",
+        path: "/contribute/?word=value?",
         element: (
             <ProtectedRoute>
                 <Contribute/>
