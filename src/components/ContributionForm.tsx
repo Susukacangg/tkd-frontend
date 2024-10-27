@@ -9,7 +9,7 @@ import {ContributeFormSchema} from "../common/form-schema.ts";
 import DictionaryService from "../service/dictionary-service.ts";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {toast} from "sonner";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 type ContributeFormFields = z.infer<typeof ContributeFormSchema>
 
@@ -19,6 +19,7 @@ function ContributionForm() {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: {errors, isSubmitting}
     } = useForm<ContributeFormFields>({
         resolver: zodResolver(ContributeFormSchema),
@@ -51,6 +52,11 @@ function ContributionForm() {
     });
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const newWordFromSuggestion = searchParams.get("word");
+
+    if(newWordFromSuggestion)
+        setValue("word", newWordFromSuggestion as string);
 
     const handleFormSubmit: SubmitHandler<ContributeFormFields> = async (data: ContributeFormFields) => {
         console.log(data);
