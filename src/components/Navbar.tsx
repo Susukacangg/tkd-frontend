@@ -2,7 +2,7 @@ import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
 import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
 import {useState} from "react";
-import {Login, Logout, Settings} from "@mui/icons-material";
+import {Login, Logout, Search, Settings} from "@mui/icons-material";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import HeaderProps from "../component-props/header-props.ts";
 
@@ -136,7 +136,12 @@ function Navbar({enableHomeOnly, enableContributeBtn, enableSearchBar, enableAva
         <nav className={"flex grow justify-between items-center h-full"}>
             <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
             <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
-                {enableSearchBar && <SearchBar/>}
+                {enableSearchBar &&
+                    <SearchBar classString={"text-md"}>
+                        <IconButton type={"submit"}>
+                            <Search cursor={"pointer"}/>
+                        </IconButton>
+                    </SearchBar>}
                 {enableAvatar && <ProfileIcon name={currentUser !== null? currentUser.username : null}/>}
             </div>
         </nav>

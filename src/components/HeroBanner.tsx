@@ -1,20 +1,5 @@
-import {Button, InputBase, Typography} from "@mui/material";
-
-const InputWithButton = ({children, placeholder}: {children: string, placeholder?: string}) => {
-    return (
-        <div className={"w-full items-center p-3 flex bg-white rounded-md"}>
-            <InputBase type={"text"}
-                       color={"primary"}
-                       placeholder={placeholder}
-                       className={"grow "}/>
-            <Button color={"primary"}
-                    variant={"contained"}
-                    className={"capitalize ml-2"}>
-                {children}
-            </Button>
-        </div>
-    );
-}
+import {Button, Typography} from "@mui/material";
+import SearchBar from "./SearchBar.tsx";
 
 function HeroBanner() {
     return (
@@ -31,9 +16,13 @@ function HeroBanner() {
                     Discover new words
                 </Typography>
 
-                <InputWithButton placeholder={"Search"}>
-                    Search
-                </InputWithButton>
+                <SearchBar classString={"text-xl"}>
+                    <Button color={"primary"}
+                            variant={"contained"}
+                            className={"capitalize ml-2"}>
+                        Search
+                    </Button>
+                </SearchBar>
             </div>
         </div>
     );
