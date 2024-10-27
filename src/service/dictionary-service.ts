@@ -60,13 +60,12 @@ export default class DictionaryService {
         }
     }
 
-    static async suggestWord(searchStr: string, controller: AbortController): Promise<string[]> {
+    static async suggestWord(searchStr: string): Promise<string[] | string> {
         try {
             const response = await dictionaryClient.get("/dict/suggest", {
                 params: {searchStr: searchStr},
                 timeout: 1000,
                 timeoutErrorMessage: "Failed to get available words",
-                signal: controller.signal
             })
 
             return response.data;
