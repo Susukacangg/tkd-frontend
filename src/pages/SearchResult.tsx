@@ -4,7 +4,7 @@ import DictionaryItem from "../dto/DictionaryItem.ts";
 import WordList from "../components/WordList.tsx";
 import {useParams} from "react-router-dom";
 import DictionaryService from "../service/dictionary-service.ts";
-import {Pagination} from "@mui/material";
+import {Pagination, Typography} from "@mui/material";
 
 function SearchResult() {
     const [dictionaryItems, setDictionaryItems] = useState<DictionaryItem[]>([]);
@@ -17,7 +17,6 @@ function SearchResult() {
             if (searchString !== undefined) {
                 try {
                     const response: any = await DictionaryService.searchWord(searchString, 1, controller);
-                    console.log(response);
                     if(response !== "") {
                         setDictionaryItems(response.content);
                         setNumPages(response.totalPages);
@@ -38,11 +37,19 @@ function SearchResult() {
     return (
         <>
             <Header/>
-            <div className={"flex flex-col gap-6 justify-center mx-auto my-12 w-3/5"}>
-                <WordList dictionaryItems={dictionaryItems}/>
-                <div className="flex justify-center">
-                    <Pagination count={numPages}/>
-                </div>
+            <div className={"flex flex-col gap-6 justify-center mx-auto mt-20 mb-12 w-3/5"}>
+                {dictionaryItems.length > 0? (
+                    <>
+                        <WordList dictionaryItems={dictionaryItems}/>
+                        <div className="flex justify-center">
+                            <Pagination count={numPages}/>
+                        </div>
+                    </>
+                ): (
+                    <Typography variant={"h3"}>
+                        No results found for "{searchString}"
+                    </Typography>
+                )}
             </div>
         </>
     );
