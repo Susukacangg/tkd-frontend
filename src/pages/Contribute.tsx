@@ -4,7 +4,7 @@ import ContributionForm from "../components/ContributionForm.tsx";
 function Contribute() {
     return (
         <>
-            <Header enableContributeBtn={true}/>
+            <Header enableContributeBtn={false}/>
             <ContributionForm/>
         </>
     );
