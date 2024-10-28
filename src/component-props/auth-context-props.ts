@@ -4,5 +4,5 @@ export default interface AuthContextProps {
     currentUser: UserView | null;
     isAuthenticated: boolean;
     loginUser: () => void;
-    logoutUser: () => void;
+    logoutUser: () => Promise<void>;
 }
