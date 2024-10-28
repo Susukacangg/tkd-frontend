@@ -2,7 +2,7 @@ import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
 import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
 import {useState} from "react";
-import {Login, Logout, Search, Settings} from "@mui/icons-material";
+import {LibraryBooks, Login, Logout, Search} from "@mui/icons-material";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import HeaderProps from "../component-props/header-props.ts";
 
@@ -17,7 +17,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
     const navigate = useNavigate();
 
     return (
-        <div className={"flex justify-between items-center h-full my-6 " + (enableHomeOnly || !enableContributeBtn? "w-1/4": "w-2/5")}>
+        <div className={`flex justify-between items-center h-full my-6 ${enableHomeOnly || !enableContributeBtn? "w-1/4": "w-2/5"} ${enableHomeOnly && enableContributeBtn? "w-1/6" : ""}`}>
             {navLinks.map((navLink) => (
                 <NavLink key={navLink.to.toString()} to={navLink.to}
                          className={({isActive}) => (isActive? "bg-primary text-white " : "bg-none text-black ") +
@@ -39,7 +39,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
 const ProfileIcon = ({name}: {name: string | null}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {isAuthenticated, logoutUser, currentUser} = useAuth();
+    const {isAuthenticated, logoutUser} = useAuth();
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
 
@@ -87,8 +87,8 @@ const ProfileIcon = ({name}: {name: string | null}) => {
         }
     }
 
-    const handleLogout = () => {
-        logoutUser();
+    const handleLogout = async () => {
+        await logoutUser();
         navigate("/home");
     }
 
@@ -105,22 +105,20 @@ const ProfileIcon = ({name}: {name: string | null}) => {
                   anchorEl={anchorEl}
                   onClick={() => setAnchorEl(null)}
                   onClose={() => {setAnchorEl(null)}}>
-                <MenuItem>
-                    My Account
-                </MenuItem>
-                <Divider/>
-                {isAuthenticated && <MenuItem>
-                    {currentUser?.username}'s Profile
-                </MenuItem>}
-                <MenuItem>
-                    <ListItemIcon>
-                        <Settings/>
-                    </ListItemIcon>
-                    Settings
-                </MenuItem>
+
+                {isAuthenticated? (
+                    <MenuItem onClick={() => navigate("/my-contributions")}>
+                        <ListItemIcon>
+                            <LibraryBooks color={"primary"}/>
+                        </ListItemIcon>
+                        My contributions
+                    </MenuItem>
+                ): null}
+                {isAuthenticated && <Divider/>}
+
                 <MenuItem onClick={() => isAuthenticated? handleLogout() : navigate("/login")}>
                     <ListItemIcon>
-                        {isAuthenticated? <Logout/> : <Login/>}
+                        {isAuthenticated? <Logout sx={{color: "black"}}/> : <Login color={"primary"}/>}
                     </ListItemIcon>
                     {isAuthenticated? "Logout" : "Login"}
                 </MenuItem>
@@ -135,7 +133,7 @@ function Navbar({enableHomeOnly, enableContributeBtn, enableSearchBar, enableAva
     return (
         <nav className={"flex grow justify-between items-center h-full"}>
             <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
-            <div className={"flex flex-row items-center w-1/3 " + (enableSearchBar? "justify-between" : "justify-end")}>
+            <div className={`flex flex-row items-center w-1/3 ${enableSearchBar? "justify-between" : "justify-end"}`}>
                 {enableSearchBar &&
                     <SearchBar classString={"text-md"}>
                         <IconButton type={"submit"}>
