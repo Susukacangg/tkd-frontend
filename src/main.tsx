@@ -12,6 +12,7 @@ import {Toaster} from "sonner";
 import {AuthProvider} from "./contexts/AuthContext.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import SearchResult from "./pages/SearchResult.tsx";
+import MyContributions from "./pages/MyContributions.tsx";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
         path: "/search/:searchString",
         element: <SearchResult/>,
     },
+    {
+        path: "/my-contributions",
+        element: (
+            <ProtectedRoute>
+                <MyContributions/>
+            </ProtectedRoute>
+        ),
+    }
 ]);
 
 const theme = createTheme({

@@ -73,4 +73,20 @@ export default class DictionaryService {
             throw error;
         }
     }
+
+    static async getUserContributions(pageNum: number, controller: AbortController): Promise<any> {
+        try {
+            const response = await dictionaryClient.get("/dict/get-users-words", {
+                params: {pageNum: pageNum},
+                withCredentials: true,
+                timeout: 3000,
+                timeoutErrorMessage: "Failed to get contributions",
+                signal: controller.signal,
+            });
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 };
