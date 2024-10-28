@@ -10,6 +10,9 @@ export const dictionaryClient = axios.create({
     baseURL: "http://localhost:8082/api"
 })
 
+const protectedRoutes = ["/contribute"];
+const isProtectedRoute = (path: string) => protectedRoutes.includes(path);
+
 const handleResponseErrorInterceptor = async (error: any) => {
     const originalRequest = error.config
 
@@ -21,9 +24,12 @@ const handleResponseErrorInterceptor = async (error: any) => {
         } catch (error) {
             // do nothing
         }
-    } else if (error.status === 500 && error.response.data.message === "Refresh token error") {
+    } else if (error.status === 401 && error.response.data === "Refresh token error") {
         localStorage.removeItem(IS_AUTHENTICATED_KEY);
-        window.location.href = "/login";
+        if(isProtectedRoute(window.location.pathname))
+            window.location.href = "/login";
+        else
+            window.location.reload();
     }
 
     return Promise.reject(error);
