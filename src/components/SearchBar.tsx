@@ -14,7 +14,7 @@ function SearchBar({children, classString}: {children: ReactNode, classString?: 
 
     const startSearch = (searchStr: string) => {
         if(searchStr.trim().length > 0)
-            navigate(`/search/${searchStr}`);
+            navigate(`/search?searchString=${searchStr}`);
     }
 
     const childrenWithClickHandler = React.Children.map(children, child => {
