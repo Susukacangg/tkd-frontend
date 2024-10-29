@@ -34,7 +34,7 @@ function MyContributions() {
                 <Typography variant={"h3"} className={"mb-8"}>
                     My Contributions
                 </Typography>
-                {dictionaryItems.length > 0? (
+                {dictionaryItems? (
                     <>
                         <WordList dictionaryItems={dictionaryItems}/>
                         <div className="flex justify-center">
@@ -43,7 +43,7 @@ function MyContributions() {
                         </div>
                     </>
                 ): (
-                    <Typography variant={"h3"}>
+                    <Typography variant={"h6"}>
                         You haven't contributed any words yet
                     </Typography>
                 )}
