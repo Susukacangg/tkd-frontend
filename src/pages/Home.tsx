@@ -23,7 +23,6 @@ function Home() {
                 setNumPages(Math.ceil(response.length / numResultsDisplay));
                 setDictionaryItems(response);
                 setPagedDictionaryItems(response.slice(0, 10));
-                console.log(response);
             } catch (error: any) {
                 if(error.name !== 'CanceledError')
                     toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
