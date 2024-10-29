@@ -21,7 +21,6 @@ function Definition() {
             if (wordId != undefined) {
                 try {
                     const response: DictionaryItem = await DictionaryService.getWord(parseInt(wordId), controller);
-                    console.log(response);
                     setCurrentWord(response);
                 } catch (error: any) {
                     // do nothing
