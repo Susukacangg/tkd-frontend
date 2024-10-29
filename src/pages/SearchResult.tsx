@@ -2,21 +2,22 @@ import Header from "../components/Header.tsx";
 import {useEffect, useState} from "react";
 import DictionaryItem from "../dto/DictionaryItem.ts";
 import WordList from "../components/WordList.tsx";
-import {useParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import DictionaryService from "../service/dictionary-service.ts";
 import {Pagination, Typography} from "@mui/material";
 
 function SearchResult() {
     const [dictionaryItems, setDictionaryItems] = useState<DictionaryItem[]>([]);
     const [numPages, setNumPages] = useState(1);
-    const {searchString} = useParams();
+    const [searchParams] = useSearchParams();
+    const searchString = searchParams.get("searchString");
 
     useEffect(() => {
         const controller = new AbortController();
         (async () => {
             if (searchString !== undefined) {
                 try {
-                    const response: any = await DictionaryService.searchWord(searchString, 1, controller);
+                    const response: any = await DictionaryService.searchWord(searchString as string, 1, controller);
                     if(response !== "") {
                         setDictionaryItems(response.content);
                         setNumPages(response.totalPages);
