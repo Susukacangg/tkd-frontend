@@ -104,7 +104,7 @@ const ProfileIcon = ({name}: {name: string | null}) => {
             <Menu open={isMenuOpen}
                   anchorEl={anchorEl}
                   onClick={() => setAnchorEl(null)}
-                  onClose={() => {setAnchorEl(null)}}>
+                  onClose={() => setAnchorEl(null)}>
 
                 {isAuthenticated? (
                     <MenuItem onClick={() => navigate("/my-contributions")}>
