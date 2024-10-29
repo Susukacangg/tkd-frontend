@@ -72,7 +72,7 @@ function Definition() {
                 </div>
 
                 {/*EXAMPLES*/}
-                <div className={"flex flex-col gap-4 mb-6"}>
+                <div className={"flex flex-col gap-4"}>
                     <Typography variant={"h5"}>
                         Usage examples
                     </Typography>
@@ -86,24 +86,25 @@ function Definition() {
                     })}
                 </div>
 
-                <Divider/>
-
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mt-16">
                     <div className="flex items-center gap-6">
                         {isUsersWord? (
                             <>
                                 <Button variant={"contained"}
-                                    color={"primary"}>
-                                Edit
+                                        color={"primary"}
+                                        className={"px-6 py-2"}>
+                                    Edit
                                 </Button>
                                 <Button variant={"contained"}
-                                        color={"error"}>
+                                        color={"error"}
+                                        className={"px-6 py-2"}>
                                     Delete
                                 </Button>
                             </>): null}
                     </div>
                     <Tooltip title={"Report this contribution"}>
-                        <IconButton color={"error"}>
+                        <IconButton color={"error"}
+                                    size={"large"}>
                             <Report fontSize={"large"}/>
                         </IconButton>
                     </Tooltip>
