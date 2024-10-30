@@ -60,7 +60,6 @@ function ContributionForm() {
         setValue("word", newWordFromSuggestion as string);
 
     const handleFormSubmit: SubmitHandler<ContributeFormFields> = async (data: ContributeFormFields) => {
-        console.log(data);
         try {
             const response = await DictionaryService.addWord(data);
             toast.success("Successfully added word", TOAST_CUSTOM_CLOSE_BTN);
