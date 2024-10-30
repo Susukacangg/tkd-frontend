@@ -26,9 +26,11 @@ function ContributionForm() {
         defaultValues: {
             word: '',
             translations: [{
+                translationId: null,
                 translation: ''
             }],
             usageExamples: [{
+                exampleId: null,
                 example: '',
                 exampleTranslation: '',
             }]
@@ -111,6 +113,7 @@ function ContributionForm() {
                     <Button variant={"contained"}
                             className={"w-1/3 capitalize bg-gray-900"}
                             onClick={() => appendTranslation({
+                                translationId: null,
                                 translation: ''
                             })}>
                         Add translation <AddCircle fontSize={"small"}
@@ -153,6 +156,7 @@ function ContributionForm() {
                     <Button variant={"contained"}
                             className={"w-1/3 capitalize bg-gray-900"}
                             onClick={() => appendExample({
+                                exampleId: null,
                                 example: '',
                                 exampleTranslation: ''
                             })}>
