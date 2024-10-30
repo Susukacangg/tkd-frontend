@@ -3,10 +3,10 @@ import Header from "../components/Header.tsx";
 import WordList from "../components/WordList.tsx";
 import {useEffect, useState} from "react";
 import DictionaryService from "../service/dictionary-service.ts";
-import DictionaryItem from "../dto/DictionaryItem.ts";
+import Word from "../dto/Word.ts";
 
 function MyContributions() {
-    const [dictionaryItems, setDictionaryItems] = useState<DictionaryItem[]>([]);
+    const [words, setWords] = useState<Word[]>([]);
     const [numPages, setNumPages] = useState(1);
     const [pageNum, setPageNum] = useState(1);
 
@@ -16,7 +16,7 @@ function MyContributions() {
         (async () => {
             try {
                 const response = await DictionaryService.getUserContributions(pageNum, controller);
-                setDictionaryItems(response.content);
+                setWords(response.content);
                 setNumPages(response.totalPages);
             } catch (error: any) {
                 if(error.name !== 'CanceledError')
@@ -34,9 +34,9 @@ function MyContributions() {
                 <Typography variant={"h3"} className={"mb-8"}>
                     My Contributions
                 </Typography>
-                {dictionaryItems? (
+                {words? (
                     <>
-                        <WordList dictionaryItems={dictionaryItems}/>
+                        <WordList words={words}/>
                         <div className="flex justify-center">
                             <Pagination count={numPages}
                                         onChange={(_, page) => setPageNum(page)}/>
