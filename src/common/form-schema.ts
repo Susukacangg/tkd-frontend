@@ -47,16 +47,19 @@ export const LoginFormSchema = z.object({
     }),
 })
 
-export const ContributeFormSchema = z.object({
+export const WordDetailsFormSchema = z.object({
+    wordId: z.number().optional(),
     word: z.string().trim().min(1, {
         message: "Please enter a word or phrase"
     }),
     translations: z.object({
+        translationId: z.number().optional(),
         translation: z.string().trim().min(1, {
             message: "Translation is required"
         })
     }).array(),
     usageExamples: z.object({
+        exampleId: z.number().optional(),
         example: z.string().trim().min(1, {
             message: "Example is required"}),
         exampleTranslation: z.string().trim().min(1, {
