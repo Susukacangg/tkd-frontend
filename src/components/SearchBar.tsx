@@ -63,8 +63,10 @@ function SearchBar({children, classString}: {children: ReactNode, classString?: 
 
     const handleSelect = (value: string | null) => {
         setInputValue((value as string).trim());
-        if (value === `Add "${inputValue}" to the dictionary...`)
+        if (value === `Add "${inputValue}" to the dictionary...`) {
+            setInputValue("");
             navigate(`/contribute?word=${inputValue}`);
+        }
     }
 
     const handleHighlightChange = (value: string | null) => {
