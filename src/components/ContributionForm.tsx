@@ -5,13 +5,13 @@ import {AddCircle, RemoveCircle} from "@mui/icons-material";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {ContributeFormSchema} from "../common/form-schema.ts";
+import {WordDetailsFormSchema} from "../common/form-schema.ts";
 import DictionaryService from "../service/dictionary-service.ts";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {toast} from "sonner";
 import {useNavigate, useSearchParams} from "react-router-dom";
 
-type ContributeFormFields = z.infer<typeof ContributeFormSchema>
+type ContributeFormFields = z.infer<typeof WordDetailsFormSchema>
 
 function ContributionForm() {
     const {
@@ -22,7 +22,7 @@ function ContributionForm() {
         setValue,
         formState: {errors, isSubmitting}
     } = useForm<ContributeFormFields>({
-        resolver: zodResolver(ContributeFormSchema),
+        resolver: zodResolver(WordDetailsFormSchema),
         defaultValues: {
             word: '',
             translations: [{
@@ -34,6 +34,7 @@ function ContributionForm() {
             }]
         }
     })
+
     const {
         fields: translationFields,
         remove: removeTranslation,
