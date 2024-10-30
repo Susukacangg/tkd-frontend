@@ -91,7 +91,10 @@ function Definition() {
                             <>
                                 <Button variant={"contained"}
                                         color={"primary"}
-                                        className={"px-6 py-2"}>
+                                        className={"px-6 py-2"}
+                                        onClick={() => navigate(`/edit/${currentWord?.wordId}`, {
+                                            state: currentWord
+                                        })}>
                                     Edit
                                 </Button>
                                 <Button variant={"contained"}
