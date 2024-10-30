@@ -88,4 +88,17 @@ export default class DictionaryService {
             throw error;
         }
     }
+
+    static async editWord(word: any) {
+        try {
+            const response = await dictionaryClient.put(`/dict/${word.wordId}`, word, {
+                timeout: 3000,
+                timeoutErrorMessage: "Failed to edit word"
+            });
+
+            return response.data;
+        } catch (error: any) {
+            throw error;
+        }
+    }
 };

@@ -53,13 +53,13 @@ export const WordDetailsFormSchema = z.object({
         message: "Please enter a word or phrase"
     }),
     translations: z.object({
-        translationId: z.number().optional(),
+        translationId: z.number().nullable(),
         translation: z.string().trim().min(1, {
             message: "Translation is required"
         })
     }).array(),
     usageExamples: z.object({
-        exampleId: z.number().optional(),
+        exampleId: z.number().nullable(),
         example: z.string().trim().min(1, {
             message: "Example is required"}),
         exampleTranslation: z.string().trim().min(1, {

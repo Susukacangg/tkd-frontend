@@ -13,6 +13,7 @@ import {AuthProvider} from "./contexts/AuthContext.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import SearchResult from "./pages/SearchResult.tsx";
 import MyContributions from "./pages/MyContributions.tsx";
+import EditContribution from "./pages/EditContribution.tsx";
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,14 @@ const router = createBrowserRouter([
                 <MyContributions/>
             </ProtectedRoute>
         ),
+    },
+    {
+        path: "/edit/:wordId",
+        element: (
+            <ProtectedRoute>
+                <EditContribution/>
+            </ProtectedRoute>
+        )
     }
 ]);
 
