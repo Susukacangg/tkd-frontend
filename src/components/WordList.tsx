@@ -1,13 +1,13 @@
 import WordListItem from "./WordListItem.tsx";
-import DictionaryItem from "../dto/DictionaryItem.ts";
+import Word from "../dto/Word.ts";
 
-function WordList({dictionaryItems}: {dictionaryItems: DictionaryItem[] }) {
+function WordList({words}: {words: Word[] }) {
 
     return(
         <>
-            {dictionaryItems.map((item: DictionaryItem) => {
+            {words.map((item: Word) => {
                 return <WordListItem key={item.wordId}
-                                     dictionaryItem={item} />;
+                                     word={item} />;
             })}
         </>
     );

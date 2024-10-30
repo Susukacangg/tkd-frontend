@@ -7,14 +7,14 @@ import {useEffect, useState} from "react";
 import DictionaryService from "../service/dictionary-service.ts";
 import {toast} from "sonner";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
-import DictionaryItem from "../dto/DictionaryItem.ts";
 import {Report} from "@mui/icons-material";
 import {useAuth} from "../contexts/AuthContext.tsx";
+import Word from "../dto/Word.ts";
 
 function Definition() {
     const {wordId} = useParams();
     const navigate = useNavigate()
-    const [currentWord, setCurrentWord] = useState<DictionaryItem | null>(null);
+    const [currentWord, setCurrentWord] = useState<Word | null>(null);
     const {currentUser} = useAuth();
     const isUsersWord = currentUser?.username === currentWord?.username;
 
@@ -24,7 +24,7 @@ function Definition() {
         (async () => {
             if (wordId != undefined) {
                 try {
-                    const response: DictionaryItem = await DictionaryService.getWord(parseInt(wordId), controller);
+                    const response: Word = await DictionaryService.getWord(parseInt(wordId), controller);
                     setCurrentWord(response);
                 } catch (error: any) {
                     // do nothing
@@ -63,10 +63,10 @@ function Definition() {
                     <Typography variant={"h5"}>
                         Translation
                     </Typography>
-                    {currentWord?.translations.split(";").map((value) => {
+                    {currentWord?.translations.map((translation) => {
                         return (
-                            <TranslateItem key={`translation-${value}`}
-                                           translation={value}/>
+                            <TranslateItem key={`translation-${translation.translation}`}
+                                           translation={translation.translation}/>
                         );
                     })}
                 </div>
@@ -76,12 +76,11 @@ function Definition() {
                     <Typography variant={"h5"}>
                         Usage examples
                     </Typography>
-                    {currentWord?.usageExamples.split(";").map((value, index) => {
-                        const exampleArr = value.split("|");
+                    {currentWord?.usageExamples.map((usageExample, index) => {
                         return (
                             <UsageExampleItem key={`usage-example-${index}`}
-                                              kadazanSentence={exampleArr[0]}
-                                              originalSentence={exampleArr[1]}/>
+                                              kadazanSentence={usageExample.example}
+                                              originalSentence={usageExample.exampleTranslation}/>
                         );
                     })}
                 </div>

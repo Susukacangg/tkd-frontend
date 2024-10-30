@@ -1,9 +1,8 @@
 import Word from "../dto/Word.ts";
 import {dictionaryClient} from "../common/api-client.ts";
-import DictionaryItem from "../dto/DictionaryItem.ts";
 
 export default class DictionaryService {
-    static async addWord(newWord: Word): Promise<any> {
+    static async addWord(newWord: any): Promise<any> {
         try {
             const response = await dictionaryClient.post("/dict/add", newWord, {
                 withCredentials: true,
@@ -17,7 +16,7 @@ export default class DictionaryService {
         }
     }
 
-    static async getRandomWords(controller: AbortController): Promise<DictionaryItem[]> {
+    static async getRandomWords(controller: AbortController): Promise<Word[]> {
         try {
             const response = await dictionaryClient.get("/dict/random", {
                 timeout: 3000,
@@ -31,7 +30,7 @@ export default class DictionaryService {
         }
     }
 
-    static async getWord(wordId: number, controller: AbortController): Promise<DictionaryItem> {
+    static async getWord(wordId: number, controller: AbortController): Promise<Word> {
         try {
             const response = await dictionaryClient.get(`/dict/${wordId}`, {
                 timeout: 2000,

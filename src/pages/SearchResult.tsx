@@ -1,13 +1,13 @@
 import Header from "../components/Header.tsx";
 import {useEffect, useState} from "react";
-import DictionaryItem from "../dto/DictionaryItem.ts";
 import WordList from "../components/WordList.tsx";
 import {useSearchParams} from "react-router-dom";
 import DictionaryService from "../service/dictionary-service.ts";
 import {Pagination, Typography} from "@mui/material";
+import Word from "../dto/Word.ts";
 
 function SearchResult() {
-    const [dictionaryItems, setDictionaryItems] = useState<DictionaryItem[]>([]);
+    const [words, setWords] = useState<Word[]>([]);
     const [numPages, setNumPages] = useState(1);
     const [searchParams] = useSearchParams();
     const searchString = searchParams.get("searchString");
@@ -19,10 +19,10 @@ function SearchResult() {
                 try {
                     const response: any = await DictionaryService.searchWord(searchString as string, 1, controller);
                     if(response !== "") {
-                        setDictionaryItems(response.content);
+                        setWords(response.content);
                         setNumPages(response.totalPages);
                     } else {
-                        setDictionaryItems([]);
+                        setWords([]);
                         setNumPages(0);
                     }
                 } catch (error: any) {
@@ -39,9 +39,9 @@ function SearchResult() {
         <>
             <Header/>
             <div className={"flex flex-col gap-6 justify-center mx-auto mt-20 mb-12 w-3/5"}>
-                {dictionaryItems.length > 0? (
+                {words.length > 0? (
                     <>
-                        <WordList dictionaryItems={dictionaryItems}/>
+                        <WordList words={words}/>
                         <div className="flex justify-center">
                             <Pagination count={numPages}/>
                         </div>

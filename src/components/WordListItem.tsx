@@ -1,11 +1,12 @@
 import {useNavigate} from "react-router-dom";
 import {Card, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import {MoreVert, Report} from "@mui/icons-material";
-import DictionaryItem from "../dto/DictionaryItem.ts";
 import {useState} from "react";
+import Word from "../dto/Word.ts";
+import Translation from "../dto/Translation.ts";
 
 
-function WordListItem({dictionaryItem}: {dictionaryItem: DictionaryItem }) {
+function WordListItem({word}: {word: Word}) {
     const navigate = useNavigate();
     const [isHoverOptionsButton, setIsHoverOptionsButton] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -13,7 +14,7 @@ function WordListItem({dictionaryItem}: {dictionaryItem: DictionaryItem }) {
 
     const handleCardClick = () => {
         if(!isHoverOptionsButton)
-            navigate(`/definition/${dictionaryItem.wordId}`);
+            navigate(`/definition/${word.wordId}`);
     }
 
     const handleOptionsButtonHover = (e: any) => {
@@ -35,13 +36,13 @@ function WordListItem({dictionaryItem}: {dictionaryItem: DictionaryItem }) {
             <div className={"flex items-center justify-between w-full"}>
                 <div className="flex flex-col items-start w-full">
                     <Typography variant={"h5"}>
-                        {dictionaryItem.word}
+                        {word.word}
                     </Typography>
                     <Typography variant={"h6"}
                                 color={"textDisabled"}
                                 className={"font-semibold"}>
-                        {dictionaryItem.translations.split(";").map((value, index, array) => {
-                            let translation = value;
+                        {word.translations.map((value: Translation, index: number, array: Translation[]) => {
+                            let translation = value.translation;
                             if (index !== array.length - 1)
                                 translation += "; ";
                             return translation;
