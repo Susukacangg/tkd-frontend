@@ -10,14 +10,13 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
     const navLinkItems: NavLinkProps[] = [
         {to: "/home", children: "Home"},
         {to: "/about", children: "About"},
-        {to: "/contact", children: "Contact"}
     ]
     let navLinks = enableHomeOnly ? navLinkItems.slice(0, 1) : navLinkItems;
 
     const navigate = useNavigate();
 
     return (
-        <div className={`flex justify-between items-center h-full my-6 ${enableHomeOnly || !enableContributeBtn? "w-1/4": "w-2/5"} ${enableHomeOnly && enableContributeBtn? "w-1/6" : ""}`}>
+        <div className={`flex justify-between items-center h-full my-6 ${enableHomeOnly || !enableContributeBtn? "w-1/6": "w-1/3"} ${enableHomeOnly && enableContributeBtn? "w-1/6" : ""}`}>
             {navLinks.map((navLink) => (
                 <NavLink key={navLink.to.toString()} to={navLink.to}
                          className={({isActive}) => (isActive? "bg-primary text-white " : "bg-none text-black ") +
