@@ -30,7 +30,7 @@ function WordListItem({word}: {word: Word}) {
     }
 
     return (
-        <Card className={`py-8 px-6 rounded-lg bg-white hover:bg-gray-100 cursor-pointer normal-case ${isHoverOptionsButton? "" : "active:bg-gray-200"}`}
+        <Card className={`w-full box-border py-8 px-6 rounded-lg bg-white hover:bg-gray-100 cursor-pointer normal-case ${isHoverOptionsButton? "" : "active:bg-gray-200"}`}
               onClick={handleCardClick}
               sx={{boxShadow: 5}}>
             <div className={"flex items-center justify-between w-full"}>
