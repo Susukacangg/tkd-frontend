@@ -14,11 +14,13 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import SearchResult from "./pages/SearchResult.tsx";
 import MyContributions from "./pages/MyContributions.tsx";
 import EditContribution from "./pages/EditContribution.tsx";
+import NotFoundPage from "./pages/NotFoundPage.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Navigate to={"/home"}/>,
+        errorElement: <NotFoundPage/>,
     },
     {
         path: "/home",
