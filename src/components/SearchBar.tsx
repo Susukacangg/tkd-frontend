@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import React, {ReactNode, useEffect, useState} from "react";
 import DictionaryService from "../service/dictionary-service.ts";
 
-function SearchBar({children, classString}: {children: ReactNode, classString?: string}) {
+function SearchBar({children, isDisabled, classString}: {children: ReactNode, isDisabled?: boolean, classString?: string}) {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState<string>("");
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -21,7 +21,8 @@ function SearchBar({children, classString}: {children: ReactNode, classString?: 
         if(React.isValidElement(child)) {
             return React.cloneElement(child, {
                 // @ts-ignore
-                onClick: () => startSearch(inputValue)
+                onClick: () => startSearch(inputValue),
+                disabled: isDisabled,
             })
         }
         return child;
@@ -100,6 +101,7 @@ function SearchBar({children, classString}: {children: ReactNode, classString?: 
                           loading={isDropdownLoading || isTyping}
                           fullWidth={true}
                           value={inputValue}
+                          disabled={isDisabled}
                           onClose={handleDropdownClose}
                           onBlur={handleDropdownClose}
                           onHighlightChange={(_, option) => handleHighlightChange(option)}
