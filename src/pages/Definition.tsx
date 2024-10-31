@@ -27,15 +27,9 @@ function Definition() {
                     const response: Word = await DictionaryService.getWord(parseInt(wordId), controller);
                     setCurrentWord(response);
                 } catch (error: any) {
-                    // do nothing
-                    // todo: navigate to 404 not found page
                     if (error.status === 404)
-                        toast.error("Word not found", TOAST_CUSTOM_CLOSE_BTN);
+                        navigate("/not-found");
                 }
-            } else {
-                // todo: navigate to 404 not found page
-                toast.error("Invalid path", TOAST_CUSTOM_CLOSE_BTN);
-                navigate("/home");
             }
         })();
 
