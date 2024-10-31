@@ -42,6 +42,16 @@ function Definition() {
         return () => controller.abort();
     }, []);
 
+    const handleDeleteClick = async () => {
+        try {
+            await DictionaryService.deleteWord(parseInt(wordId as string));
+            toast.success("Deleted word", TOAST_CUSTOM_CLOSE_BTN);
+            navigate("/my-contributions");
+        } catch (error: any) {
+            toast.error("Failed to delete word", TOAST_CUSTOM_CLOSE_BTN);
+        }
+    }
+
     return(
         <>
             <Header/>
@@ -99,7 +109,8 @@ function Definition() {
                                 </Button>
                                 <Button variant={"contained"}
                                         color={"error"}
-                                        className={"px-6 py-2"}>
+                                        className={"px-6 py-2"}
+                                        onClick={handleDeleteClick}>
                                     Delete
                                 </Button>
                             </>): null}

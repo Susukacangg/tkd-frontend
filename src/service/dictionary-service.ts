@@ -101,4 +101,16 @@ export default class DictionaryService {
             throw error;
         }
     }
+
+    static async deleteWord(wordId: number): Promise<void> {
+        try {
+            await dictionaryClient.delete(`/dict/${wordId}`, {
+                withCredentials: true,
+                timeout: 3000,
+                timeoutErrorMessage: "Failed to delete word"
+            })
+        } catch (error) {
+            throw error;
+        }
+    }
 };
