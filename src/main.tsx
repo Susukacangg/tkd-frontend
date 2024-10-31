@@ -15,12 +15,12 @@ import SearchResult from "./pages/SearchResult.tsx";
 import MyContributions from "./pages/MyContributions.tsx";
 import EditContribution from "./pages/EditContribution.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
+import About from "./pages/About.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Navigate to={"/home"}/>,
-        errorElement: <NotFoundPage/>,
     },
     {
         path: "/home",
@@ -37,6 +37,7 @@ const router = createBrowserRouter([
     {
         path: "/definition/:wordId",
         element: <Definition/>,
+        errorElement: <NotFoundPage/>,
     },
     {
         path: "/contribute/?word=value?",
@@ -65,6 +66,18 @@ const router = createBrowserRouter([
                 <EditContribution/>
             </ProtectedRoute>
         )
+    },
+    {
+        path: "/about",
+        element: <About/>
+    },
+    {
+        path: "*",
+        element: <Navigate to={"/not-found"}/>,
+    },
+    {
+        path: "/not-found",
+        element: <NotFoundPage/>,
     }
 ]);
 
