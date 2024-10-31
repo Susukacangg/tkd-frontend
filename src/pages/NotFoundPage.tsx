@@ -5,7 +5,7 @@ import CenteredContainer from "../components/CenteredContainer.tsx";
 function NotFoundPage() {
     return (
         <>
-            <Header/>
+            <Header enableHomeOnly={true} enableContributeBtn={false} enableSearchBar={false} enableAvatar={false}/>
             <CenteredContainer>
                 <Typography variant={"h1"}
                             color={"primary"}>
