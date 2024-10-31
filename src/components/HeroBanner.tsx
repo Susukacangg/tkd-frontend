@@ -1,7 +1,7 @@
 import {Button, Typography} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
 
-function HeroBanner() {
+function HeroBanner({disableSearch = false}: {disableSearch?: boolean}) {
     return (
         <div className="w-full relative h-fit">
             <img src="/kadazanpplenhanced.jpeg" alt="landing image"
@@ -16,7 +16,8 @@ function HeroBanner() {
                     Discover new words
                 </Typography>
 
-                <SearchBar classString={"text-xl"}>
+                <SearchBar isDisabled={disableSearch}
+                           classString={"text-xl"}>
                     <Button color={"primary"}
                             variant={"contained"}
                             className={"capitalize ml-2"}>
