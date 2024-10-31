@@ -1,18 +1,22 @@
-import {Pagination, Typography} from "@mui/material";
+import {CircularProgress, Pagination, Typography} from "@mui/material";
 import Header from "../components/Header.tsx";
 import WordList from "../components/WordList.tsx";
 import {useEffect, useState} from "react";
 import DictionaryService from "../service/dictionary-service.ts";
 import Word from "../dto/Word.ts";
+import CenteredContainer from "../components/CenteredContainer.tsx";
 
 function MyContributions() {
     const [words, setWords] = useState<Word[]>([]);
-    const [numPages, setNumPages] = useState(1);
+    const [numPages, setNumPages] = useState(0);
     const [pageNum, setPageNum] = useState(1);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
 
+        setIsLoading(true);
         (async () => {
             try {
                 const response = await DictionaryService.getUserContributions(pageNum, controller);
@@ -22,32 +26,40 @@ function MyContributions() {
                 if(error.name !== 'CanceledError')
                     console.log(error.message);
             }
+            setIsLoading(false);
         })();
 
-        return () => controller.abort();
+        return () => {
+            controller.abort();
+            setIsLoading(false);
+        }
     }, [pageNum])
 
     return (
         <>
             <Header enableSearchBar={true} enableContributeBtn={true} enableHomeOnly={true}/>
-            <div className={"flex flex-col gap-6 justify-center mx-auto mt-20 mb-12 w-3/5"}>
+            <CenteredContainer>
                 <Typography variant={"h3"} className={"mb-8"}>
                     My Contributions
                 </Typography>
-                {words? (
-                    <>
-                        <WordList words={words}/>
-                        <div className="flex justify-center">
-                            <Pagination count={numPages}
-                                        onChange={(_, page) => setPageNum(page)}/>
-                        </div>
-                    </>
-                ): (
-                    <Typography variant={"h6"}>
-                        You haven't contributed any words yet
-                    </Typography>
-                )}
-            </div>
+                {!isLoading ?
+                    words? (
+                        <>
+                            <WordList words={words}/>
+                        </>
+                    ): (
+                        <Typography variant={"h6"}>
+                            You haven't contributed any words yet
+                        </Typography>
+                    )
+                : <CircularProgress size={69}/>}
+                <div className="flex justify-center">
+                    <Pagination count={numPages}
+                                size={"large"}
+                                color={"primary"}
+                                onChange={(_, page) => setPageNum(page)}/>
+                </div>
+            </CenteredContainer>
         </>
     );
 }
