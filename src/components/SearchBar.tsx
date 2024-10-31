@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import React, {ReactNode, useEffect, useState} from "react";
 import DictionaryService from "../service/dictionary-service.ts";
 
-function SearchBar({children, isDisabled, classString}: {children: ReactNode, isDisabled?: boolean, classString?: string}) {
+function SearchBar({children, isDisabled = false, classString}: {children: ReactNode, isDisabled?: boolean, classString?: string}) {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState<string>("");
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
