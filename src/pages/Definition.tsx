@@ -51,7 +51,6 @@ function Definition() {
         (async () => {
             if (wordId != undefined) {
                 try {
-                    await new Promise(res => setTimeout(res, 3000));
                     const response: Word = await DictionaryService.getWord(parseInt(wordId), controller);
                     setCurrentWord(response);
                 } catch (error: any) {
