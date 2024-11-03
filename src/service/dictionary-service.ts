@@ -92,6 +92,7 @@ export default class DictionaryService {
     static async editWord(word: any) {
         try {
             const response = await dictionaryClient.put(`/dict/${word.wordId}`, word, {
+                withCredentials: true,
                 timeout: 3000,
                 timeoutErrorMessage: "Failed to edit word"
             });
