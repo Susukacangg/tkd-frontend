@@ -46,7 +46,6 @@ function EditContributionForm() {
     });
 
     const handleFormSubmit: SubmitHandler<EditContributionFormFields> = async (data: EditContributionFormFields) => {
-        console.log(data);
         try {
             const response = await DictionaryService.editWord(data);
             toast.success("Successfully edited word", TOAST_CUSTOM_CLOSE_BTN);
