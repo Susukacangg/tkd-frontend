@@ -18,25 +18,30 @@ function Home() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         setIsLoading(true);
+        const controller = new AbortController();
+        let isMounted = true;
+
         (async() => {
             try {
                 const response: Word[] = await DictionaryService.getRandomWords(controller);
-                setNumPages(Math.ceil(response.length / numResultsDisplay));
-                setWords(response);
-                setPagedWords(response.slice(0, 10));
+                if(isMounted) {
+                    setNumPages(Math.ceil(response.length / numResultsDisplay));
+                    setWords(response);
+                    setPagedWords(response.slice(0, 10));
+                }
             } catch (error: any) {
-                if(error.name !== 'CanceledError')
+                if(error.name !== 'CanceledError' && isMounted)
                     toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
+            } finally {
+                if(isMounted)
+                    setIsLoading(false);
             }
-            setIsLoading(false);
         })()
 
         return () => {
+            isMounted = false;
             controller.abort();
-            setIsLoading(false);
         }
     }, [])
 

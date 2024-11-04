@@ -11,27 +11,32 @@ function MyContributions() {
     const [numPages, setNumPages] = useState(0);
     const [pageNum, setPageNum] = useState(1);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         setIsLoading(true);
+        const controller = new AbortController();
+        let isMounted = true;
+
         (async () => {
             try {
                 const response = await DictionaryService.getUserContributions(pageNum, controller);
-                setWords(response.content);
-                setNumPages(response.totalPages);
+                if(isMounted) {
+                    setWords(response.content);
+                    setNumPages(response.totalPages);
+                }
             } catch (error: any) {
-                if(error.name !== 'CanceledError')
+                if(error.name !== 'CanceledError' && isMounted)
                     console.log(error.message);
+            } finally {
+                if(isMounted)
+                    setIsLoading(false)
             }
-            setIsLoading(false);
         })();
 
         return () => {
+            isMounted = false;
             controller.abort();
-            setIsLoading(false);
         }
     }, [pageNum])
 

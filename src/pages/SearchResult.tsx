@@ -17,30 +17,36 @@ function SearchResult() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const controller = new AbortController();
         setIsLoading(true);
+        const controller = new AbortController();
+        let isMounted = true;
+
         (async () => {
             if (searchString !== undefined) {
                 try {
                     const response: any = await DictionaryService.searchWord(searchString as string, pageNum, controller);
-                    if(response !== "") {
-                        setWords(response.content);
-                        setNumPages(response.totalPages);
-                    } else {
-                        setWords([]);
-                        setNumPages(0);
+                    if(isMounted) {
+                        if (response !== "") {
+                            setWords(response.content);
+                            setNumPages(response.totalPages);
+                        } else {
+                            setWords([]);
+                            setNumPages(0);
+                        }
                     }
                 } catch (error: any) {
-                    if(error.name !== 'CanceledError')
+                    if(error.name !== 'CanceledError' && isMounted)
                         console.error(error);
+                } finally {
+                    if(isMounted)
+                        setIsLoading(false);
                 }
-                setIsLoading(false);
             }
         })();
 
         return () => {
+            isMounted = false;
             controller.abort();
-            setIsLoading(false);
         }
     }, [searchString, pageNum])
 
