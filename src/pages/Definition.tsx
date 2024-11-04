@@ -45,25 +45,29 @@ function Definition() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         setIsLoading(true);
+        const controller = new AbortController();
+        let isMounted = true;
+
         (async () => {
             if (wordId != undefined) {
                 try {
                     const response: Word = await DictionaryService.getWord(parseInt(wordId), controller);
-                    setCurrentWord(response);
+                    if(isMounted)
+                        setCurrentWord(response);
                 } catch (error: any) {
-                    if (error.status === 404)
+                    if (error.status === 404 && isMounted)
                         navigate("/not-found");
+                } finally {
+                    if(isMounted)
+                        setIsLoading(false);
                 }
-                setIsLoading(false);
             }
         })();
 
         return () => {
+            isMounted = false;
             controller.abort();
-            setIsLoading(false);
         }
     }, []);
 
