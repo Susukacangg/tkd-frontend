@@ -10,7 +10,6 @@ class IamService {
         try {
             const response = await iamClient.post('/auth/register', req, {
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to register"
             });
             return response.data;
@@ -23,7 +22,6 @@ class IamService {
         try {
             const response = await iamClient.post('/auth/login', req, {
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to login"
             });
             return response.data;
@@ -36,7 +34,6 @@ class IamService {
         try {
             const response = await iamClient.post('/auth/logout', {
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Something went wrong",
             })
             return response.data;
@@ -49,7 +46,6 @@ class IamService {
         try {
             const response = await iamClient.post('/auth/refresh', {}, {
                 withCredentials: true,
-                timeout: 1100,
                 timeoutErrorMessage: "Failed to refresh token",
             })
             return response.data;
@@ -62,7 +58,6 @@ class IamService {
         try {
             const response = await iamClient.get('/auth/check-username', {
                 params: {username: username},
-                timeout: 1100,
                 timeoutErrorMessage: "Failed to check username"
             });
             return response.data;
@@ -75,7 +70,6 @@ class IamService {
         try {
             const response = await iamClient.get('/auth/check-email', {
                 params: {email: email},
-                timeout: 1100,
                 timeoutErrorMessage: "Failed to check email"
             });
 
@@ -90,7 +84,6 @@ class IamService {
             const response: AxiosResponse<UserView, any> = await iamClient.get('/user/details', {
                 params: {includeId: false},
                 withCredentials: true,
-                timeout: 2000,
                 timeoutErrorMessage: "Failed to get user details",
                 signal: controller.signal,
             });
