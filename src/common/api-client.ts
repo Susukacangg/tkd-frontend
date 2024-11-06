@@ -3,11 +3,11 @@ import {IS_AUTHENTICATED_KEY} from "./constants.ts";
 import IamService from "../service/iam-service.ts";
 
 export const iamClient = axios.create({
-    baseURL: "http://localhost:8081/api"
+    baseURL: "https://api.iam.thekadazandusundictionary.com/api"
 })
 
 export const dictionaryClient = axios.create({
-    baseURL: "http://localhost:8082/api"
+    baseURL: "https://api.dictionary.thekadazandusundictionary.com/api"
 })
 
 const protectedRoutes = ["/contribute"];

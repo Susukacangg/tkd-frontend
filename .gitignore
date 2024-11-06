@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 
 .vite/
+
+.firebase
+
+.vite
+
+./dist
