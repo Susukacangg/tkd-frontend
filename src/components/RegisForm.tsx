@@ -1,7 +1,7 @@
 import FieldLabel from "./FieldLabel.tsx";
 import FormFooter from "./FormFooter.tsx";
 import FormContainer from "./FormContainer.tsx";
-import {Button, CircularProgress, InputAdornment, TextField} from "@mui/material";
+import {Button, CircularProgress, IconButton, InputAdornment, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -12,6 +12,8 @@ import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {useNavigate} from "react-router-dom";
 import {RegisFormSchema} from "../common/form-schema.ts";
 import {useAuth} from "../contexts/AuthContext.tsx";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useState} from "react";
 
 type RegisterFormFields = z.infer<typeof RegisFormSchema>;
 
@@ -20,6 +22,7 @@ function RegisForm() {
 
     const navigate = useNavigate();
     const {loginUser} = useAuth();
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const {
         register,
         handleSubmit,
@@ -60,6 +63,10 @@ function RegisForm() {
         }
     }
 
+    const passwordErrorMessage = errors?.password?.message?.split("\n").map((line, index) => (
+        <span key={index}>{line}<br/></span>
+    ));
+
     return(
         <FormContainer headerString={"Welcome to The Kadazandusun Dictionary"}
                        subHeaderString={subHeaderString}
@@ -86,17 +93,43 @@ function RegisForm() {
                                {...register("email")}/>
 
                     <FieldLabel title={"Password"}/>
-                    <TextField type={"password"}
-                               placeholder={"********"}
+                    <TextField type={isPasswordVisible ? "text" : "password"}
+                               placeholder={"password"}
                                error={errors.password && true}
-                               helperText={errors.password?.message}
+                               helperText={passwordErrorMessage}
+                               slotProps={{
+                                   input: {
+                                       endAdornment: (
+                                           <InputAdornment position={"end"}>
+                                               <IconButton onClick={() => {
+                                                   isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
+                                               }}>
+                                                   {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                               </IconButton>
+                                           </InputAdornment>
+                                       ),
+                                   },
+                               }}
                                {...register("password")}/>
 
                     <FieldLabel title={"Re-enter Password"}/>
-                    <TextField type={"password"}
-                               placeholder={"********"}
+                    <TextField type={isPasswordVisible ? "text" : "password"}
+                               placeholder={"password"}
                                error={errors.confirmPassword && true}
                                helperText={errors.confirmPassword?.message}
+                               slotProps={{
+                                   input: {
+                                       endAdornment: (
+                                           <InputAdornment position={"end"}>
+                                               <IconButton onClick={() => {
+                                                   isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
+                                               }}>
+                                                   {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                               </IconButton>
+                                           </InputAdornment>
+                                       ),
+                                   },
+                               }}
                                {...register("confirmPassword")}/>
 
                 </div>
