@@ -16,6 +16,7 @@ import MyContributions from "./pages/MyContributions.tsx";
 import EditContribution from "./pages/EditContribution.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import About from "./pages/About.tsx";
+import LogoutPage from "./pages/LogoutPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
     {
         path: "/not-found",
         element: <NotFoundPage/>,
+    },
+    {
+        path: "/logout",
+        element: <LogoutPage/>,
     }
 ]);
 

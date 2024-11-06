@@ -38,7 +38,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
 const ProfileIcon = ({name}: {name: string | null}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {isAuthenticated, logoutUser} = useAuth();
+    const {isAuthenticated} = useAuth();
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
 
@@ -86,11 +86,6 @@ const ProfileIcon = ({name}: {name: string | null}) => {
         }
     }
 
-    const handleLogout = async () => {
-        await logoutUser();
-        navigate("/home");
-    }
-
     return (
         <>
             <Tooltip title={"Account settings"}>
@@ -115,7 +110,7 @@ const ProfileIcon = ({name}: {name: string | null}) => {
                 ): null}
                 {isAuthenticated && <Divider/>}
 
-                <MenuItem onClick={() => isAuthenticated? handleLogout() : navigate("/login")}>
+                <MenuItem onClick={() => isAuthenticated? navigate("/logout") : navigate("/login")}>
                     <ListItemIcon>
                         {isAuthenticated? <Logout sx={{color: "black"}}/> : <Login color={"primary"}/>}
                     </ListItemIcon>

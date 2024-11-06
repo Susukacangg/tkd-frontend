@@ -34,18 +34,19 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         setIsAuthenticated(true);
     };
 
-    const logoutUser = async () => {
+    const logoutUser = async (controller: AbortController) => {
         try {
-            const logoutMessage: string = await IamService.logout();
+            const logoutMessage: string = await IamService.logout(controller);
 
             localStorage.removeItem(IS_AUTHENTICATED_KEY);
             toast.success(logoutMessage, TOAST_CUSTOM_CLOSE_BTN);
 
             setIsAuthenticated(false);
 
-            window.location.href = "/login"
+            window.location.href = "/login";
         } catch (error: any) {
             toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
+            window.location.href = "/home";
         }
     };
 
