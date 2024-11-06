@@ -6,7 +6,6 @@ export default class DictionaryService {
         try {
             const response = await dictionaryClient.post("/dict/add", newWord, {
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to add word to dictionary"
             })
 
@@ -19,7 +18,6 @@ export default class DictionaryService {
     static async getRandomWords(controller: AbortController): Promise<Word[]> {
         try {
             const response = await dictionaryClient.get("/dict/random", {
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to get random words",
                 signal: controller.signal,
             })
@@ -33,7 +31,6 @@ export default class DictionaryService {
     static async getWord(wordId: number, controller: AbortController): Promise<Word> {
         try {
             const response = await dictionaryClient.get(`/dict/${wordId}`, {
-                timeout: 2000,
                 timeoutErrorMessage: "Failed to get word",
                 signal: controller.signal
             })
@@ -48,7 +45,6 @@ export default class DictionaryService {
         try {
             const response = await dictionaryClient.get("/dict/search", {
                 params: {word: wordString, pageNum: pageNum},
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to search word",
                 signal: controller.signal
             });
@@ -63,7 +59,6 @@ export default class DictionaryService {
         try {
             const response = await dictionaryClient.get("/dict/suggest", {
                 params: {searchStr: searchStr},
-                timeout: 1000,
                 timeoutErrorMessage: "Failed to get available words"
             })
 
@@ -78,7 +73,6 @@ export default class DictionaryService {
             const response = await dictionaryClient.get("/dict/get-users-words", {
                 params: {pageNum: pageNum},
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to get contributions",
                 signal: controller.signal,
             });
@@ -93,7 +87,6 @@ export default class DictionaryService {
         try {
             const response = await dictionaryClient.put(`/dict/${word.wordId}`, word, {
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to edit word"
             });
 
@@ -107,7 +100,6 @@ export default class DictionaryService {
         try {
             await dictionaryClient.delete(`/dict/${wordId}`, {
                 withCredentials: true,
-                timeout: 3000,
                 timeoutErrorMessage: "Failed to delete word"
             })
         } catch (error) {
