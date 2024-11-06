@@ -86,7 +86,7 @@ function ContributionForm() {
                                {...register('word')}/>
 
                     {/*translation input section*/}
-                    <FieldLabel title={"Translation"}/>
+                    <FieldLabel title={"Translation/Definition"}/>
                     {translationFields.map((field, index) => {
                         return (
                             <div key={field.id} className={"flex flex-col gap-6"}>

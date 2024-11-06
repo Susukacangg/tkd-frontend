@@ -105,7 +105,7 @@ function Definition() {
                     {/*TRANSLATION*/}
                     <div className={"flex flex-col gap-4 my-4"}>
                         <Typography variant={"h5"}>
-                            Translation
+                            Translation/Definition
                         </Typography>
                         {currentWord?.translations.map((translation) => {
                             return (
