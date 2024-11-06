@@ -147,7 +147,7 @@ function Definition() {
                                             className={"px-6 py-2"}
                                             disabled={isDeleting}
                                             onClick={handleDeleteClick}>
-                                        {isDeleting ? <CircularProgress size={30} color={"error"}/> : "Delete"}
+                                        {isDeleting ? <CircularProgress size={20} color={"error"}/> : "Delete"}
                                     </Button>
                                 </>): null}
                         </div>
