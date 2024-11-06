@@ -27,7 +27,10 @@ export const RegisFormSchema = z.object({
                 return error.message;
             }
         }, {message: "Email already registered!"}),
-    password: z.string().regex(PASS_REGEX, "Invalid password"),
+    password: z.string().regex(PASS_REGEX, "Must contain at least 1 uppercase letter\n" +
+        "Must contain at lest 1 digit\n" +
+        "Must contain at least 1 special character (@$!%*?&/)\n" +
+        "Must be 8 characters long"),
     confirmPassword: z.string()
         .refine((value) => value !== "", {
             message: "Please confirm your password"

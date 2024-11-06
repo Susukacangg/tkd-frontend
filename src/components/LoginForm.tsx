@@ -1,7 +1,7 @@
 import FieldLabel from "./FieldLabel.tsx";
 import FormContainer from "./FormContainer.tsx";
 import FormFooter from "./FormFooter.tsx";
-import {Button, CircularProgress, TextField} from "@mui/material";
+import {Button, CircularProgress, IconButton, InputAdornment, TextField} from "@mui/material";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {LoginFormSchema} from "../common/form-schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -12,12 +12,15 @@ import {toast} from "sonner";
 import IamService from "../service/iam-service.ts";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../contexts/AuthContext.tsx";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useState} from "react";
 
 type LoginFormFields = z.infer<typeof LoginFormSchema>
 
 function LoginForm() {
     const {loginUser} = useAuth();
     const navigate = useNavigate();
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const {
         register,
         handleSubmit,
@@ -38,8 +41,9 @@ function LoginForm() {
             toast.success(response, TOAST_CUSTOM_CLOSE_BTN);
             navigate("/home");
         } catch (error: any) {
+            console.log(error);
             if (error.status === 401)
-                toast.error("The login ID or password you provided is incorrect.", TOAST_CUSTOM_CLOSE_BTN);
+                toast.error(error.response.data, TOAST_CUSTOM_CLOSE_BTN);
             else
                 toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
         }
@@ -62,10 +66,23 @@ function LoginForm() {
                                {...register("login")}/>
 
                     <FieldLabel title={"Password"}/>
-                    <TextField type={"password"}
+                    <TextField type={isPasswordVisible ? "text" : "password"}
                                placeholder={"********"}
                                error={errors.password && true}
                                helperText={errors.password?.message}
+                               slotProps={{
+                                   input: {
+                                       endAdornment: (
+                                           <InputAdornment position={"end"}>
+                                               <IconButton onClick={() => {
+                                                   isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
+                                               }}>
+                                                   {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                               </IconButton>
+                                           </InputAdornment>
+                                       ),
+                                   },
+                               }}
                                {...register("password")}/>
                 </div>
                 <Button variant={"contained"}
