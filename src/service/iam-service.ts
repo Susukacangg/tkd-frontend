@@ -30,11 +30,12 @@ class IamService {
         }
     }
 
-    static async logout(): Promise<string> {
+    static async logout(controller: AbortController): Promise<string> {
         try {
             const response = await iamClient.post('/auth/logout', {
                 withCredentials: true,
                 timeoutErrorMessage: "Something went wrong",
+                signal: controller.signal
             })
             return response.data;
         } catch (error) {
