@@ -1,5 +1,5 @@
 import Header from "../components/Header.tsx";
-import {Button, Divider, IconButton, Skeleton, Tooltip, Typography} from "@mui/material";
+import {Button, CircularProgress, Divider, IconButton, Skeleton, Tooltip, Typography} from "@mui/material";
 import TranslateItem from "../components/TranslateItem.tsx";
 import UsageExampleItem from "../components/UsageExampleItem.tsx";
 import {useNavigate, useParams} from "react-router-dom";
@@ -43,6 +43,7 @@ function Definition() {
     const isUsersWord = currentUser?.username === currentWord?.username;
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -72,12 +73,15 @@ function Definition() {
     }, []);
 
     const handleDeleteClick = async () => {
+        setIsDeleting(true);
         try {
             await DictionaryService.deleteWord(parseInt(wordId as string));
             toast.success("Deleted word", TOAST_CUSTOM_CLOSE_BTN);
             navigate("/my-contributions");
         } catch (error: any) {
             toast.error("Failed to delete word", TOAST_CUSTOM_CLOSE_BTN);
+        } finally {
+            setIsDeleting(false);
         }
     }
 
@@ -132,6 +136,7 @@ function Definition() {
                                     <Button variant={"contained"}
                                             color={"primary"}
                                             className={"px-6 py-2"}
+                                            disabled={isDeleting}
                                             onClick={() => navigate(`/edit/${currentWord?.wordId}`, {
                                                 state: currentWord
                                             })}>
@@ -140,8 +145,9 @@ function Definition() {
                                     <Button variant={"contained"}
                                             color={"error"}
                                             className={"px-6 py-2"}
+                                            disabled={isDeleting}
                                             onClick={handleDeleteClick}>
-                                        Delete
+                                        {isDeleting ? <CircularProgress size={30} color={"error"}/> : "Delete"}
                                     </Button>
                                 </>): null}
                         </div>

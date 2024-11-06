@@ -4,7 +4,7 @@ import {WordDetailsFormSchema} from "../common/form-schema.ts";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import FieldLabel from "./FieldLabel.tsx";
-import {Button, IconButton, TextField} from "@mui/material";
+import {Button, CircularProgress, IconButton, TextField} from "@mui/material";
 import {AddCircle, RemoveCircle} from "@mui/icons-material";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import DictionaryService from "../service/dictionary-service.ts";
@@ -156,7 +156,7 @@ function EditContributionForm() {
                                 type={"submit"}
                                 disabled={isSubmitting}
                                 className={"mt-6 capitalize w-1/2 text-lg"}>
-                            Edit
+                            {isSubmitting ? <CircularProgress size={30}/> : "Edit"}
                         </Button>
                         <Button variant={"contained"}
                                 type={"reset"}
