@@ -39,7 +39,7 @@ function Definition() {
     const {wordId} = useParams();
     const navigate = useNavigate()
     const [currentWord, setCurrentWord] = useState<Word | null>(null);
-    const {currentUser} = useAuth();
+    const {currentUser, isUserAdmin} = useAuth();
     const isUsersWord = currentUser?.username === currentWord?.username;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -131,7 +131,7 @@ function Definition() {
 
                     <div className="flex justify-between items-center mt-16">
                         <div className="flex items-center gap-6">
-                            {isUsersWord? (
+                            {isUsersWord || isUserAdmin? (
                                 <>
                                     <Button variant={"contained"}
                                             color={"primary"}

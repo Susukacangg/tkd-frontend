@@ -11,6 +11,7 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export function AuthProvider({ children }: {children: ReactNode}) {
     const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem(IS_AUTHENTICATED_KEY) !== null);
     const [currentUser, setCurrentUser] = useState<UserView | null>(null);
+    const [isUserAdmin, setIsUserAdmin] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -19,6 +20,13 @@ export function AuthProvider({ children }: {children: ReactNode}) {
                 try {
                     const response: UserView = await IamService.getUserDetails(controller);
                     setCurrentUser(response);
+                } catch (error: any) {
+                    // do nothing
+                }
+
+                try {
+                    const response: boolean = await IamService.checkAdmin(controller);
+                    setIsUserAdmin(response);
                 } catch (error: any) {
                     // do nothing
                 }
@@ -51,7 +59,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     };
 
     return(
-        <AuthContext.Provider value={{currentUser, isAuthenticated, loginUser, logoutUser}}>
+        <AuthContext.Provider value={{currentUser, isAuthenticated, isUserAdmin, loginUser, logoutUser}}>
             {children}
         </AuthContext.Provider>
     );
