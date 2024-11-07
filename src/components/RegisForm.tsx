@@ -137,7 +137,7 @@ function RegisForm() {
                         type={"submit"}
                         disabled={isSubmitting}
                         className={"mt-6 capitalize w-full text-lg"}>
-                    {isSubmitting? <CircularProgress color="secondary" size={28}/> : "Create Account"}
+                    {isSubmitting? <CircularProgress color="secondary" size={25}/> : "Create Account"}
                 </Button>
             </form>
         </FormContainer>

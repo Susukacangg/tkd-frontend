@@ -1,6 +1,6 @@
 import FormContainer from "./FormContainer.tsx";
 import FieldLabel from "./FieldLabel.tsx";
-import {Button, IconButton, TextField} from "@mui/material";
+import {Button, CircularProgress, IconButton, TextField} from "@mui/material";
 import {AddCircle, RemoveCircle} from "@mui/icons-material";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {z} from "zod";
@@ -171,7 +171,7 @@ function ContributionForm() {
                             type={"submit"}
                             disabled={isSubmitting}
                             className={"mt-6 capitalize w-1/2 text-lg"}>
-                        Submit
+                        {isSubmitting ? <CircularProgress size={25}/> : "Submit"}
                     </Button>
                     <Button variant={"contained"}
                             type={"reset"}

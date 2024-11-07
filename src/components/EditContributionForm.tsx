@@ -156,7 +156,7 @@ function EditContributionForm() {
                                 type={"submit"}
                                 disabled={isSubmitting}
                                 className={"mt-6 capitalize w-1/2 text-lg"}>
-                            {isSubmitting ? <CircularProgress size={20}/> : "Edit"}
+                            {isSubmitting ? <CircularProgress size={25}/> : "Edit"}
                         </Button>
                         <Button variant={"contained"}
                                 type={"reset"}
