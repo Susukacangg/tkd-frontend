@@ -114,4 +114,15 @@ export default class DictionaryService {
             throw error;
         }
     }
+
+    static async reportWord(reportRequest: any): Promise<void> {
+        try {
+            await dictionaryClient.post('/report-contribution', reportRequest, {
+                withCredentials: true,
+                timeoutErrorMessage: "Failed to report word"
+            })
+        } catch (error) {
+            throw error;
+        }
+    }
 };

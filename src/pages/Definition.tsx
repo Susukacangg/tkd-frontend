@@ -153,7 +153,10 @@ function Definition() {
                         </div>
                         <Tooltip title={"Report this contribution"}>
                             <IconButton color={"error"}
-                                        size={"large"}>
+                                        size={"large"}
+                                        onClick={() => navigate(`/report/${currentWord?.wordId}`, {
+                                            state: currentWord
+                                        })}>
                                 <Report fontSize={"large"}/>
                             </IconButton>
                         </Tooltip>
