@@ -89,7 +89,7 @@ function LoginForm() {
                         type={"submit"}
                         disabled={isSubmitting}
                         className={"mt-6 capitalize w-full text-lg"}>
-                    {isSubmitting? <CircularProgress color="secondary" size={28}/> : "Login"}
+                    {isSubmitting? <CircularProgress color="secondary" size={25}/> : "Login"}
                 </Button>
             </form>
         </FormContainer>
