@@ -96,6 +96,19 @@ class IamService {
         }
     }
 
+    static async checkAdmin(controller: AbortController): Promise<boolean> {
+        try {
+            const response = await iamClient.get('/admin/check', {
+                withCredentials: true,
+                signal: controller.signal,
+            });
+
+            return response.data;
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
 }
 
 export default IamService;
