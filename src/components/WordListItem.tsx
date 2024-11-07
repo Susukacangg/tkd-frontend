@@ -26,6 +26,9 @@ function WordListItem({word}: {word: Word}) {
 
     const handleReportOptionClick = (e: any) => {
         setAnchorEl(null);
+        navigate(`/report/${word.wordId}`, {
+            state: word
+        });
         e.stopPropagation();
     }
 

@@ -69,3 +69,10 @@ export const WordDetailsFormSchema = z.object({
             message: "Example translation is required"})
     }).array()
 })
+
+export const ReportWordFormSchema = z.object({
+    wordId: z.number(),
+    reportedBy: z.string().trim(),
+    reportType: z.string().trim(),
+    reportDescription: z.string().trim()
+})

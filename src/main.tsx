@@ -17,6 +17,7 @@ import EditContribution from "./pages/EditContribution.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import About from "./pages/About.tsx";
 import LogoutPage from "./pages/LogoutPage.tsx";
+import Report from "./pages/Report";
 
 const router = createBrowserRouter([
     {
@@ -83,6 +84,14 @@ const router = createBrowserRouter([
     {
         path: "/logout",
         element: <LogoutPage/>,
+    },
+    {
+        path: "/report/:wordId",
+        element: (
+            <ProtectedRoute>
+                <Report/>
+            </ProtectedRoute>
+        ),
     }
 ]);
 
