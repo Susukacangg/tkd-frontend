@@ -28,7 +28,7 @@ function About() {
                     </Typography>
                     <Typography variant={"body1"}
                                 className={"text-xl"}>
-                        <b>Welcome to The Kadazandusun Dictionary (TKD)</b>, a dedicated platform for preserving and revitalizing the Kadazandusun language. <div></div>
+                        <b>Welcome to The Kadazandusun Dictionary (TKD)</b>, a dedicated platform for preserving and revitalizing the Kadazandusun language. <br/>
                         Our goal is to create an accessible, digital dictionary that enables both native speakers and language enthusiasts to explore and contribute to the richness of Kadazandusun.
                     </Typography>
                 </AboutSubContainer>
@@ -39,7 +39,7 @@ function About() {
                     </Typography>
                     <Typography variant={"body1"}
                                 className={"text-lg"}>
-                        We aim to keep the Kadazandusun language alive through digitalization. As an endangered language, Kadazandusun faces unique challenges, <div></div>
+                        We aim to keep the Kadazandusun language alive through digitalization. As an endangered language, Kadazandusun faces unique challenges, <br/>
                         but with technology and community support, we can document and share its beauty for generations to come.
                     </Typography>
                 </AboutSubContainer>
@@ -59,7 +59,7 @@ function About() {
                     </Typography>
                     <Typography variant={"body1"}
                                 className={"text-lg"}>
-                        Languages are integral to cultural identity. By learning and preserving Kadazandusun, we celebrate the heritage and traditions of the Kadazandusun people of Sabah, Malaysia. <div></div>
+                        Languages are integral to cultural identity. By learning and preserving Kadazandusun, we celebrate the heritage and traditions of the Kadazandusun people of Sabah, Malaysia. <br/>
                         This platform is designed for everyone, from learners and native speakers to linguists and historians.
                     </Typography>
                 </AboutSubContainer>
@@ -79,7 +79,7 @@ function About() {
                         <Typography variant={"body1"}
                                     component={"li"}
                                     className={"text-lg"}>
-                            <b>User Contributions:</b> Add new words or submit original entries to expand the Kadazandusun lexicon. Each submission is valuable in documenting and preserving the language. <div></div>
+                            <b>User Contributions:</b> Add new words or submit original entries to expand the Kadazandusun lexicon. Each submission is valuable in documenting and preserving the language. <br/>
                             {/*We also welcome submissions for other dialects of the Kadazandusun language, enhancing the richness and diversity of our dictionary.*/}
                         </Typography>
                         <Typography variant={"body1"}
