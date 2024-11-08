@@ -7,28 +7,17 @@ import {
     List,
     ListItem,
     ListItemButton, ListItemIcon,
-    ListItemText, SwipeableDrawer,
-    Typography
+    ListItemText, SwipeableDrawer, Typography,
 } from "@mui/material";
 import Navbar from "./Navbar.tsx";
 import HeaderProps from "../component-props/header-props.ts";
 import {useNavigate} from "react-router-dom";
-import {LibraryBooks, Login, Logout, MenuRounded} from "@mui/icons-material";
+import {Close, LibraryBooks, Login, Logout, MenuRounded, Search} from "@mui/icons-material";
 import {useState} from "react";
 import {MENU_ITEMS} from "../common/constants.ts";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import {nameToColor} from "../common/utility.ts";
-
-const HeaderTitle = () => {
-    const navigate = useNavigate();
-
-    return (
-        <Typography variant="h5" className={"font-semibold xl:mr-14 sm:mr-0 sm:text-5xl xl:text-2xl sm:py-10 xl:py-0 text-nowrap"}
-                    onClick={() => navigate("/home")}>
-            The Kadazandusun Dictionary
-        </Typography>
-    );
-}
+import SearchBar from "./SearchBar.tsx";
 
 const DrawerMenu = () => {
     const navigate = useNavigate();
@@ -100,16 +89,11 @@ const DrawerMenu = () => {
                     paddingTop: 3,
                     paddingLeft: 3
                 }}>
-                    <ListItemText primary={
-                        <Button variant={"contained"}
-                                onClick={() => navigate("/contribute")}
-                                style={{
-                                    fontSize: 30,
-                                    textTransform: "capitalize",
-                                    borderRadius: 10
-                                }}>
-                            Contribute
-                        </Button>}/>
+                    <Button variant={"contained"}
+                            onClick={() => navigate("/contribute")}
+                            className={"text-3xl capitalize py-2 px-5"}>
+                        Contribute
+                    </Button>
                 </ListItem>
             </List>
 
@@ -150,26 +134,59 @@ const DrawerMenu = () => {
 
 function Header({enableHomeOnly = false, enableAvatar = true, enableSearchBar = true, enableContributeBtn = true}: HeaderProps) {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const navigate = useNavigate();
+    const [isSearchBarOpen, setSearchBarOpen] = useState(false);
 
     const toggleDrawer = () => {
         setDrawerOpen(!isDrawerOpen);
     }
 
+    const toggleSearchBar = () => {
+        setSearchBarOpen(prevState => !prevState);
+    }
+
     return (
-        <header className={"bg-white static top-0 z-50 flex justify-center items-center px-8 border-0 border-b-2 border-solid border-b-gray-300"}>
-        {/*items center kasi center the text in the middle line*/}
-            <HeaderTitle/>
+        <header className={"bg-white static top-0 z-50 flex sm:justify-between xl:justify-center items-center px-8 border-0 border-b-2 border-solid border-b-gray-300"}>
+            <Typography variant="h5" className={"font-semibold mr-14 text-nowrap sm:hidden xl:block"}
+                        onClick={() => navigate("/home")}>
+                The Kadazandusun Dictionary
+            </Typography>
+
+            {/*mobile view elements*/}
+            <IconButton className={"sm:block xl:hidden pr-10"}
+                        onClick={() => toggleDrawer()}>
+                <MenuRounded className={"text-5xl"}/>
+            </IconButton>
+            <div className="xl:hidden sm:block w-full flex justify-center items-center">
+                {isSearchBarOpen ?
+                    <SearchBar isDisabled={false} classString={"text-4xl my-5 xl:hidden"}>
+                        <IconButton type={"submit"}>
+                            <Search cursor={"pointer"}
+                                    className={"text-5xl"}/>
+                        </IconButton>
+                    </SearchBar>
+                    : <Typography variant="h5" className={"font-semibold mr-0 text-5xl py-10 text-nowrap text-center"}
+                                  onClick={() => navigate("/home")}>
+                        The Kadazandusun Dictionary
+                    </Typography>}
+            </div>
+            <IconButton className={"sm:block xl:hidden pl-8"}
+                        onClick={() => toggleSearchBar()}>
+                {isSearchBarOpen ?
+                    <Close className={"text-5xl"}/>
+                    : <Search className={"text-5xl"}/>}
+            </IconButton>
+            {/*mobile view elements*/}
+
             <Navbar enableHomeOnly={enableHomeOnly}
                     enableContributeBtn={enableContributeBtn}
                     enableSearchBar={enableSearchBar}
                     enableAvatar={enableAvatar}/>
-            <IconButton className={"sm:block xl:hidden place-self-center absolute left-8"}
-                        onClick={() => toggleDrawer()}>
-                <MenuRounded className={"text-5xl"}/>
-            </IconButton>
+
             <SwipeableDrawer open={isDrawerOpen}
                              onOpen={toggleDrawer}
-                             onClose={toggleDrawer}>
+                             onClose={toggleDrawer}
+                             className={"xl:hidden"}>
                 <DrawerMenu/>
             </SwipeableDrawer>
         </header>
