@@ -8,7 +8,11 @@ export const RegisFormSchema = z.object({
             message: "Username must contain at least 3 characters"
         })
         .refine(value => USERNAME_REGEX.test(value), {
-            message: "Invalid username"
+            message: "Must contain only alphanumeric characters\n" +
+                "Cannot contain spaces\n" +
+                "Special characters period (.), underscore (_), and hyphen (-) are allowed\n" +
+                "Cannot start or end with special characters\n" +
+                "Cannot have consecutive special characters"
         })
         .refine(async (value) => {
             if(value.length > 2) {

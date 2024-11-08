@@ -67,6 +67,10 @@ function RegisForm() {
         <span key={index}>{line}<br/></span>
     ));
 
+    const usernameErrorMessage = errors?.username?.message?.split("\n").map((line, index) => (
+        <span key={index}>{line}<br/></span>
+    ));
+
     return(
         <FormContainer headerString={"Welcome to The Kadazandusun Dictionary"}
                        subHeaderString={subHeaderString}
@@ -81,7 +85,7 @@ function RegisForm() {
                                placeholder={"username"}
                                error={errors.username && true}
                                slotProps={setLoading(validatingFields?.username)}
-                               helperText={errors.username?.message}
+                               helperText={usernameErrorMessage}
                                {...register("username")}/>
 
                     <FieldLabel title={"Email"}/>
