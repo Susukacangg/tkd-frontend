@@ -89,13 +89,15 @@ function Definition() {
         <>
             <Header/>
             {!isLoading ? (
-                <div className={"flex flex-col gap-10 w-3/4 mx-auto mt-16 mb-10"}>
+                <div className={"flex flex-col gap-10 w-3/4 mx-auto sm:mt-32 xl:mt-16 mb-10"}>
                     {/*WORD*/}
-                    <div className="flex justify-between items-end">
-                        <Typography variant={"h2"}>
+                    <div className="flex justify-between sm:gap-8 xl:gap-0 xl:items-end sm:flex-col xl:flex-row">
+                        <Typography variant={"h2"}
+                                    className={"sm:text-8xl xl:text-6xl"}>
                             {currentWord?.word}
                         </Typography>
-                        <Typography variant={"body1"}>
+                        <Typography variant={"body1"}
+                                    className={"sm:text-2xl xl:text-[16px]"}>
                             contributed by {currentWord?.username}
                         </Typography>
                     </div>
@@ -103,8 +105,9 @@ function Definition() {
                     <Divider/>
 
                     {/*TRANSLATION*/}
-                    <div className={"flex flex-col gap-4 my-4"}>
-                        <Typography variant={"h5"}>
+                    <div className={"flex flex-col gap-4 sm:my-20 xl:my-4"}>
+                        <Typography variant={"h5"}
+                                    className={"sm:text-6xl xl:text-2xl sm:mb-4 xl:mb-0"}>
                             Translation/Definition
                         </Typography>
                         {currentWord?.translations.map((translation) => {
@@ -117,7 +120,8 @@ function Definition() {
 
                     {/*EXAMPLES*/}
                     <div className={"flex flex-col gap-4"}>
-                        <Typography variant={"h5"}>
+                        <Typography variant={"h5"}
+                                    className={"sm:text-6xl xl:text-2xl sm:mb-4 xl:mb-0"}>
                             Usage examples
                         </Typography>
                         {currentWord?.usageExamples.map((usageExample, index) => {
@@ -129,13 +133,13 @@ function Definition() {
                         })}
                     </div>
 
-                    <div className="flex justify-between items-center mt-16">
+                    <div className="flex justify-between items-center sm:mt-24 xl:mt-16">
                         <div className="flex items-center gap-6">
                             {isUsersWord || isUserAdmin? (
                                 <>
                                     <Button variant={"contained"}
                                             color={"primary"}
-                                            className={"px-6 py-2"}
+                                            className={"sm:px-12 sm:py-3 xl:px-6 xl:py-2 sm:text-3xl xl:text-sm"}
                                             disabled={isDeleting}
                                             onClick={() => navigate(`/edit/${currentWord?.wordId}`, {
                                                 state: currentWord
@@ -144,7 +148,7 @@ function Definition() {
                                     </Button>
                                     <Button variant={"contained"}
                                             color={"error"}
-                                            className={"px-6 py-2"}
+                                            className={"sm:px-12 sm:py-3 xl:px-6 xl:py-2 sm:text-3xl xl:text-sm"}
                                             disabled={isDeleting}
                                             onClick={handleDeleteClick}>
                                         {isDeleting ? <CircularProgress size={25} color={"error"}/> : "Delete"}
@@ -157,7 +161,7 @@ function Definition() {
                                         onClick={() => navigate(`/report/${currentWord?.wordId}`, {
                                             state: currentWord
                                         })}>
-                                <Report fontSize={"large"}/>
+                                <Report className={"sm:text-5xl xl:text-3xl"}/>
                             </IconButton>
                         </Tooltip>
                     </div>
