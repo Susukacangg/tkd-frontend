@@ -1,17 +1,14 @@
-import {NavLink, NavLinkProps, useNavigate} from "react-router-dom";
-import {Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip} from "@mui/material";
+import {NavLink, useNavigate} from "react-router-dom";
+import {Button, IconButton} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
-import {useState} from "react";
-import {LibraryBooks, Login, Logout, Search} from "@mui/icons-material";
+import {Search} from "@mui/icons-material";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import HeaderProps from "../component-props/header-props.ts";
+import {MENU_ITEMS} from "../common/constants.ts";
+import ProfileIcon from "./ProfileIcon.tsx";
 
 const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boolean, enableContributeBtn?: boolean}) => {
-    const navLinkItems: NavLinkProps[] = [
-        {to: "/home", children: "Home"},
-        {to: "/about", children: "About"},
-    ]
-    let navLinks = enableHomeOnly ? navLinkItems.slice(0, 1) : navLinkItems;
+    let navLinks = enableHomeOnly ? MENU_ITEMS.slice(0, 1) : MENU_ITEMS;
 
     const navigate = useNavigate();
 
@@ -32,92 +29,6 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
                     Contribute
                 </Button>}
         </div>
-    );
-}
-
-const ProfileIcon = ({name}: {name: string | null}) => {
-
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {isAuthenticated} = useAuth();
-    const navigate = useNavigate();
-    const isMenuOpen = Boolean(anchorEl);
-
-    const nameToColor = (name: string | null): string => {
-        if (name !== null) {
-            let color: string = "";
-
-            if (name !== undefined) {
-                let hash: number = 0;
-                for (let i = 0; i < name.length; i++) {
-                    hash = name.charCodeAt(i) + ((hash << 6) - hash);
-                }
-
-                color = "#";
-
-                for (let i = 0; i < 3; i++) {
-                    const value = (hash >> (i * 8)) & 0xff;
-                    color += `00${value.toString(16)}`.slice(-2)
-                }
-            }
-
-            return color;
-        }
-
-        return "";
-    }
-
-    const avatarDisplay = (name: string | null) => {
-        let firstInitial, lastInitial, avatarImg = "";
-
-        if(name !== null){
-            const nameArray = name.split(' ');
-            firstInitial = nameArray[0][0];
-            lastInitial = nameArray.length > 1? nameArray[nameArray.length - 1][0] : "";
-        } else {
-            avatarImg = "/mt-avatar.jpg";
-        }
-
-        return {
-            sx: {
-                bgcolor: nameToColor(name),
-            },
-            children: `${firstInitial}${lastInitial}`,
-            src: avatarImg,
-        }
-    }
-
-    return (
-        <>
-            <Tooltip title={"Account settings"}>
-                <IconButton className={"ml-4"}
-                            onClick={(e) => setAnchorEl(e.currentTarget)}
-                            sx={{color: nameToColor(name)}}>
-                    <Avatar {...avatarDisplay(name)}/>
-                </IconButton>
-            </Tooltip>
-            <Menu open={isMenuOpen}
-                  anchorEl={anchorEl}
-                  onClick={() => setAnchorEl(null)}
-                  onClose={() => setAnchorEl(null)}>
-
-                {isAuthenticated? (
-                    <MenuItem onClick={() => navigate("/my-contributions")}>
-                        <ListItemIcon>
-                            <LibraryBooks color={"primary"}/>
-                        </ListItemIcon>
-                        My contributions
-                    </MenuItem>
-                ): null}
-                {isAuthenticated && <Divider/>}
-
-                <MenuItem onClick={() => isAuthenticated? navigate("/logout") : navigate("/login")}>
-                    <ListItemIcon>
-                        {isAuthenticated? <Logout sx={{color: "black"}}/> : <Login color={"primary"}/>}
-                    </ListItemIcon>
-                    {isAuthenticated? "Logout" : "Login"}
-                </MenuItem>
-            </Menu>
-        </>
     );
 }
 
