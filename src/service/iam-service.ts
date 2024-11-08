@@ -32,7 +32,7 @@ class IamService {
 
     static async logout(controller: AbortController): Promise<string> {
         try {
-            const response = await iamClient.post('/auth/logout', {
+            const response = await iamClient.post('/auth/logout', null, {
                 withCredentials: true,
                 timeoutErrorMessage: "Something went wrong",
                 signal: controller.signal
@@ -80,7 +80,7 @@ class IamService {
         }
     }
 
-    static async getUserDetails(controller: AbortController): Promise<UserView> {
+    static async getUserDetails(controller: AbortController): Promise<UserView | null> {
         try {
             const response: AxiosResponse<UserView, any> = await iamClient.get('/user/details', {
                 params: {includeId: false},

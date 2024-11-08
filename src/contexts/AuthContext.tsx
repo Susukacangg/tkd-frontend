@@ -1,6 +1,4 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {toast} from "sonner";
-import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import {IS_AUTHENTICATED_KEY} from "../common/constants.ts";
 import AuthContextProps from "../component-props/auth-context-props.ts";
 import IamService from "../service/iam-service.ts";
@@ -15,25 +13,36 @@ export function AuthProvider({ children }: {children: ReactNode}) {
 
     useEffect(() => {
         const controller = new AbortController();
-        (async () => {
-            if(isAuthenticated) {
-                try {
-                    const response: UserView = await IamService.getUserDetails(controller);
-                    setCurrentUser(response);
-                } catch (error: any) {
-                    // do nothing
-                }
 
-                try {
-                    const response: boolean = await IamService.checkAdmin(controller);
-                    setIsUserAdmin(response);
-                } catch (error: any) {
-                    // do nothing
-                }
+        (async () => {
+            try {
+                const response: UserView | null = await IamService.getUserDetails(controller);
+                setCurrentUser(response ? response : null);
+            } catch (error: any) {
+                if(controller.signal.aborted)
+                    return;
+                console.error(error.message);
             }
         })();
-        return () => controller.abort();
 
+        return () => controller.abort();
+    }, [isAuthenticated])
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        (async () => {
+            try {
+                const response: boolean = await IamService.checkAdmin(controller);
+                setIsUserAdmin(response);
+            } catch (error: any) {
+                if(controller.signal.aborted)
+                    return;
+                console.error(error.message);
+            }
+        })();
+
+        return () => controller.abort();
     }, [isAuthenticated])
 
     const loginUser = () => {
@@ -42,20 +51,10 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         setIsAuthenticated(true);
     };
 
-    const logoutUser = async (controller: AbortController) => {
-        try {
-            const logoutMessage: string = await IamService.logout(controller);
+    const logoutUser = () => {
+        localStorage.removeItem(IS_AUTHENTICATED_KEY);
 
-            localStorage.removeItem(IS_AUTHENTICATED_KEY);
-            toast.success(logoutMessage, TOAST_CUSTOM_CLOSE_BTN);
-
-            setIsAuthenticated(false);
-
-            window.location.href = "/login";
-        } catch (error: any) {
-            toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
-            window.location.href = "/home";
-        }
+        setIsAuthenticated(false);
     };
 
     return(

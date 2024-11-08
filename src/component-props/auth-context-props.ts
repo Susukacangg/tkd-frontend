@@ -5,5 +5,5 @@ export default interface AuthContextProps {
     isAuthenticated: boolean;
     isUserAdmin: boolean;
     loginUser: () => void;
-    logoutUser: (controller: AbortController) => Promise<void>;
+    logoutUser: () => void;
 }
