@@ -41,7 +41,10 @@ const DrawerMenu = () => {
              }}>
             {isAuthenticated ?
                 <List>
-                    <ListItem>
+                    <ListItem sx={{
+                        paddingTop: 3,
+                        paddingLeft: 3
+                    }}>
                         <ListItemIcon style={{
                             marginRight: 8
                         }}>
@@ -62,19 +65,18 @@ const DrawerMenu = () => {
                                           }
                                       }}/>
                     </ListItem>
-                    <ListItem sx={{
-                        paddingTop: 3,
-                        paddingLeft: 3
-                    }}>
-                        <ListItemIcon>
-                            <LibraryBooks color={"primary"} fontSize={"large"}/>
-                        </ListItemIcon>
-                        <ListItemText primary={"My Contributions"}
-                                      sx={{
-                                          ".MuiListItemText-primary": {
-                                              fontSize: 30,
-                                          }
-                                      }}/>
+                    <ListItem>
+                        <ListItemButton onClick={() => navigate("/my-contributions")}>
+                            <ListItemIcon>
+                                <LibraryBooks color={"primary"} fontSize={"large"}/>
+                            </ListItemIcon>
+                            <ListItemText primary={"My Contributions"}
+                                          sx={{
+                                              ".MuiListItemText-primary": {
+                                                  fontSize: 30,
+                                              }
+                                          }}/>
+                        </ListItemButton>
                     </ListItem>
                 </List>
             : null}
