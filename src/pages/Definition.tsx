@@ -105,7 +105,7 @@ function Definition() {
                     <Divider/>
 
                     {/*TRANSLATION*/}
-                    <div className={"flex flex-col gap-4 sm:my-20 xl:my-4"}>
+                    <div className={"flex flex-col gap-4 sm:mb-20 sm:mt-12 xl:my-4"}>
                         <Typography variant={"h5"}
                                     className={"sm:text-6xl xl:text-2xl sm:mb-4 xl:mb-0"}>
                             Translation/Definition
