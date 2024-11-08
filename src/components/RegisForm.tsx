@@ -50,7 +50,11 @@ function RegisForm() {
 
     const setLoading = (isFieldLoading: boolean | undefined) => {
         if(!isFieldLoading)
-            return {};
+            return {
+                input: {
+                    className: "sm:text-4xl xl:text-base"
+                }
+            };
 
         return {
             input: {
@@ -58,28 +62,47 @@ function RegisForm() {
                     <InputAdornment position={"start"}>
                         <CircularProgress size={20}/>
                     </InputAdornment>
-                )
+                ),
+                className: "sm:text-4xl xl:text-base"
             }
         }
     }
 
     const passwordErrorMessage = errors?.password?.message?.split("\n").map((line, index) => (
-        <span key={index}>{line}<br/></span>
+        <span key={index}
+              className={"sm:text-xl xl:text-sm"}>
+            {line}<br/>
+        </span>
     ));
 
     const usernameErrorMessage = errors?.username?.message?.split("\n").map((line, index) => (
-        <span key={index}>{line}<br/></span>
+        <span key={index}
+              className={"sm:text-xl xl:text-sm"}>
+            {line}<br/>
+        </span>
     ));
 
-    return(
+    const emailErrorMessage = (
+        <span className={"sm:text-xl xl:text-sm"}>
+            {errors?.email?.message}<br/>
+        </span>
+    );
+
+    const confirmPasswordErrorMessage = (
+        <span className={"sm:text-xl xl:text-sm"}>
+            {errors?.confirmPassword?.message}<br/>
+        </span>
+    );
+
+    return (
         <FormContainer headerString={"Welcome to The Kadazandusun Dictionary"}
                        subHeaderString={subHeaderString}
                        formFooter={<FormFooter text={"Already have an account?"}
                                                linkText={"Log in"}
                                                linkRoute={"/login"}/>}>
             <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className={"mt-10 w-1/2"}>
-                <div className={"mb-1 flex flex-col justify-between gap-6"}>
+                  className={"sm:mt-16 xl:mt-10 sm:w-full xl:w-1/2"}>
+                <div className={"flex flex-col justify-between sm:gap-14 xl:gap-6"}>
                     <FieldLabel title={"Username"}/>
                     <TextField type={"text"}
                                placeholder={"username"}
@@ -93,7 +116,7 @@ function RegisForm() {
                                placeholder={"example@mail.com"}
                                error={errors.email && true}
                                slotProps={setLoading(validatingFields?.email)}
-                               helperText={errors.email?.message}
+                               helperText={emailErrorMessage}
                                {...register("email")}/>
 
                     <FieldLabel title={"Password"}/>
@@ -108,10 +131,13 @@ function RegisForm() {
                                                <IconButton onClick={() => {
                                                    isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
                                                }}>
-                                                   {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                                   {isPasswordVisible ?
+                                                       <VisibilityOff className={"sm:text-5xl xl:text-3xl"}/>
+                                                       : <Visibility className={"sm:text-5xl xl:text-3xl"}/>}
                                                </IconButton>
                                            </InputAdornment>
                                        ),
+                                       className: "sm:text-5xl xl:text-base",
                                    },
                                }}
                                {...register("password")}/>
@@ -120,7 +146,7 @@ function RegisForm() {
                     <TextField type={isPasswordVisible ? "text" : "password"}
                                placeholder={"password"}
                                error={errors.confirmPassword && true}
-                               helperText={errors.confirmPassword?.message}
+                               helperText={confirmPasswordErrorMessage}
                                slotProps={{
                                    input: {
                                        endAdornment: (
@@ -128,10 +154,13 @@ function RegisForm() {
                                                <IconButton onClick={() => {
                                                    isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
                                                }}>
-                                                   {isPasswordVisible ? <VisibilityOff/> : <Visibility/>}
+                                                   {isPasswordVisible ?
+                                                       <VisibilityOff className={"sm:text-5xl xl:text-3xl"}/>
+                                                       : <Visibility className={"sm:text-5xl xl:text-3xl"}/>}
                                                </IconButton>
                                            </InputAdornment>
                                        ),
+                                       className: "sm:text-5xl xl:text-base",
                                    },
                                }}
                                {...register("confirmPassword")}/>
@@ -140,7 +169,7 @@ function RegisForm() {
                 <Button variant={"contained"}
                         type={"submit"}
                         disabled={isSubmitting}
-                        className={"mt-6 capitalize w-full text-lg"}>
+                        className={"sm:mt-20 xl:mt-6 capitalize w-full sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}>
                     {isSubmitting? <CircularProgress color="secondary" size={25}/> : "Create Account"}
                 </Button>
             </form>
