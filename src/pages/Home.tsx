@@ -1,7 +1,7 @@
 import Header from "../components/Header.tsx";
 import HeroBanner from "../components/HeroBanner.tsx";
 import WordList from "../components/WordList.tsx";
-import {CircularProgress, Pagination} from "@mui/material";
+import {CircularProgress, Pagination, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {toast} from "sonner";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
@@ -50,6 +50,9 @@ function Home() {
             <Header enableSearchBar={false}/>
             <CenteredContainer>
                 <HeroBanner/>
+                <Typography variant={"h3"} className={"mt-4"}>
+                    Random Words
+                </Typography>
                 {!isLoading ? (
                     <>
                         <WordList words={pagedWords}/>

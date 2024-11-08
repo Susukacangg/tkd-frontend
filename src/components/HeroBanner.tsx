@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar.tsx";
 
 function HeroBanner({disableSearch = false}: {disableSearch?: boolean}) {
     return (
-        <div className="w-full relative h-fit">
+        <div className="w-full relative h-fit sm:hidden xl:block">
             <img src="/kadazanpplenhanced.jpeg" alt="landing image"
                  className={"rounded-lg w-full"}/>
 

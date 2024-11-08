@@ -38,12 +38,13 @@ function WordListItem({word}: {word: Word}) {
               sx={{boxShadow: 5}}>
             <div className={"flex items-center justify-between w-full"}>
                 <div className="flex flex-col items-start w-full">
-                    <Typography variant={"h5"}>
+                    <Typography variant={"h5"}
+                                className={"sm:text-4xl xl:text-2xl"}>
                         {word.word}
                     </Typography>
                     <Typography variant={"h6"}
                                 color={"textDisabled"}
-                                className={"font-semibold"}>
+                                className={"font-semibold sm:text-2xl xl:text-xl"}>
                         {word.translations.map((value: Translation, index: number, array: Translation[]) => {
                             let translation = value.translation;
                             if (index !== array.length - 1)
@@ -56,7 +57,7 @@ function WordListItem({word}: {word: Word}) {
                     <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}
                                 onMouseEnter={handleOptionsButtonHover}
                                 onMouseLeave={handleOptionsButtonHover}>
-                        <MoreVert/>
+                        <MoreVert className={"sm:text-3xl xl:text-2xl"}/>
                     </IconButton>
                 </Tooltip>
                 <Menu open={isOptionsOpen}
