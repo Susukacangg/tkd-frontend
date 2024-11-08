@@ -83,7 +83,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/logout",
-        element: <LogoutPage/>,
+        element: (
+            <ProtectedRoute>
+                <LogoutPage/>
+            </ProtectedRoute>
+        ),
     },
     {
         path: "/report/:wordId",
