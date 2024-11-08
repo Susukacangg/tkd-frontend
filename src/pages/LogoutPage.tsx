@@ -19,7 +19,7 @@ function LogoutPage() {
         <div className="flex justify-center items-center h-screen w-screen">
             <div className="flex-col gap-10 justify-items-center">
                 <CircularProgress size={69} className={"mb-14"}/>
-                <Typography>
+                <Typography className={"sm:text-3xl xl:text-base"}>
                     Logging you out
                 </Typography>
             </div>
