@@ -7,7 +7,7 @@ function TranslateItem({translation}: {translation: string}) {
             <div className={"w-fit flex flex-row items-center"}>
                 <GTranslate className={"mr-6 bg-gray-200 sm:p-2 xl:p-1 rounded-md sm:text-6xl xl:text-3xl"}/>
                 <Typography variant="h6" fontWeight={"bold"}
-                            className={"sm:text-5xl xl:text-xl"}>
+                            className={"sm:text-4xl xl:text-xl"}>
                     {translation}
                 </Typography>
             </div>

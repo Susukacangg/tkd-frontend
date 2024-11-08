@@ -11,7 +11,7 @@ function UsageExampleItem({kadazanSentence, originalSentence}: UsageExampleProps
             <div className={"flex flex-col"}>
                 {/*KADAZAN EXAMPLE*/}
                 <Typography variant={"h6"} fontWeight={"bold"}
-                            className={"sm:text-5xl xl:text-xl sm:mb-2 xl:mb-0"}>
+                            className={"sm:text-4xl xl:text-xl sm:mb-2 xl:mb-0"}>
                     {kadazanSentence}
                 </Typography>
 
