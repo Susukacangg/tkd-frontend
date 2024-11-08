@@ -102,6 +102,11 @@ function SearchBar({children, isDisabled = false, classString}: {children: React
                           fullWidth={true}
                           value={inputValue}
                           disabled={isDisabled}
+                          slotProps={{
+                              listbox: {
+                                  className: "sm:text-5xl xl:text-base",
+                              }
+                          }}
                           onClose={handleDropdownClose}
                           onBlur={handleDropdownClose}
                           onHighlightChange={(_, option) => handleHighlightChange(option)}
