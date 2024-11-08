@@ -58,19 +58,24 @@ function EditContributionForm() {
     return (
         <FormContainer headerString={"Editing"}>
             <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className={"mt-10 w-1/2"}>
-                <div className={"mb-1 flex flex-col justify-between gap-6"}>
+                  className={"sm:mt-16 xl:mt-10 sm:w-full xl:w-1/2"}>
+                <div className={"flex flex-col justify-between sm:gap-14 xl:gap-6"}>
                     {/*word or phrase section*/}
                     <FieldLabel title={"Word or phrase"}/>
                     <TextField type={"text"}
                                placeholder={"e.g. tokou"}
                                error={errors.word && true}
                                helperText={errors.word?.message}
-                               className={"w-11/12"}
+                               className={"w-11/12 text-sm"}
+                               slotProps={{
+                                   input: {
+                                       className: "sm:text-5xl xl:text-base"
+                                   }
+                               }}
                                {...register('word')}/>
 
                     {/*translation input section*/}
-                    <FieldLabel title={"Translation"}/>
+                    <FieldLabel title={"Translation/Definition"}/>
                     {translationFields.map((field, index) => {
                         return (
                             <div key={field.id} className={"flex flex-col gap-6"}>
@@ -81,13 +86,18 @@ function EditContributionForm() {
                                                error={errors.translations?.[index]?.translation && true}
                                                helperText={errors.translations?.[index]?.translation?.message}
                                                className={"w-11/12"}
+                                               slotProps={{
+                                                   input: {
+                                                       className: "sm:text-5xl xl:text-base"
+                                                   }
+                                               }}
                                                {...register(`translations.${index}.translation`)}/>
 
                                     {translationFields.length > 1 &&
                                         <IconButton color={"error"}
                                                     onClick={() => removeTranslation(index)}>
-                                            <RemoveCircle fontSize={"large"}
-                                                          color={"error"}/>
+                                            <RemoveCircle color={"error"}
+                                                          className={"sm:text-5xl xl:text-3xl"}/>
                                         </IconButton>
                                     }
                                 </div>
@@ -95,13 +105,12 @@ function EditContributionForm() {
                         );
                     })}
                     <Button variant={"contained"}
-                            className={"w-1/3 capitalize bg-gray-900"}
+                            className={"sm:w-11/12 xl:w-1/3 capitalize bg-gray-900 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}
                             onClick={() => appendTranslation({
                                 translationId: null,
                                 translation: ''
                             })}>
-                        Add translation <AddCircle fontSize={"small"}
-                                                   className={"ml-2"}/>
+                        Add translation <AddCircle className={"ml-2 sm:text-4xl xl:text-lg"}/>
                     </Button>
 
                     {/*examples section*/}
@@ -117,12 +126,17 @@ function EditContributionForm() {
                                                    error={errors.usageExamples?.[index]?.example && true}
                                                    helperText={errors.usageExamples?.[index]?.example?.message}
                                                    className={"w-11/12"}
+                                                   slotProps={{
+                                                       input: {
+                                                           className: "sm:text-5xl xl:text-base"
+                                                       }
+                                                   }}
                                                    {...register(`usageExamples.${index}.example` as const)}/>
                                         {exampleFields.length > 1 &&
                                             <IconButton color={"error"}
                                                         onClick={() => removeExample(index)}>
-                                                <RemoveCircle fontSize={"large"}
-                                                              color={"error"}/>
+                                                <RemoveCircle color={"error"}
+                                                              className={"sm:text-5xl xl:text-3xl"}/>
                                             </IconButton>}
                                     </div>
 
@@ -132,36 +146,40 @@ function EditContributionForm() {
                                                error={errors.usageExamples?.[index]?.exampleTranslation && true}
                                                helperText={errors.usageExamples?.[index]?.exampleTranslation?.message}
                                                className={"w-11/12"}
+                                               slotProps={{
+                                                   input: {
+                                                       className: "sm:text-5xl xl:text-base"
+                                                   }
+                                               }}
                                                {...register(`usageExamples.${index}.exampleTranslation` as const)}/>
                                 </div>
                             </div>
                         );
                     })}
                     <Button variant={"contained"}
-                            className={"w-1/3 capitalize bg-gray-900"}
+                            className={"sm:w-11/12 xl:w-1/3 capitalize bg-gray-900 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}
                             onClick={() => appendExample({
                                 exampleId: null,
                                 example: '',
                                 exampleTranslation: ''
                             })}>
-                        Add example <AddCircle fontSize={"small"}
-                                               className={"ml-2"}/>
+                        Add example <AddCircle className={"ml-2 sm:text-4xl xl:text-lg"}/>
                     </Button>
                 </div>
 
                 {/*submit and reset buttons*/}
-                <div className={"flex w-11/12 gap-3"}>
+                <div className={"flex sm:w-full xl:w-11/12 gap-3 sm:mt-16 xl:mt-1"}>
                     <Button variant={"contained"}
                             type={"submit"}
                             disabled={isSubmitting}
-                            className={"mt-6 capitalize w-1/2 text-lg"}>
+                            className={"mt-6 capitalize w-1/2 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}>
                         {isSubmitting ? <CircularProgress size={25}/> : "Edit"}
                     </Button>
                     <Button variant={"contained"}
                             type={"reset"}
                             disabled={isSubmitting}
                             onClick={() => navigate(`/definition/${wordId}`)}
-                            className={"mt-6 capitalize w-1/2 text-lg"}
+                            className={"mt-6 capitalize w-1/2 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}
                             sx={{backgroundColor: "#f28b82"}}>
                         Cancel
                     </Button>
