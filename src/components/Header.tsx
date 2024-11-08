@@ -7,7 +7,7 @@ const HeaderTitle = () => {
     const navigate = useNavigate();
 
     return (
-        <Typography variant="h5" className={"font-semibold xl:mr-14 sm:mr-0 sm:text-4xl xl:text-2xl sm:py-10 xl:py-0 text-nowrap"}
+        <Typography variant="h5" className={"font-semibold xl:mr-14 sm:mr-0 sm:text-5xl xl:text-2xl sm:py-10 xl:py-0 text-nowrap"}
                     onClick={() => navigate("/home")}>
             The Kadazandusun Dictionary
         </Typography>
