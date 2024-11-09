@@ -6,7 +6,7 @@ import {
     IconButton,
     List,
     ListItem,
-    ListItemButton, ListItemIcon,
+    ListItemButton, ListItemIcon, Skeleton,
     SwipeableDrawer, Typography,
 } from "@mui/material";
 import Navbar from "./Navbar.tsx";
@@ -21,36 +21,37 @@ import SearchBar from "./SearchBar.tsx";
 
 const DrawerMenu = () => {
     const navigate = useNavigate();
-    const {isAuthenticated, currentUser} = useAuth();
+    const {isAuthenticated, currentUser, isLoadingUser} = useAuth();
 
     return (
         <Box role={"menu"}
-             className={"xxs:max-xs:w-[200px] lg:w-[375px]"}>
+             className={"xxs:max-xs:w-[275px] xs:w-[300px] lg:w-[425px]"}>
             {isAuthenticated ?
                 <List>
-                    <ListItem sx={{
-                        paddingTop: 3,
-                        paddingLeft: 3
-                    }}>
+                    <ListItem className={"xs:pl-5 lg:pl-7 pt-3"}>
                         <ListItemIcon className={"xxs:mr-0 lg:mr-[8px]"}>
-                            <Avatar className={"xxs:w-[35px] xxs:h-[35px] lg:w-[50px] lg:h-[50px] xxs:text-[16px] lg:text-[20px] xxs:mr-0 lg:mr-2"}
-                                sx={{
-                                    bgcolor: nameToColor(currentUser !== null? currentUser.username : null),
-                                }}>
-                                {currentUser?.username[0]}
-                            </Avatar>
+                            {isLoadingUser ? <Skeleton variant={"circular"}
+                                                       className={"lg:w-[50px] lg:h-[50px]"}></Skeleton>
+                            : <Avatar className={"xxs:w-[35px] xxs:h-[35px] lg:w-[50px] lg:h-[50px] xxs:text-[16px] lg:text-[20px] xxs:mr-0 lg:mr-2"}
+                                      sx={{
+                                          bgcolor: nameToColor(currentUser !== null? currentUser.username : null),
+                                      }}>
+                                    {currentUser?.username[0]}
+                                </Avatar>}
                         </ListItemIcon>
-                        <Typography className={"xxs:text-[15px] lg:text-[30px]"}>
-                            {currentUser?.username}
-                        </Typography>
+                        {isLoadingUser ? <Skeleton variant={"rounded"}
+                                                   className={"w-[200px]"}></Skeleton>
+                            : <Typography className={"xxs:text-[15px] lg:text-[30px]"}>
+                                {currentUser?.username}
+                            </Typography>}
                     </ListItem>
-                    <ListItem className={"xxs:max-md:pl-2"}>
+                    <ListItem className={"xxs:max-lg:pl-2"}>
                         <ListItemButton onClick={() => navigate("/my-contributions")}>
                             <ListItemIcon className={"xxs:max-md:pr-0"}>
                                 <LibraryBooks color={"primary"}
                                               className={"xxs:text-[25px] lg:text-4xl"}/>
                             </ListItemIcon>
-                            <Typography className={"xxs:text-[15px] lg:text-[30px]"}>
+                            <Typography className={"xxs:text-[15px] lg:text-[30px] xxs:max-lg:-ml-1"}>
                                 My Contributions
                             </Typography>
                         </ListItemButton>
@@ -137,17 +138,17 @@ function Header({enableHomeOnly = false, enableAvatar = true, enableSearchBar = 
             {/*mobile view elements*/}
             <IconButton className={"lg:block xl:hidden xxs:pr-4 lg:pr-10"}
                         onClick={() => toggleDrawer()}>
-                <MenuRounded className={"xxs:text-2xl lg:text-5xl"}/>
+                <MenuRounded className={"xxs:max-md:text-2xl lg:text-5xl"}/>
             </IconButton>
             <div className="xl:hidden lg:block w-full flex justify-center items-center">
                 {isSearchBarOpen ?
                     <SearchBar isDisabled={false} classString={"xxs:text-[12px] lg:text-4xl xxs:my-2.5 lg:my-5 xl:hidden"}>
                         <IconButton type={"submit"}>
                             <Search cursor={"pointer"}
-                                    className={"xxs:text-2xl lg:text-5xl"}/>
+                                    className={"xxs:max-md:text-2xl lg:text-5xl"}/>
                         </IconButton>
                     </SearchBar>
-                    : <Typography variant="h5" className={"font-semibold mr-0 xxs:text-[16px] lg:text-5xl xxs:py-6 lg:py-10 text-nowrap text-center"}
+                    : <Typography variant="h5" className={"font-semibold mr-0 xxs:max-xs:text-[16px] md:max-xl:text-5xl xxs:py-6 lg:py-10 text-nowrap text-center"}
                                   onClick={() => navigate("/home")}>
                         The Kadazandusun Dictionary
                     </Typography>}
@@ -155,8 +156,8 @@ function Header({enableHomeOnly = false, enableAvatar = true, enableSearchBar = 
             <IconButton className={"lg:block xl:hidden pl-4"}
                         onClick={() => toggleSearchBar()}>
                 {isSearchBarOpen ?
-                    <Close className={"xxs:text-2xl lg:text-5xl"}/>
-                    : <Search className={"xxs:text-2xl lg:text-5xl"}/>}
+                    <Close className={"xxs:max-md:text-2xl lg:text-5xl"}/>
+                    : <Search className={"xxs:max-md:text-2xl lg:text-5xl"}/>}
             </IconButton>
             {/*mobile view elements*/}
 
