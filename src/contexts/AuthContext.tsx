@@ -17,7 +17,6 @@ export function AuthProvider({ children }: {children: ReactNode}) {
 
         (async () => {
             if(isAuthenticated) {
-                console.log("getting user details...");
                 try {
                     const response: UserView | null = await IamService.getUserDetails(controller);
                     setCurrentUser(response ? response : null);
