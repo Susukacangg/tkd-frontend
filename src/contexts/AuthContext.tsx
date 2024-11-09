@@ -11,6 +11,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     const [currentUser, setCurrentUser] = useState<UserView | null>(null);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
+    const [isLoadingUser, setIsLoadingUser] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -19,6 +20,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
             if(isAuthenticated) {
                 console.log("getting user details...");
                 try {
+                    setIsLoadingUser(true);
                     const response: UserView | null = await IamService.getUserDetails(controller);
                     setCurrentUser(response ? response : null);
                     setIsTokenRefreshed(false);
@@ -26,6 +28,8 @@ export function AuthProvider({ children }: {children: ReactNode}) {
                     if (controller.signal.aborted)
                         return;
                     console.error(error.message);
+                } finally {
+                    setIsLoadingUser(false);
                 }
             } else {
                 setCurrentUser(null);
@@ -72,7 +76,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     const updateIsTokenRefreshed = (value: boolean) => setIsTokenRefreshed(value);
 
     return(
-        <AuthContext.Provider value={{currentUser, isAuthenticated, isUserAdmin, updateIsTokenRefreshed, loginUser, logoutUser}}>
+        <AuthContext.Provider value={{currentUser, isAuthenticated, isUserAdmin, isLoadingUser, updateIsTokenRefreshed, loginUser, logoutUser}}>
             {children}
         </AuthContext.Provider>
     );
