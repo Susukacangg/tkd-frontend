@@ -104,7 +104,7 @@ function SearchBar({children, isDisabled = false, classString}: {children: React
                           disabled={isDisabled}
                           slotProps={{
                               listbox: {
-                                  className: "sm:text-5xl xl:text-base",
+                                  className: "lg:text-5xl xl:text-base",
                               }
                           }}
                           onClose={handleDropdownClose}
