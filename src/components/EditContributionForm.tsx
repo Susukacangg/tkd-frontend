@@ -58,8 +58,8 @@ function EditContributionForm() {
     return (
         <FormContainer headerString={"Editing"}>
             <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className={"sm:mt-16 xl:mt-10 sm:w-full xl:w-1/2"}>
-                <div className={"flex flex-col justify-between sm:gap-14 xl:gap-6"}>
+                  className={"lg:mt-16 xl:mt-10 xxs:w-full xl:w-1/2"}>
+                <div className={"flex flex-col justify-between xxs:gap-5 lg:gap-14 xl:gap-6"}>
                     {/*word or phrase section*/}
                     <FieldLabel title={"Word or phrase"}/>
                     <TextField type={"text"}
@@ -69,7 +69,7 @@ function EditContributionForm() {
                                className={"w-11/12 text-sm"}
                                slotProps={{
                                    input: {
-                                       className: "sm:text-5xl xl:text-base"
+                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base"
                                    }
                                }}
                                {...register('word')}/>
@@ -88,7 +88,7 @@ function EditContributionForm() {
                                                className={"w-11/12"}
                                                slotProps={{
                                                    input: {
-                                                       className: "sm:text-5xl xl:text-base"
+                                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base"
                                                    }
                                                }}
                                                {...register(`translations.${index}.translation`)}/>
@@ -97,7 +97,7 @@ function EditContributionForm() {
                                         <IconButton color={"error"}
                                                     onClick={() => removeTranslation(index)}>
                                             <RemoveCircle color={"error"}
-                                                          className={"sm:text-5xl xl:text-3xl"}/>
+                                                          className={"lg:text-5xl xl:text-3xl"}/>
                                         </IconButton>
                                     }
                                 </div>
@@ -105,18 +105,18 @@ function EditContributionForm() {
                         );
                     })}
                     <Button variant={"contained"}
-                            className={"sm:w-11/12 xl:w-1/3 capitalize bg-gray-900 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}
+                            className={"xxs:w-11/12 xl:w-1/3 capitalize bg-gray-900 xxs:text-[10px] lg:text-4xl xl:text-base lg:py-3 xl:py-1.5"}
                             onClick={() => appendTranslation({
                                 translationId: null,
                                 translation: ''
                             })}>
-                        Add translation <AddCircle className={"ml-2 sm:text-4xl xl:text-lg"}/>
+                        Add translation <AddCircle className={"ml-2 xxs:text-sm lg:text-4xl xl:text-lg"}/>
                     </Button>
 
                     {/*examples section*/}
                     <FieldLabel title={"Usage examples"}/>
                     {exampleFields.map((field, index) => {
-                        return(
+                        return (
                             <div key={field.id} className={"flex flex-col gap-6"}>
                                 <div className={"flex flex-col gap-3"}>
                                     <div className={"flex gap-3 items-center"}>
@@ -128,7 +128,7 @@ function EditContributionForm() {
                                                    className={"w-11/12"}
                                                    slotProps={{
                                                        input: {
-                                                           className: "sm:text-5xl xl:text-base"
+                                                           className: "xxs:text-[12px] lg:text-5xl xl:text-base"
                                                        }
                                                    }}
                                                    {...register(`usageExamples.${index}.example` as const)}/>
@@ -136,7 +136,7 @@ function EditContributionForm() {
                                             <IconButton color={"error"}
                                                         onClick={() => removeExample(index)}>
                                                 <RemoveCircle color={"error"}
-                                                              className={"sm:text-5xl xl:text-3xl"}/>
+                                                              className={"lg:text-5xl xl:text-3xl"}/>
                                             </IconButton>}
                                     </div>
 
@@ -148,7 +148,7 @@ function EditContributionForm() {
                                                className={"w-11/12"}
                                                slotProps={{
                                                    input: {
-                                                       className: "sm:text-5xl xl:text-base"
+                                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base"
                                                    }
                                                }}
                                                {...register(`usageExamples.${index}.exampleTranslation` as const)}/>
@@ -157,29 +157,29 @@ function EditContributionForm() {
                         );
                     })}
                     <Button variant={"contained"}
-                            className={"sm:w-11/12 xl:w-1/3 capitalize bg-gray-900 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}
+                            className={"xxs:w-11/12 xl:w-1/3 capitalize bg-gray-900 xxs:text-[10px] lg:text-4xl xl:text-base lg:py-3 xl:py-1.5"}
                             onClick={() => appendExample({
                                 exampleId: null,
                                 example: '',
                                 exampleTranslation: ''
                             })}>
-                        Add example <AddCircle className={"ml-2 sm:text-4xl xl:text-lg"}/>
+                        Add example <AddCircle className={"ml-2 xxs:text-sm  lg:text-4xl xl:text-lg"}/>
                     </Button>
                 </div>
 
                 {/*submit and reset buttons*/}
-                <div className={"flex sm:w-full xl:w-11/12 gap-3 sm:mt-16 xl:mt-1"}>
+                <div className={"flex lg:w-full xxs:w-11/12 xl:w-11/12 gap-3 lg:mt-16 xl:mt-1"}>
                     <Button variant={"contained"}
                             type={"submit"}
                             disabled={isSubmitting}
-                            className={"mt-6 capitalize w-1/2 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}>
+                            className={"mt-6 capitalize w-1/2 lg:text-4xl xl:text-base lg:py-3 xl:py-1.5"}>
                         {isSubmitting ? <CircularProgress size={25}/> : "Edit"}
                     </Button>
                     <Button variant={"contained"}
                             type={"reset"}
                             disabled={isSubmitting}
                             onClick={() => navigate(`/definition/${wordId}`)}
-                            className={"mt-6 capitalize w-1/2 sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}
+                            className={"mt-6 capitalize w-1/2 lg:text-4xl xl:text-base lg:py-3 xl:py-1.5"}
                             sx={{backgroundColor: "#f28b82"}}>
                         Cancel
                     </Button>

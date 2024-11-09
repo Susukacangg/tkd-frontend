@@ -52,7 +52,7 @@ function RegisForm() {
         if(!isFieldLoading)
             return {
                 input: {
-                    className: "sm:text-4xl xl:text-base"
+                    className: "xxs:text-[12px] lg:text-4xl xl:text-base"
                 }
             };
 
@@ -63,33 +63,33 @@ function RegisForm() {
                         <CircularProgress size={20}/>
                     </InputAdornment>
                 ),
-                className: "sm:text-4xl xl:text-base"
+                className: "xxs:text-[12px]  lg:text-4xl xl:text-base"
             }
         }
     }
 
     const passwordErrorMessage = errors?.password?.message?.split("\n").map((line, index) => (
         <span key={index}
-              className={"sm:text-xl xl:text-sm"}>
+              className={"xxs:text-[9px] lg:text-xl xl:text-sm"}>
             {line}<br/>
         </span>
     ));
 
     const usernameErrorMessage = errors?.username?.message?.split("\n").map((line, index) => (
         <span key={index}
-              className={"sm:text-xl xl:text-sm"}>
+              className={"xxs:text-[9px] lg:text-xl xl:text-sm"}>
             {line}<br/>
         </span>
     ));
 
     const emailErrorMessage = (
-        <span className={"sm:text-xl xl:text-sm"}>
+        <span className={"xxs:text-[9px] lg:text-xl xl:text-sm"}>
             {errors?.email?.message}<br/>
         </span>
     );
 
     const confirmPasswordErrorMessage = (
-        <span className={"sm:text-xl xl:text-sm"}>
+        <span className={"xxs:text-[9px] lg:text-xl xl:text-sm"}>
             {errors?.confirmPassword?.message}<br/>
         </span>
     );
@@ -101,8 +101,8 @@ function RegisForm() {
                                                linkText={"Log in"}
                                                linkRoute={"/login"}/>}>
             <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className={"sm:mt-16 xl:mt-10 sm:w-full xl:w-1/2"}>
-                <div className={"flex flex-col justify-between sm:gap-14 xl:gap-6"}>
+                  className={"xxs:mt-5 lg:mt-16 xl:mt-10 xxs:w-full xl:w-1/2"}>
+                <div className={"flex flex-col justify-between xxs:gap-6 lg:gap-14 xl:gap-6"}>
                     <FieldLabel title={"Username"}/>
                     <TextField type={"text"}
                                placeholder={"username"}
@@ -132,12 +132,12 @@ function RegisForm() {
                                                    isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
                                                }}>
                                                    {isPasswordVisible ?
-                                                       <VisibilityOff className={"sm:text-5xl xl:text-3xl"}/>
-                                                       : <Visibility className={"sm:text-5xl xl:text-3xl"}/>}
+                                                       <VisibilityOff className={"lg:text-5xl xl:text-3xl"}/>
+                                                       : <Visibility className={"lg:text-5xl xl:text-3xl"}/>}
                                                </IconButton>
                                            </InputAdornment>
                                        ),
-                                       className: "sm:text-5xl xl:text-base",
+                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base",
                                    },
                                }}
                                {...register("password")}/>
@@ -155,12 +155,12 @@ function RegisForm() {
                                                    isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
                                                }}>
                                                    {isPasswordVisible ?
-                                                       <VisibilityOff className={"sm:text-5xl xl:text-3xl"}/>
-                                                       : <Visibility className={"sm:text-5xl xl:text-3xl"}/>}
+                                                       <VisibilityOff className={"lg:text-5xl xl:text-3xl"}/>
+                                                       : <Visibility className={"lg:text-5xl xl:text-3xl"}/>}
                                                </IconButton>
                                            </InputAdornment>
                                        ),
-                                       className: "sm:text-5xl xl:text-base",
+                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base",
                                    },
                                }}
                                {...register("confirmPassword")}/>
@@ -169,7 +169,7 @@ function RegisForm() {
                 <Button variant={"contained"}
                         type={"submit"}
                         disabled={isSubmitting}
-                        className={"sm:mt-20 xl:mt-6 capitalize w-full sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}>
+                        className={"xxs:mt-6 lg:mt-20 xl:mt-6 capitalize w-full xxs:text-sm lg:text-4xl xl:text-base lg:py-3 xl:py-1.5"}>
                     {isSubmitting? <CircularProgress color="secondary" size={25}/> : "Create Account"}
                 </Button>
             </form>

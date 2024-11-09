@@ -50,7 +50,7 @@ function Home() {
             <Header enableSearchBar={false}/>
             <CenteredContainer>
                 <HeroBanner/>
-                <Typography variant={"h3"} className={"mt-4"}>
+                <Typography variant={"h3"} className={"xxs:mt-0 lg:mt-4 xxs:text-2xl"}>
                     Random Words
                 </Typography>
                 {!isLoading ? (

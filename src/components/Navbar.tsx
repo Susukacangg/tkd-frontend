@@ -36,7 +36,7 @@ function Navbar({enableHomeOnly, enableContributeBtn, enableSearchBar, enableAva
     const {currentUser} = useAuth();
 
     return (
-        <nav className={"xl:flex sm:hidden grow justify-between items-center h-full"}>
+        <nav className={"xl:flex xxs:hidden grow justify-between items-center h-full"}>
             <NavLinks enableHomeOnly={enableHomeOnly} enableContributeBtn={enableContributeBtn} />
             <div className={`flex flex-row items-center w-1/3 ${enableSearchBar? "justify-between" : "justify-end"}`}>
                 {enableSearchBar &&

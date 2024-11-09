@@ -60,7 +60,7 @@ function SearchResult() {
                             <WordList words={words}/>
                         </>
                     ): (
-                        <Typography variant={"h3"}>
+                        <Typography variant={"h3"} className={"xxs:mt-0 lg:mt-4 xxs:text-2xl"}>
                             No results found for "{searchString}"
                         </Typography>
                     )

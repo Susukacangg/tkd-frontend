@@ -56,8 +56,8 @@ function LoginForm() {
                                                linkText={"Create a new account"}
                                                linkRoute={"/register"}/>}>
             <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className={"sm:mt-16 xl:mt-10 sm:w-full xl:w-1/2"}>
-                <div className={"flex flex-col justify-between sm:gap-14 xl:gap-6"}>
+                  className={"lg:mt-16 xl:mt-10 xxs:w-full xl:w-1/2"}>
+                <div className={"flex flex-col justify-between xxs:gap-6 lg:gap-14 xl:gap-6 xxs:max-xs:mt-4"}>
                     <FieldLabel title={"Username or Email"}/>
                     <TextField type={"text"}
                                placeholder={"example@mail.com"}
@@ -65,7 +65,7 @@ function LoginForm() {
                                helperText={errors.login?.message}
                                slotProps={{
                                    input: {
-                                       className: "sm:text-5xl xl:text-base"
+                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base"
                                    }
                                }}
                                {...register("login")}/>
@@ -83,12 +83,12 @@ function LoginForm() {
                                                    isPasswordVisible ? setIsPasswordVisible(false) : setIsPasswordVisible(true)
                                                }}>
                                                    {isPasswordVisible ?
-                                                       <VisibilityOff className={"sm:text-5xl xl:text-3xl"}/>
-                                                       : <Visibility className={"sm:text-5xl xl:text-3xl"}/>}
+                                                       <VisibilityOff className={"lg:text-5xl xl:text-3xl"}/>
+                                                       : <Visibility className={"lg:text-5xl xl:text-3xl"}/>}
                                                </IconButton>
                                            </InputAdornment>
                                        ),
-                                       className: "sm:text-5xl xl:text-base",
+                                       className: "xxs:text-[12px] lg:text-5xl xl:text-base",
                                    },
                                }}
                                {...register("password")}/>
@@ -96,7 +96,7 @@ function LoginForm() {
                 <Button variant={"contained"}
                         type={"submit"}
                         disabled={isSubmitting}
-                        className={"sm:mt-20 xl:mt-6 capitalize w-full sm:text-4xl xl:text-base sm:py-3 xl:py-1.5"}>
+                        className={"xxs:mt-6 lg:mt-20 xl:mt-6 capitalize w-full xxs:text-sm lg:text-4xl xl:text-base lg:py-3 xl:py-1.5"}>
                     {isSubmitting? <CircularProgress color="secondary" size={25}/> : "Login"}
                 </Button>
             </form>
