@@ -13,6 +13,11 @@ export const dictionaryClient = axios.create({
 const protectedRoutes = ["/contribute"];
 const isProtectedRoute = (path: string) => protectedRoutes.includes(path);
 
+let updateTokenRefreshed: (value: boolean) => void;
+export const setAuthContextFunctions = (updateToken: (value: boolean) => void) => {
+    updateTokenRefreshed = updateToken;
+}
+
 const handleResponseErrorInterceptor = async (error: any) => {
     const originalRequest = error.config
 
@@ -20,6 +25,8 @@ const handleResponseErrorInterceptor = async (error: any) => {
         originalRequest._retry = true;
         try {
             await IamService.refresh();
+            if(updateTokenRefreshed)
+                updateTokenRefreshed(true);
             return axios(originalRequest);
         } catch (error) {
             // do nothing

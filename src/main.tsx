@@ -1,103 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
-import Home from './pages/Home.tsx'
 import './index.css'
-import Register from "./pages/Register.tsx";
-import Login from "./pages/Login.tsx";
-import Definition from "./pages/Definition.tsx";
-import Contribute from "./pages/Contribute.tsx";
 import {createTheme, StyledEngineProvider, ThemeProvider} from "@mui/material";
 import {Toaster} from "sonner";
-import {AuthProvider} from "./contexts/AuthContext.tsx";
-import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import SearchResult from "./pages/SearchResult.tsx";
-import MyContributions from "./pages/MyContributions.tsx";
-import EditContribution from "./pages/EditContribution.tsx";
-import NotFoundPage from "./pages/NotFoundPage.tsx";
-import About from "./pages/About.tsx";
-import LogoutPage from "./pages/LogoutPage.tsx";
-import Report from "./pages/Report";
+import App from "./App.tsx";
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Navigate to={"/home"}/>,
-    },
-    {
-        path: "/home",
-        element: <Home/>,
-    },
-    {
-        path: "/register",
-        element: <Register/>,
-    },
-    {
-        path: "/login",
-        element: <Login/>
-    },
-    {
-        path: "/definition/:wordId",
-        element: <Definition/>,
-        errorElement: <NotFoundPage/>,
-    },
-    {
-        path: "/contribute/?word=value?",
-        element: (
-            <ProtectedRoute>
-                <Contribute/>
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: "/search/?searchString=value?",
-        element: <SearchResult/>,
-    },
-    {
-        path: "/my-contributions",
-        element: (
-            <ProtectedRoute>
-                <MyContributions/>
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: "/edit/:wordId",
-        element: (
-            <ProtectedRoute>
-                <EditContribution/>
-            </ProtectedRoute>
-        )
-    },
-    {
-        path: "/about",
-        element: <About/>
-    },
-    {
-        path: "*",
-        element: <Navigate to={"/not-found"}/>,
-    },
-    {
-        path: "/not-found",
-        element: <NotFoundPage/>,
-    },
-    {
-        path: "/logout",
-        element: (
-            <ProtectedRoute>
-                <LogoutPage/>
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: "/report/:wordId",
-        element: (
-            <ProtectedRoute>
-                <Report/>
-            </ProtectedRoute>
-        ),
-    }
-]);
 
 const theme = createTheme({
     palette: {
@@ -129,9 +36,7 @@ createRoot(document.getElementById('root')!).render(
                                cancelButton: "bg-transparent text-black"
                            },
                        }}/>
-              <AuthProvider>
-                  <RouterProvider router={router}/>
-              </AuthProvider>
+              <App/>
           </StyledEngineProvider>
       </ThemeProvider>
     </StrictMode>
