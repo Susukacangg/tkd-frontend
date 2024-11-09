@@ -10,40 +10,52 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem(IS_AUTHENTICATED_KEY) !== null);
     const [currentUser, setCurrentUser] = useState<UserView | null>(null);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
+    const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
 
     useEffect(() => {
         const controller = new AbortController();
 
         (async () => {
-            try {
-                const response: UserView | null = await IamService.getUserDetails(controller);
-                setCurrentUser(response ? response : null);
-            } catch (error: any) {
-                if(controller.signal.aborted)
-                    return;
-                console.error(error.message);
+            if(isAuthenticated) {
+                console.log("getting user details...");
+                try {
+                    const response: UserView | null = await IamService.getUserDetails(controller);
+                    setCurrentUser(response ? response : null);
+                    setIsTokenRefreshed(false);
+                } catch (error: any) {
+                    if (controller.signal.aborted)
+                        return;
+                    console.error(error.message);
+                }
+            } else {
+                setCurrentUser(null);
             }
         })();
 
         return () => controller.abort();
-    }, [isAuthenticated])
+    }, [isAuthenticated, isTokenRefreshed])
 
     useEffect(() => {
         const controller = new AbortController();
 
         (async () => {
-            try {
-                const response: boolean = await IamService.checkAdmin(controller);
-                setIsUserAdmin(response);
-            } catch (error: any) {
-                if(controller.signal.aborted)
-                    return;
-                console.error(error.message);
+            if(isAuthenticated) {
+                try {
+                    const response: boolean = await IamService.checkAdmin(controller);
+                    setIsUserAdmin(response);
+                    setIsTokenRefreshed(false);
+                } catch (error: any) {
+                    if (controller.signal.aborted)
+                        return;
+                    console.error(error.message);
+                }
+            } else {
+                setIsUserAdmin(false);
             }
         })();
 
         return () => controller.abort();
-    }, [isAuthenticated])
+    }, [isAuthenticated, isTokenRefreshed])
 
     const loginUser = () => {
         localStorage.setItem(IS_AUTHENTICATED_KEY, "true");
@@ -57,8 +69,10 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         setIsAuthenticated(false);
     };
 
+    const updateIsTokenRefreshed = (value: boolean) => setIsTokenRefreshed(value);
+
     return(
-        <AuthContext.Provider value={{currentUser, isAuthenticated, isUserAdmin, loginUser, logoutUser}}>
+        <AuthContext.Provider value={{currentUser, isAuthenticated, isUserAdmin, updateIsTokenRefreshed, loginUser, logoutUser}}>
             {children}
         </AuthContext.Provider>
     );
