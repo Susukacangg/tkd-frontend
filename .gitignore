@@ -28,3 +28,6 @@ dist-ssr
 ./dist
 
 .firebase
+
+tkd-fe.crt
+tkd-fe-privateKey.key
