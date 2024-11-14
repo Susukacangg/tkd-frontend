@@ -1,5 +1,4 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {IS_AUTHENTICATED_KEY} from "../common/constants.ts";
 import AuthContextProps from "../component-props/auth-context-props.ts";
 import IamService from "../service/iam-service.ts";
 import UserView from "../dto/UserView.ts";
@@ -7,7 +6,7 @@ import UserView from "../dto/UserView.ts";
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export function AuthProvider({ children }: {children: ReactNode}) {
-    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem(IS_AUTHENTICATED_KEY) !== null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [currentUser, setCurrentUser] = useState<UserView | null>(null);
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
@@ -17,11 +16,40 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         const controller = new AbortController();
 
         (async () => {
+            try {
+                const response: boolean = await IamService.checkIsUserAuthenticated(controller);
+                setIsAuthenticated(response);
+            } catch (error: any) {
+                if (controller.signal.aborted)
+                    return;
+                console.error(error);
+            }
+        })();
+
+        return () => controller.abort();
+    }, [])
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        getCsrfToken(controller);
+
+        const interval = setInterval(() => getCsrfToken(), 840000)
+
+        return () => {
+            controller.abort();
+            clearInterval(interval);
+        }
+    }, [])
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        (async () => {
             if(isAuthenticated) {
-                console.log("getting user details...");
                 try {
                     setIsLoadingUser(true);
-                    const response: UserView | null = await IamService.getUserDetails(controller);
+                    const response: UserView | undefined = await IamService.getUserDetails(controller);
                     setCurrentUser(response ? response : null);
                     setIsTokenRefreshed(false);
                 } catch (error: any) {
@@ -62,18 +90,24 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     }, [isAuthenticated, isTokenRefreshed])
 
     const loginUser = () => {
-        localStorage.setItem(IS_AUTHENTICATED_KEY, "true");
-
         setIsAuthenticated(true);
     };
 
     const logoutUser = () => {
-        localStorage.removeItem(IS_AUTHENTICATED_KEY);
-
         setIsAuthenticated(false);
     };
 
     const updateIsTokenRefreshed = (value: boolean) => setIsTokenRefreshed(value);
+
+    const getCsrfToken = async (controller?: AbortController) => {
+        try {
+            await IamService.getCsrfToken(controller);
+        } catch (error: any) {
+            if (controller?.signal.aborted)
+                return;
+            console.error(error);
+        }
+    }
 
     return(
         <AuthContext.Provider value={{currentUser, isAuthenticated, isUserAdmin, isLoadingUser, updateIsTokenRefreshed, loginUser, logoutUser}}>

@@ -3,12 +3,14 @@ import RegisterRequest from "../dto/RegisterRequest.ts";
 import LoginRequest from "../dto/LoginRequest.ts";
 import UserView from "../dto/UserView.ts";
 import {iamClient} from "../common/api-client.ts";
+import Cookies from "js-cookie";
 
 class IamService {
 
     static async register(req: RegisterRequest): Promise<string> {
         try {
             const response = await iamClient.post('/auth/register', req, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to register"
             });
@@ -21,6 +23,7 @@ class IamService {
     static async login(req: LoginRequest): Promise<string> {
         try {
             const response = await iamClient.post('/auth/login', req, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to login"
             });
@@ -30,11 +33,13 @@ class IamService {
         }
     }
 
-    static async logout(): Promise<string> {
+    static async logout(controller: AbortController): Promise<string> {
         try {
             const response = await iamClient.post('/auth/logout', null, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Something went wrong",
+                signal: controller.signal
             })
             return response.data;
         } catch (error) {
@@ -45,6 +50,7 @@ class IamService {
     static async refresh(): Promise<string> {
         try {
             const response = await iamClient.post('/auth/refresh', {}, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to refresh token",
             })
@@ -79,7 +85,7 @@ class IamService {
         }
     }
 
-    static async getUserDetails(controller: AbortController): Promise<UserView | null> {
+    static async getUserDetails(controller: AbortController): Promise<UserView | undefined> {
         try {
             const response: AxiosResponse<UserView, any> = await iamClient.get('/user/details', {
                 params: {includeId: false},
@@ -104,6 +110,30 @@ class IamService {
 
             return response.data;
         } catch (error: any) {
+            throw error;
+        }
+    }
+
+    static async getCsrfToken(controller?: AbortController): Promise<void> {
+        try {
+            await iamClient.get('/auth/csrf', {
+                withCredentials: true,
+                signal: controller?.signal
+            })
+        } catch (error: any) {
+            throw error;
+        }
+    }
+
+    static async checkIsUserAuthenticated(controller: AbortController): Promise<boolean> {
+        try {
+            const response = await iamClient.get('/auth/verify', {
+                withCredentials: true,
+                signal: controller.signal,
+            })
+
+            return response.data;
+        } catch (error) {
             throw error;
         }
     }

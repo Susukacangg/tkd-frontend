@@ -51,7 +51,7 @@ function EditContributionForm() {
             toast.success("Successfully edited word", TOAST_CUSTOM_CLOSE_BTN);
             navigate(`/definition/${response}`);
         } catch (error) {
-            console.error("Edit word error: " + error);
+            toast.error("Failed to edit word", TOAST_CUSTOM_CLOSE_BTN);
         }
     }
 

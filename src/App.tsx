@@ -97,10 +97,10 @@ const router = createBrowserRouter([
 ]);
 
 const Main = () => {
-    const {updateIsTokenRefreshed} = useAuth();
+    const {updateIsTokenRefreshed, logoutUser} = useAuth();
 
     useEffect(() => {
-        setAuthContextFunctions(updateIsTokenRefreshed);
+        setAuthContextFunctions(updateIsTokenRefreshed, logoutUser);
     }, [updateIsTokenRefreshed]);
 
     return (
