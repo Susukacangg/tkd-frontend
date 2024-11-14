@@ -1,10 +1,12 @@
 import Word from "../dto/Word.ts";
 import {dictionaryClient} from "../common/api-client.ts";
+import Cookies from 'js-cookie';
 
 export default class DictionaryService {
     static async addWord(newWord: any): Promise<any> {
         try {
             const response = await dictionaryClient.post("/dict/add", newWord, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to add word to dictionary"
             })
@@ -86,6 +88,7 @@ export default class DictionaryService {
     static async editWord(word: any) {
         try {
             const response = await dictionaryClient.put(`/dict/${word.wordId}`, word, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to edit word"
             });
@@ -99,6 +102,7 @@ export default class DictionaryService {
     static async deleteWord(wordId: number): Promise<void> {
         try {
             await dictionaryClient.delete(`/dict/${wordId}`, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to delete word"
             })
@@ -110,6 +114,7 @@ export default class DictionaryService {
     static async reportWord(reportRequest: any): Promise<void> {
         try {
             await dictionaryClient.post('/report-contribution', reportRequest, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
                 withCredentials: true,
                 timeoutErrorMessage: "Failed to report word"
             })
