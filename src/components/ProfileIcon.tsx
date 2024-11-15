@@ -15,6 +15,7 @@ const ProfileIcon = ({name}: {name: string | null}) => {
     return (
         <>
             <Tooltip title={"Account"}>
+                <div className={"inline-block"}>
                     <IconButton className={"ml-4"}
                                 disabled={isLoadingUser}
                                 onClick={(e) => setAnchorEl(e.currentTarget)}
@@ -22,11 +23,12 @@ const ProfileIcon = ({name}: {name: string | null}) => {
                         {isLoadingUser ? <Skeleton variant={"circular"} width={40} height={40}></Skeleton>
                             : <Avatar {...getAvatarDisplay(name)}/>}
                     </IconButton>
+                </div>
             </Tooltip>
             <Menu open={isMenuOpen}
-                anchorEl={anchorEl}
-                onClick={() => setAnchorEl(null)}
-                onClose={() => setAnchorEl(null)}>
+                  anchorEl={anchorEl}
+                  onClick={() => setAnchorEl(null)}
+                  onClose={() => setAnchorEl(null)}>
 
                 {isAuthenticated? (
                     <MenuItem onClick={() => navigate("/my-contributions")}>
