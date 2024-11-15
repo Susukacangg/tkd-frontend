@@ -16,8 +16,9 @@ const ProfileIcon = ({name}: {name: string | null}) => {
         <>
             <Tooltip title={"Account"}>
                     <IconButton className={"ml-4"}
-                                  onClick={(e) => setAnchorEl(e.currentTarget)}
-                                  sx={{color: nameToColor(name)}}>
+                                disabled={isLoadingUser}
+                                onClick={(e) => setAnchorEl(e.currentTarget)}
+                                sx={{color: nameToColor(name)}}>
                         {isLoadingUser ? <Skeleton variant={"circular"} width={40} height={40}></Skeleton>
                             : <Avatar {...getAvatarDisplay(name)}/>}
                     </IconButton>

@@ -5,6 +5,7 @@ export default interface AuthContextProps {
     isAuthenticated: boolean;
     isUserAdmin: boolean;
     isLoadingUser: boolean;
+    isAuthenticating: boolean;
     updateIsTokenRefreshed: (value: boolean) => void;
     loginUser: () => void;
     logoutUser: () => void;
