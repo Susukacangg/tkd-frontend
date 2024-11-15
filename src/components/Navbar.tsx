@@ -1,5 +1,5 @@
 import {NavLink, useNavigate} from "react-router-dom";
-import {Button, IconButton} from "@mui/material";
+import {Button, CircularProgress, IconButton} from "@mui/material";
 import SearchBar from "./SearchBar.tsx";
 import {Search} from "@mui/icons-material";
 import {useAuth} from "../contexts/AuthContext.tsx";
@@ -11,6 +11,7 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
     let navLinks = enableHomeOnly ? MENU_ITEMS.slice(0, 1) : MENU_ITEMS;
 
     const navigate = useNavigate();
+    const {isAuthenticating} = useAuth();
 
     return (
         <div className={`flex justify-between items-center h-full my-6 ${enableHomeOnly || !enableContributeBtn? "w-1/6": "w-1/3"} ${enableHomeOnly && enableContributeBtn? "w-1/6" : ""}`}>
@@ -24,9 +25,12 @@ const NavLinks = ({enableHomeOnly, enableContributeBtn}: {enableHomeOnly?: boole
             {enableContributeBtn &&
                 <Button variant={"contained"}
                         color={"primary"}
-                        className={"capitalize"}
+                        disabled={isAuthenticating}
+                        className={`capitalize ${isAuthenticating ? "px-9" : ""}`}
                         onClick={() => (navigate("/contribute"))}>
-                    Contribute
+                    {isAuthenticating ?
+                        <CircularProgress size={25.7}/>
+                        : "Contribute"}
                 </Button>}
         </div>
     );
