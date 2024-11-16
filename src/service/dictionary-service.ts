@@ -122,4 +122,73 @@ export default class DictionaryService {
             throw error;
         }
     }
+
+    static async commentContribution(commentRequest: any): Promise<string> {
+        try {
+            const response = await dictionaryClient.post(`/dict/comment`, commentRequest, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
+                withCredentials: true,
+                timeoutErrorMessage: "Failed to add comment"
+            })
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async getComments(wordId: number, pageNum: number, controller?: AbortController): Promise<any> {
+        try {
+            const response = await dictionaryClient.get('/dict/comment', {
+                params: {wordId: wordId, pageNum: pageNum},
+                timeoutErrorMessage: "Failed to get comments",
+                signal: controller?.signal
+            })
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async reportContributionComment(reportRequest: any): Promise<void> {
+        try {
+            await dictionaryClient.post('/dict/comment/report', reportRequest, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
+                withCredentials: true,
+                timeoutErrorMessage: "Failed to get comments"
+            })
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async editContributionComment(commentRequest: any): Promise<string> {
+        try {
+            const response = await dictionaryClient.put(`/dict/comment`, commentRequest, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
+                withCredentials: true,
+                timeoutErrorMessage: "Failed to add comment"
+            })
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static async deleteContributionComment(commentId: number): Promise<string> {
+        try {
+            const response = await dictionaryClient.patch(`/dict/comment`, null, {
+                headers: {"X-XSRF-TOKEN": Cookies.get("XSRF-TOKEN")},
+                params: {commentId: commentId},
+                withCredentials: true,
+                timeoutErrorMessage: "Failed to delete comment"
+            })
+
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 };

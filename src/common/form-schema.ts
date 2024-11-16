@@ -80,3 +80,16 @@ export const ReportWordFormSchema = z.object({
     reportType: z.string().trim(),
     reportDescription: z.string().trim()
 })
+
+export const CommentFormSchema = z.object({
+    commentId: z.number().nullable(),
+    comment: z.string().trim(),
+    wordId: z.number(),
+    commentedBy: z.string().trim()
+})
+
+export const ReportWordCommentFormSchema = z.object({
+    commentId: z.number(),
+    reportedBy: z.string().trim(),
+    reportType: z.string().trim().min(1),
+})

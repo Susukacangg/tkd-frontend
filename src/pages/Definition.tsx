@@ -1,5 +1,5 @@
 import Header from "../components/Header.tsx";
-import {Button, CircularProgress, Divider, IconButton, Skeleton, Tooltip, Typography} from "@mui/material";
+import {Divider, Skeleton, Typography} from "@mui/material";
 import TranslateItem from "../components/TranslateItem.tsx";
 import UsageExampleItem from "../components/UsageExampleItem.tsx";
 import {useNavigate, useParams} from "react-router-dom";
@@ -7,9 +7,10 @@ import {useEffect, useState} from "react";
 import DictionaryService from "../service/dictionary-service.ts";
 import {toast} from "sonner";
 import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
-import {Report} from "@mui/icons-material";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import Word from "../dto/Word.ts";
+import CommentsList from "../components/CommentsList.tsx";
+import DefinitionFooter from "../components/DefinitionFooter.tsx";
 
 const DefinitionSkeleton = () => {
     return (
@@ -97,7 +98,7 @@ function Definition() {
                             {currentWord?.word}
                         </Typography>
                         <Typography variant={"body1"}
-                                    className={"xxs:text-[9px] lg:text-2xl xl:text-[16px]"}>
+                                    className={"xxs:text-[12px] lg:text-2xl xl:text-[16px]"}>
                             contributed by {currentWord?.username}
                         </Typography>
                     </div>
@@ -133,38 +134,13 @@ function Definition() {
                         })}
                     </div>
 
-                    <div className="flex justify-between items-center lg:mt-24 xl:mt-16">
-                        <div className="flex items-center gap-6">
-                            {isUsersWord || isUserAdmin? (
-                                <>
-                                    <Button variant={"contained"}
-                                            color={"primary"}
-                                            className={"lg:px-12 lg:py-3 xl:px-6 xl:py-2 xxs:text-[10px] lg:text-3xl xl:text-sm"}
-                                            disabled={isDeleting}
-                                            onClick={() => navigate(`/edit/${currentWord?.wordId}`, {
-                                                state: currentWord
-                                            })}>
-                                        Edit
-                                    </Button>
-                                    <Button variant={"contained"}
-                                            color={"error"}
-                                            className={"lg:px-12 lg:py-3 xl:px-6 xl:py-2 xxs:text-[10px] lg:text-3xl xl:text-sm"}
-                                            disabled={isDeleting}
-                                            onClick={handleDeleteClick}>
-                                        {isDeleting ? <CircularProgress size={25} color={"error"}/> : "Delete"}
-                                    </Button>
-                                </>): null}
-                        </div>
-                        <Tooltip title={"Report this contribution"}>
-                            <IconButton color={"error"}
-                                        size={"large"}
-                                        onClick={() => navigate(`/report/${currentWord?.wordId}`, {
-                                            state: currentWord
-                                        })}>
-                                <Report className={"lg:text-5xl xl:text-3xl"}/>
-                            </IconButton>
-                        </Tooltip>
-                    </div>
+                    <DefinitionFooter isUsersWord={isUsersWord}
+                                      isUserAdmin={isUserAdmin}
+                                      isDeleting={isDeleting}
+                                      currentWord={currentWord}
+                                      handleDeleteClick={handleDeleteClick}/>
+
+                    <CommentsList/>
                 </div>
             ): <DefinitionSkeleton/>}
 
