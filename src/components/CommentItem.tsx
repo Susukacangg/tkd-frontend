@@ -19,7 +19,6 @@ import {
     MoreHoriz,
     ReportOutlined
 } from "@mui/icons-material";
-import {formatDistanceToNow, parseISO} from "date-fns";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import {ContributionComment} from "../dto/ContributionComment.ts";
 import {Dispatch, SetStateAction, useState} from "react";
@@ -173,42 +172,6 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
             wordId: commentItem.wordId
         }
     });
-
-    const formatDistanceString = (distance: string) => {
-        let formattedDistance: string = distance;
-
-        formattedDistance = formattedDistance.replace("about ", commentItem.isEdited ? "edited " : "");
-
-        if (formattedDistance.includes("minute"))
-            formattedDistance = `${commentItem.isEdited ? "edited " : ""} ${formattedDistance.replace(" minutes", "m").replace(" minute", "m")}`;
-        else if (formattedDistance.includes("hour"))
-            formattedDistance = formattedDistance.replace(" hours", "h").replace(" hour", "h");
-        else if (formattedDistance.includes("day"))
-            formattedDistance = formattedDistance.replace(" days", "h").replace(" day", "h");
-
-        return formattedDistance;
-    }
-
-    const formatDateTime = (dateTimeString: string): string => {
-        const date = parseISO(dateTimeString + "Z");
-        let distance = formatDistanceToNow(date, {addSuffix: true})
-        const diffInSeconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-
-        if (diffInSeconds < 60) {
-            return `${commentItem.isEdited ? "edited " : ""} ${diffInSeconds}s ago`;
-        } else {
-            distance = formatDistanceString(distance);
-
-            if (distance.includes("ago"))
-                return distance;
-
-            return date.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-            });
-        }
-    }
 
     const handleReportOptionClick = () => {
         setAnchorEl(null);
