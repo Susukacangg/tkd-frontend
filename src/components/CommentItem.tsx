@@ -190,7 +190,7 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
     }
 
     const formatDateTime = (dateTimeString: string): string => {
-        const date = parseISO(dateTimeString);
+        const date = parseISO(dateTimeString + "Z");
         let distance = formatDistanceToNow(date, {addSuffix: true})
         const diffInSeconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
 
