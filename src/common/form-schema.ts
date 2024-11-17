@@ -7,6 +7,9 @@ export const RegisFormSchema = z.object({
         .min(3, {
             message: "Username must contain at least 3 characters"
         })
+        .max(20, {
+            message: "Username can't contain more than 20 characters"
+        })
         .refine(value => USERNAME_REGEX.test(value), {
             message: "Must contain only alphanumeric characters\n" +
                 "Cannot contain spaces\n" +
