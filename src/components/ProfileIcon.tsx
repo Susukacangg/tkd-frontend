@@ -8,19 +8,20 @@ import {getAvatarDisplay, nameToColor} from "../common/utility.ts";
 const ProfileIcon = ({name}: {name: string | null}) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const {isAuthenticated, isLoadingUser} = useAuth();
+    const {isAuthenticated, isLoadingUser, isAuthenticating} = useAuth();
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
+    const isProfileLoading = isLoadingUser || isAuthenticating;
 
     return (
         <>
             <Tooltip title={"Account"}>
                 <div className={"inline-block"}>
                     <IconButton className={"ml-4"}
-                                disabled={isLoadingUser}
+                                disabled={isProfileLoading}
                                 onClick={(e) => setAnchorEl(e.currentTarget)}
                                 sx={{color: nameToColor(name)}}>
-                        {isLoadingUser ? <Skeleton variant={"circular"} width={40} height={40}></Skeleton>
+                        {isProfileLoading ? <Skeleton variant={"circular"} width={40} height={40}></Skeleton>
                             : <Avatar {...getAvatarDisplay(name)}/>}
                     </IconButton>
                 </div>
