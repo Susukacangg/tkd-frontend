@@ -226,7 +226,6 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
     }
 
     const handleFormSubmit: SubmitHandler<EditCommentFormFields> = async (data: EditCommentFormFields) => {
-        console.log(data);
         try {
             const response = await DictionaryService.editContributionComment(data);
             toast.success(response, TOAST_CUSTOM_CLOSE_BTN)

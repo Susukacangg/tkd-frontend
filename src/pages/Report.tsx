@@ -43,8 +43,6 @@ function Report() {
 
     const handleFormSubmit: SubmitHandler<ReportWordFormFields> = async (data: ReportWordFormFields) => {
         try {
-            console.log(data);
-            await new Promise(resolve => setTimeout(resolve, 1000));
             await DictionaryService.reportWord(data);
             toast.success("Successfully reported word", TOAST_CUSTOM_CLOSE_BTN);
             navigate('/home');
