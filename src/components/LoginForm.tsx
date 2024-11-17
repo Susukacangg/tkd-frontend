@@ -56,7 +56,7 @@ function LoginForm() {
                                                linkText={"Create a new account"}
                                                linkRoute={"/register"}/>}>
             <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className={"lg:mt-16 xl:mt-10 xxs:w-full xl:w-1/2"}>
+                  className={"xs:mt-5 lg:mt-16 xl:mt-10 xxs:w-full xl:w-1/2"}>
                 <div className={"flex flex-col justify-between xxs:gap-6 lg:gap-14 xl:gap-6 xxs:max-xs:mt-4"}>
                     <FieldLabel title={"Username or Email"}/>
                     <TextField type={"text"}
