@@ -262,14 +262,16 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
             <div className="flex justify-between items-center w-full">
                 <div className="flex gap-2 justify-between items-center w-fit">
                     <Avatar {...getAvatarDisplay(commentItem.username)}
-                            className={"w-[30px] h-[30px] text-base"}/>
-                    <Typography>
-                        {commentItem.isDeleted ? "Anonymous" : commentItem.username}
-                    </Typography>
-                    <Typography color={"grey"}
-                                className={"ml-1.5"}>
-                        {formatDateTime(commentItem.isEdited ? commentItem.editedDateTime as string : commentItem.commentDateTime)}
-                    </Typography>
+                            className={"xxs:w-[23px] xxs:h-[23px] lg:w-[30px] lg:h-[30px] xxs:text-sm lg:text-base"}/>
+                    <div className="flex gap-2 justify-between items-center w-fit xxs:max-xs:flex-col xxs:max-xs:justify-center xxs:max-xs:items-start xxs:max-xs:gap-0 xxs:max-xs:mb-1.5">
+                        <Typography className={"xxs:max-lg:text-sm"}>
+                            {commentItem.isDeleted ? "Anonymous" : commentItem.username}
+                        </Typography>
+                        <Typography color={"grey"}
+                                    className={"xxs:ml-0.5 lg:ml-1.5 xxs:max-lg:text-xs"}>
+                            {formatDateTime(commentItem.isEdited ? commentItem.editedDateTime as string : commentItem.commentDateTime)}
+                        </Typography>
+                    </div>
                 </div>
                 {/*more options button*/}
                 <div className="flex justify-between items-center w-fit">
@@ -293,34 +295,34 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
                           }}>
                         <MenuItem color={"error"}
                                   disabled={deleteIsSubmitting}
-                                  className={"text-sm py-2"}
+                                  className={"xxs:max-xs:py-0 py-2"}
                                   onClick={handleReportOptionClick}>
                             <ReportOutlined color={"error"}
-                                    className={"text-xl mr-2"}/>
+                                    className={"text-xl xxs:mr-1 lg:mr-2"}/>
                             <Typography color={"error"}
-                                        className={"text-sm"}>
+                                        className={"xxs:text-xs lg:text-sm"}>
                                 Report
                             </Typography>
                         </MenuItem>
                         {isUsersComment && !commentItem.isEdited ?
                             <MenuItem disabled={deleteIsSubmitting}
-                                      className={"text-sm py-2"}
+                                      className={"xxs:max-xs:py-0 py-2"}
                                       onClick={handleEditOptionClick}>
-                                <EditOutlined className={"text-black text-xl mr-2"}/>
-                                <Typography className={"text-sm"}>
+                                <EditOutlined className={"text-black text-xl xxs:mr-1 lg:mr-2"}/>
+                                <Typography className={"xxs:text-xs lg:text-sm"}>
                                     Edit
                                 </Typography>
                             </MenuItem>
                             : null}
                         {isUsersComment || isUserAdmin ?
-                            <MenuItem className={"text-sm py-2"}
+                            <MenuItem className={"xxs:max-xs:py-0 py-2"}
                                       disabled={deleteIsSubmitting}
                                       onClick={handleDelete}>
                                 {deleteIsSubmitting ?
                                     <CircularProgress size={20}
                                                       className={"text-black mr-2"}/>
-                                    : <DeleteOutline className={"text-black text-xl mr-2"}/>}
-                                <Typography className={"text-sm"}>
+                                    : <DeleteOutline className={"text-black text-xl xxs:mr-1 lg:mr-2"}/>}
+                                <Typography className={"xxs:text-xs lg:text-sm"}>
                                     Delete
                                 </Typography>
                             </MenuItem>
@@ -335,7 +337,7 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
             {/*comment || edit section*/}
             {!isEditMode ?
                 <Typography component={"ol"}
-                            className={"-ml-0.5 -mt-0.5"}>
+                            className={"xxs:-ml-2 lg:-ml-0.5 lg:-mt-0.5 xxs:max-lg:text-sm"}>
                     {commentItem.isDeleted ? "This comment has been removed" : commentItem.comment}
                 </Typography>
                 :
@@ -352,14 +354,14 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
                                })}
                                slotProps={{
                                    input: {
-                                       className: "bg-white",
+                                       className: "bg-white xxs:text-xs xs:text-sm lg:text-base",
                                        autoComplete: 'off'
                                    }
                                }}/>
                     <div className="flex gap-2 items-center w-fit">
                         <Button variant={"contained"}
                                 size={"small"}
-                                className={"bg-[#f28b82] capitalize"}
+                                className={"bg-[#f28b82] capitalize xxs:max-lg:text-xs"}
                                 onClick={() => setIsEditMode(false)}>
                             Cancel
                         </Button>
@@ -368,7 +370,7 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
                                 color={"primary"}
                                 size={"small"}
                                 type={"submit"}
-                                className={"capitalize"}>
+                                className={"capitalize xxs:max-lg:text-xs"}>
                             {isSubmitting ? <CircularProgress size={25}/> : "Save Edit"}
                         </Button>
                     </div>

@@ -117,7 +117,7 @@ function CommentsList() {
     }, [reloadComments]);
 
     return (
-        <div className="flex flex-col justify-start items-center mt-10 mb-14 gap-3 w-2/5">
+        <div className="flex flex-col justify-start items-center mt-10 mb-14 gap-3 xxs:w-full xl:w-2/5">
             <Divider className={"w-full mb-2"}/>
             {/*comment bar*/}
             {isAuthenticated ?
@@ -143,12 +143,14 @@ function CommentsList() {
                                                                  disabled={isSendCommentDisabled || isSubmitting}
                                                                  size={"small"}>
                                                        <Send
-                                                           color={isSendCommentDisabled || isSubmitting ? "disabled" : "primary"}/>
+                                                           color={isSendCommentDisabled || isSubmitting ? "disabled" : "primary"}
+                                                           className={"xxs:max-md:text-lg"}/>
                                                    </IconButton>}
 
                                            </InputAdornment>
                                        ),
-                                       autoComplete: 'off'
+                                       autoComplete: 'off',
+                                       className: "xxs:max-md:text-sm"
                                    }
                                }}/>
                 </form>
