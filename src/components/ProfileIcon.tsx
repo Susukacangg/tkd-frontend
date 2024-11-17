@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useAuth} from "../contexts/AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
-import {Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Tooltip} from "@mui/material";
+import {Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Skeleton, Tooltip, Typography} from "@mui/material";
 import {LibraryBooks, Login, Logout} from "@mui/icons-material";
 import {getAvatarDisplay, nameToColor} from "../common/utility.ts";
 
@@ -37,14 +37,19 @@ const ProfileIcon = ({name}: {name: string | null}) => {
                         </ListItemIcon>
                         My contributions
                     </MenuItem>
-                ): null}
-                {isAuthenticated && <Divider/>}
+                ):
+                    <Typography className={"px-3 pt-2 pb-4"}>
+                        Welcome, Guest!
+                    </Typography>
+                }
+
+                <Divider/>
 
                 <MenuItem onClick={() => isAuthenticated? navigate("/logout") : navigate("/login")}>
                     <ListItemIcon>
                         {isAuthenticated? <Logout sx={{color: "black"}}/> : <Login color={"primary"}/>}
                     </ListItemIcon>
-                    {isAuthenticated? "Logout" : "Login"}
+                    {isAuthenticated? "Logout" : "Sign in"}
                 </MenuItem>
             </Menu>
         </>
