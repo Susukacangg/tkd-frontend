@@ -148,7 +148,7 @@ function Header({enableHomeOnly = false, enableAvatar = true, enableSearchBar = 
                                     className={"xxs:max-md:text-2xl lg:text-5xl"}/>
                         </IconButton>
                     </SearchBar>
-                    : <Typography variant="h5" className={"font-semibold mr-0 xxs:max-xs:text-[16px] md:max-xl:text-5xl xxs:py-6 lg:py-10 text-nowrap text-center"}
+                    : <Typography variant="h5" className={"font-semibold mr-0 xxs:max-xs:text-[16px] md:max-xl:text-4xl xxs:py-6 lg:py-10 text-nowrap text-center"}
                                   onClick={() => navigate("/home")}>
                         The Kadazandusun Dictionary
                     </Typography>}
