@@ -266,10 +266,6 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
                         <Typography className={"xxs:max-lg:text-sm"}>
                             {commentItem.isDeleted ? "Anonymous" : commentItem.username}
                         </Typography>
-                        <Typography color={"grey"}
-                                    className={"xxs:ml-0.5 lg:ml-1.5 xxs:max-lg:text-xs"}>
-                            {formatDateTime(commentItem.isEdited ? commentItem.editedDateTime as string : commentItem.commentDateTime)}
-                        </Typography>
                     </div>
                 </div>
                 {/*more options button*/}
