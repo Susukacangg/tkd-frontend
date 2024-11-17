@@ -32,7 +32,7 @@ function CommentsList() {
     const [isCommentsLoading, setIsCommentsLoading] = useState(false);
     const [isMoreCommentsLoading, setIsMoreCommentsLoading] = useState(false);
     const {wordId} = useParams();
-    const {currentUser} = useAuth();
+    const {currentUser, isAuthenticated} = useAuth();
 
     const {
         register,
@@ -118,38 +118,42 @@ function CommentsList() {
 
     return (
         <div className="flex flex-col justify-start items-center mt-10 mb-14 gap-3 w-2/5">
+            <Divider className={"w-full mb-2"}/>
             {/*comment bar*/}
-            <form onSubmit={handleSubmit(handleFormSubmit)}
-                  className="flex gap-2 items-center mb-4 w-full">
-                <TextField size={"small"}
-                           placeholder={"Add a comment"}
-                           className={"w-full"}
-                           {...register('comment', {
-                               onChange: (e) => {
-                                   setIsCommentDisabled(!getValues('comment'));
-                                   e.target.dispatchEvent(new Event("input", {bubbles: true}));
-                               }
-                           })}
-                           slotProps={{
-                               input: {
-                                   endAdornment: (
-                                       <InputAdornment position={"end"}>
-                                           {isSubmitting ?
-                                               <CircularProgress size={25}/>
-                                               : <IconButton color={"primary"}
-                                                             type={"submit"}
-                                                             disabled={isSendCommentDisabled || isSubmitting}
-                                                             size={"small"}>
-                                                   <Send
-                                                       color={isSendCommentDisabled || isSubmitting ? "disabled" : "primary"}/>
-                                               </IconButton>}
+            {isAuthenticated ?
+                <form onSubmit={handleSubmit(handleFormSubmit)}
+                      className="flex gap-2 items-center mb-4 w-full">
+                    <TextField size={"small"}
+                               placeholder={"Add a comment"}
+                               className={"w-full"}
+                               {...register('comment', {
+                                   onChange: (e) => {
+                                       setIsCommentDisabled(!getValues('comment'));
+                                       e.target.dispatchEvent(new Event("input", {bubbles: true}));
+                                   }
+                               })}
+                               slotProps={{
+                                   input: {
+                                       endAdornment: (
+                                           <InputAdornment position={"end"}>
+                                               {isSubmitting ?
+                                                   <CircularProgress size={25}/>
+                                                   : <IconButton color={"primary"}
+                                                                 type={"submit"}
+                                                                 disabled={isSendCommentDisabled || isSubmitting}
+                                                                 size={"small"}>
+                                                       <Send
+                                                           color={isSendCommentDisabled || isSubmitting ? "disabled" : "primary"}/>
+                                                   </IconButton>}
 
-                                       </InputAdornment>
-                                   ),
-                                   autoComplete: 'off'
-                               }
-                           }}/>
-            </form>
+                                           </InputAdornment>
+                                       ),
+                                       autoComplete: 'off'
+                                   }
+                               }}/>
+                </form>
+                : null
+            }
 
             {/*list of comment items*/}
             {!isCommentsLoading ?
