@@ -32,21 +32,25 @@ function Report() {
     const {
         register,
         handleSubmit,
-        setValue,
         formState: {errors, isSubmitting}
     } = useForm<ReportWordFormFields>({
-        resolver: zodResolver(ReportWordFormSchema)
+        resolver: zodResolver(ReportWordFormSchema),
+        defaultValues: {
+            wordId: parseInt(wordId as string),
+            reportedBy: currentWord.username,
+            reportType: reportTypeOptions[0].value,
+            reportDateTime: new Date().toISOString(),
+            reportDescription: ''
+        }
     })
-
-    setValue('wordId', parseInt(wordId as string));
-    setValue('reportedBy', currentWord.username);
 
     const handleFormSubmit: SubmitHandler<ReportWordFormFields> = async (data: ReportWordFormFields) => {
         try {
             await DictionaryService.reportWord(data);
             toast.success("Successfully reported word", TOAST_CUSTOM_CLOSE_BTN);
             navigate('/home');
-        } catch (error) {
+        } catch (error: any) {
+            toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
             console.error("Edit word error: " + error);
         }
     }
@@ -85,7 +89,7 @@ function Report() {
                         {/*report type dropdown*/}
                         <FieldLabel title={"Report type"}/>
                         <TextField select
-                                   defaultValue={"Incorrect translation/definition"}
+                                   defaultValue={reportTypeOptions[0].value}
                                    error={errors.reportType && true}
                                    helperText={errors.reportType?.message}
                                    className={"w-11/12"}

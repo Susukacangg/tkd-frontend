@@ -81,18 +81,21 @@ export const ReportWordFormSchema = z.object({
     wordId: z.number(),
     reportedBy: z.string().trim(),
     reportType: z.string().trim(),
-    reportDescription: z.string().trim()
+    reportDescription: z.string().trim(),
+    reportDateTime: z.string()
 })
 
 export const CommentFormSchema = z.object({
     commentId: z.number().nullable(),
     comment: z.string().trim(),
     wordId: z.number(),
-    commentedBy: z.string().trim()
+    commentedBy: z.string().trim(),
+    commentDateTime: z.string()
 })
 
 export const ReportWordCommentFormSchema = z.object({
     commentId: z.number(),
     reportedBy: z.string().trim(),
     reportType: z.string().trim().min(1),
+    reportDateTime: z.string()
 })
