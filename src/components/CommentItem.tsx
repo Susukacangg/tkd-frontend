@@ -58,6 +58,7 @@ const ReportCommentDialog = ({commentItem, isOpen, setIsOpen}: ReportCommentDial
             commentId: commentItem.commentId,
             reportedBy: commentItem.username,
             reportType: '',
+            reportDateTime: new Date().toISOString()
         }
     });
 
@@ -156,7 +157,8 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
             commentId: commentItem.commentId,
             comment: commentItem.comment,
             commentedBy: commentItem.username,
-            wordId: commentItem.wordId
+            wordId: commentItem.wordId,
+            commentDateTime: new Date().toISOString()
         }
     });
 
@@ -169,7 +171,8 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
             commentId: commentItem.commentId,
             comment: commentItem.comment,
             commentedBy: commentItem.username,
-            wordId: commentItem.wordId
+            wordId: commentItem.wordId,
+            commentDateTime: commentItem.commentDateTime
         }
     });
 
@@ -219,6 +222,35 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
         deleteHandleSubmit(() => handleDeleteComment(commentItem.commentId))();
     }
 
+    const formatDateTime = (dateTimeString: string): string => {
+        const serverTimestamp = new Date(dateTimeString).getTime();
+        const nowTimestamp = Date.now();
+
+        const milliseconds = nowTimestamp - serverTimestamp;
+
+        const seconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        if (seconds < 60) {
+            return `${commentItem.isEdited ? "edited " : ""}${seconds}s ago`;
+        } else if (minutes < 60) {
+            return `${commentItem.isEdited ? "edited " : ""}${minutes}m ago`;
+        } else if (hours < 24) {
+            return `${commentItem.isEdited ? "edited " : ""}${hours}h ago`;
+        } else if (days < 7) {
+            return `${commentItem.isEdited ? "edited " : ""}${days}d ago`;
+        } else {
+            const currentDate = new Date(serverTimestamp);
+            return `${commentItem.isEdited ? "edited " : ""}${currentDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            })}`;
+        }
+    }
+
     return (
         <div className="flex flex-col justify-start items-start gap-1 w-full bg-[#f6f6f6] p-3 rounded-lg box-border">
             {/*header of the comment*/}
@@ -229,6 +261,10 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
                     <div className="flex gap-2 justify-between items-center w-fit xxs:max-xs:flex-col xxs:max-xs:justify-center xxs:max-xs:items-start xxs:max-xs:gap-0 xxs:max-xs:mb-1.5">
                         <Typography className={"xxs:max-lg:text-sm"}>
                             {commentItem.isDeleted ? "Anonymous" : commentItem.username}
+                        </Typography>
+                        <Typography color={"grey"}
+                                    className={"xxs:ml-0.5 lg:ml-1.5 xxs:max-lg:text-xs"}>
+                            {formatDateTime(commentItem.isEdited ? commentItem.editedDateTime as string : commentItem.commentDateTime)}
                         </Typography>
                     </div>
                 </div>
@@ -303,6 +339,7 @@ function CommentItem({commentItem, setReloadComments}: {commentItem: Contributio
                 <form onSubmit={handleSubmit(handleFormSubmit)}
                       className="flex flex-col gap-4 justify-start items-start mt-4 w-full">
                     <TextField size={"small"}
+                               disabled={isSubmitting}
                                placeholder={"Add a comment"}
                                className={"w-full"}
                                {...register('comment', {

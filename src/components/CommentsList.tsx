@@ -1,15 +1,8 @@
 import {
     CircularProgress,
     Divider,
-    IconButton,
-    InputAdornment,
-    TextField, Typography,
+    Typography,
 } from "@mui/material";
-import {Send} from "@mui/icons-material";
-import {CommentFormSchema} from "../common/form-schema.ts";
-import {z} from "zod";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useAuth} from "../contexts/AuthContext.tsx";
@@ -18,13 +11,11 @@ import {TOAST_CUSTOM_CLOSE_BTN} from "../common/toast-custom-close-btn.tsx";
 import DictionaryService from "../service/dictionary-service.ts";
 import {ContributionComment} from "../dto/ContributionComment.ts";
 import CommentItem from "./CommentItem.tsx";
-
-type CommentFormFields = z.infer<typeof CommentFormSchema>;
+import CommentBar from "./CommentBar.tsx";
 
 function CommentsList() {
 
     const [comments, setComments] = useState<ContributionComment[]>([]);
-    const [isSendCommentDisabled, setIsCommentDisabled] = useState(true);
     const [pageNum, setPageNum] = useState(1);
     const [numMoreComments, setNumMoreComments] = useState(0);
     const [reloadComments, setReloadComments] = useState(false);
@@ -32,23 +23,7 @@ function CommentsList() {
     const [isCommentsLoading, setIsCommentsLoading] = useState(false);
     const [isMoreCommentsLoading, setIsMoreCommentsLoading] = useState(false);
     const {wordId} = useParams();
-    const {currentUser, isAuthenticated} = useAuth();
-
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        getValues,
-        formState: {isSubmitting}
-    } = useForm<CommentFormFields>({
-        resolver: zodResolver(CommentFormSchema),
-        defaultValues: {
-            wordId: parseInt(wordId as string),
-            commentedBy: currentUser?.username as string,
-            comment: '',
-            commentId: null
-        }
-    });
+    const {isAuthenticated} = useAuth();
 
     const loadComments = async (controller?: AbortController) => {
         try {
@@ -88,18 +63,6 @@ function CommentsList() {
         }
     }
 
-    const handleFormSubmit: SubmitHandler<CommentFormFields> = async (data: CommentFormFields) => {
-        try {
-            const response: string = await DictionaryService.commentContribution(data);
-            toast.success(response, TOAST_CUSTOM_CLOSE_BTN);
-            setReloadComments(true);
-            setValue('comment', '');
-            setIsCommentDisabled(true);
-        } catch (error: any) {
-            toast.error(error.message, TOAST_CUSTOM_CLOSE_BTN);
-        }
-    }
-
     useEffect(() => {
         const controller = new AbortController();
 
@@ -121,39 +84,7 @@ function CommentsList() {
             <Divider className={"w-full mb-2"}/>
             {/*comment bar*/}
             {isAuthenticated ?
-                <form onSubmit={handleSubmit(handleFormSubmit)}
-                      className="flex gap-2 items-center mb-4 w-full">
-                    <TextField size={"small"}
-                               placeholder={"Add a comment"}
-                               className={"w-full"}
-                               {...register('comment', {
-                                   onChange: (e) => {
-                                       setIsCommentDisabled(!getValues('comment'));
-                                       e.target.dispatchEvent(new Event("input", {bubbles: true}));
-                                   }
-                               })}
-                               slotProps={{
-                                   input: {
-                                       endAdornment: (
-                                           <InputAdornment position={"end"}>
-                                               {isSubmitting ?
-                                                   <CircularProgress size={25}/>
-                                                   : <IconButton color={"primary"}
-                                                                 type={"submit"}
-                                                                 disabled={isSendCommentDisabled || isSubmitting}
-                                                                 size={"small"}>
-                                                       <Send
-                                                           color={isSendCommentDisabled || isSubmitting ? "disabled" : "primary"}
-                                                           className={"xxs:max-md:text-lg"}/>
-                                                   </IconButton>}
-
-                                           </InputAdornment>
-                                       ),
-                                       autoComplete: 'off',
-                                       className: "xxs:max-md:text-sm"
-                                   }
-                               }}/>
-                </form>
+                <CommentBar setReloadComments={setReloadComments}/>
                 : null
             }
 
