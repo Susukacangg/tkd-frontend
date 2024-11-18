@@ -11,27 +11,7 @@ export function AuthProvider({ children }: {children: ReactNode}) {
     const [isUserAdmin, setIsUserAdmin] = useState(false);
     const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
-    const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        (async () => {
-            try {
-                setIsAuthenticating(true);
-                const response: boolean = await IamService.checkIsUserAuthenticated(controller);
-                setIsAuthenticated(response);
-            } catch (error: any) {
-                if (controller.signal.aborted)
-                    return;
-                console.error(error);
-            } finally {
-                setIsAuthenticating(false);
-            }
-        })();
-
-        return () => controller.abort();
-    }, [])
+    const [isAuthenticating, setIsAuthenticating] = useState(true);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -50,17 +30,35 @@ export function AuthProvider({ children }: {children: ReactNode}) {
         const controller = new AbortController();
 
         (async () => {
+            try {
+                setIsAuthenticated(await IamService.checkIsUserAuthenticated(controller));
+                setIsAuthenticating(false);
+            } catch (error: any) {
+                if (controller.signal.aborted)
+                    return;
+                console.error(error);
+                setIsAuthenticated(false);
+                setIsAuthenticating(false);
+            }
+        })();
+
+        return () => controller.abort();
+    }, [])
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        (async () => {
             if(isAuthenticated) {
                 try {
-                    setIsLoadingUser(true);
                     const response: UserView | undefined = await IamService.getUserDetails(controller);
-                    setCurrentUser(response ? response : null);
+                    setCurrentUser(!response ? null : response);
+                    setIsLoadingUser(false);
                     setIsTokenRefreshed(false);
                 } catch (error: any) {
                     if (controller.signal.aborted)
                         return;
                     console.error(error.message);
-                } finally {
                     setIsLoadingUser(false);
                 }
             } else {
